@@ -26,8 +26,12 @@ public class LoginController implements Initializable {
 	}
 
 	@FXML
-	protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
-
-		
+	protected void handleBtnLogin(ActionEvent event) throws IOException {
+		System.out.println("Login btn pressed");
+	}
+	
+	@FXML
+	protected void handleBtnCreate(ActionEvent event) {
+		System.out.println("Create new account btn pressed");
 	}
 }

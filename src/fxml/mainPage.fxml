@@ -1,42 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="rootGrid" fx:controller="controllers.LoginController"
-	xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"
-	styleClass="root">
+<GridPane fx:id="rootGrid" alignment="center" hgap="10" styleClass="root" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controllers.LoginController">
 	<padding>
-		<Insets top="25" right="25" bottom="10" left="25" />
+		<Insets bottom="10" left="25" right="25" top="25" />
 	</padding>
-
-	<Text id="welcome-text" text="Login" GridPane.columnIndex="0"
-		GridPane.rowIndex="0" GridPane.columnSpan="2" />
-
-	<Label text="Username:" GridPane.columnIndex="0"
-		GridPane.rowIndex="1" />
-
-	<TextField fx:id="userField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-	<Label text="Password:" GridPane.columnIndex="0"
-		GridPane.rowIndex="2" />
-
-	<PasswordField fx:id="passwordField"
-		GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#handleSubmitButtonAction" />
-
-	<HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="1"
-		GridPane.rowIndex="4">
-		<Button text="Sign In" onAction="#handleSubmitButtonAction" />
-	</HBox>
-
-	<Text fx:id="actiontarget" GridPane.columnIndex="1"
-		GridPane.rowIndex="6" />
+   <children>
+   
+   	<Text id="welcome-text" text="Login" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+   
+   	<Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+   
+   	<TextField fx:id="userField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   
+   	<Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+   
+   	<PasswordField fx:id="passwordField" onAction="#handleBtnLogin" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+   
+   	<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <children>
+      		<Button onAction="#handleBtnCreate" text="Create Account" />
+            <Button onAction="#handleBtnLogin" text="Sign In" />
+      </children>
+   	</HBox>
+   
+   	<Text fx:id="actiontarget" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+   </children>
 
 	<stylesheets>
 		<URL value="@main.css" />
 	</stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 
 </GridPane>
