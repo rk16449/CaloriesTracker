@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="rootGrid" alignment="center" hgap="10" styleClass="root" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controllers.LoginController">
+	<padding>
+		<Insets bottom="10" left="25" right="25" top="25" />
+	</padding>
+   <children>
+   
+   	<Text id="welcome-text" text="Create Account" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+   
+   	<Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+   
+   	<TextField fx:id="userField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   
+   	<Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+   
+   	<PasswordField fx:id="passwordField" onAction="#handleSubmitButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+   
+   	<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
+      <children>
+      		<Button onAction="#handleBtnCreate" text="Create Account" />
+      </children>
+   	</HBox>
+   
+   	<Text fx:id="actiontarget" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <PasswordField fx:id="passwordField1" onAction="#handleSubmitButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label text="Confirm Password:" GridPane.rowIndex="3" />
+      <Button onAction="#handleBtnLogin" text="Back" GridPane.rowIndex="7" />
+   </children>
+
+	<stylesheets>
+		<URL value="@main.css" />
+	</stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+
+</GridPane>
