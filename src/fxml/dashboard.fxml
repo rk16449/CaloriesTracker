@@ -26,7 +26,7 @@
         
         <Tab text="Dashboard">
          	 <content>
-         	 	
+         	 	<fx:include source="summaryTab.fxml" />
          	 </content>
           </Tab>
         
