@@ -1,5 +1,7 @@
 # CaloriesTracker
 
+[![BCH compliance](https://bettercodehub.com/edge/badge/rk16449/CaloriesTracker?branch=master)](https://bettercodehub.com/)
+
 
 This project was designed to help with tracking calories and achieving fitness goals.
 
