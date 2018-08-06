@@ -33,6 +33,19 @@ public class LoginController implements Initializable {
 	@FXML
 	protected void handleBtnLogin(ActionEvent event) throws IOException {
 		System.out.println("Login btn pressed");
+		// Authenticate here
+		
+		
+		
+		// Go to main program dashboard
+		Parent parent = FXMLLoader.load(getClass().getResource("/fxml/dashboard.fxml"));
+		Scene scene = new Scene(parent);
+		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appStage.setScene(scene);
+		appStage.setTitle("Dashboard");
+		appStage.setWidth(944);
+		appStage.setHeight(600);
+		appStage.show();
 	}
 	
 	@FXML
