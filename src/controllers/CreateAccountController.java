@@ -35,7 +35,7 @@ public class CreateAccountController implements Initializable {
 		System.out.println("Back btn pressed");
 		
 		// Send us back to main screen
-		Parent parent = FXMLLoader.load(getClass().getResource("/fxml/mainPage.fxml"));
+		Parent parent = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
 		Scene scene = new Scene(parent);
 		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		appStage.setScene(scene);
