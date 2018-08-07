@@ -18,7 +18,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="909.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SummaryTabController">
    <children>
-      <BarChart id="dailyProgress" fx:id="dailyProgress" layoutX="59.0" layoutY="202.0" prefHeight="221.0" prefWidth="361.0" title="Progress">
+      <BarChart id="dailyProgress" fx:id="dailyProgress" layoutX="51.0" layoutY="193.0" prefHeight="246.0" prefWidth="406.0" title="Progress">
         <xAxis>
           <CategoryAxis fx:id="categoryAxisDate" label="Date" side="BOTTOM" />
         </xAxis>
@@ -26,6 +26,13 @@
           <NumberAxis fx:id="numberAxisCalories" label="Calories" side="LEFT" upperBound="3000.0" />
         </yAxis>
       </BarChart>
-      <PieChart id="dailyMacros" fx:id="dailyMacros" layoutX="475.0" layoutY="186.0" prefHeight="253.0" prefWidth="371.0" title="Daily Macros" />
+      <PieChart id="dailyMacros" fx:id="dailyMacros" layoutX="480.0" layoutY="193.0" prefHeight="246.0" prefWidth="378.0" title="Daily Macros" />
+      <VBox layoutX="339.0" layoutY="54.0" prefHeight="61.0" prefWidth="282.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="303.0" text="Daily Goal" />
+            <ProgressBar opacity="0.8" prefHeight="18.0" prefWidth="286.0" progress="0.76" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="303.0" text="Weight gain, medium intensity, 3200 Calories" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
