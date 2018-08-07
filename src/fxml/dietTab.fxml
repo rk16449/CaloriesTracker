@@ -16,4 +16,16 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="909.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DietTabController" />
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="909.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DietTabController">
+   <children>
+      <TableView layoutX="71.0" layoutY="54.0" prefHeight="326.0" prefWidth="463.0">
+        <columns>
+            <TableColumn prefWidth="122.0" text="Food" />
+          <TableColumn prefWidth="96.0" text="Protein" />
+          <TableColumn prefWidth="130.0" text="Carbohydrates" />
+            <TableColumn prefWidth="114.0" text="Fats" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
