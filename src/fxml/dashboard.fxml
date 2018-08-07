@@ -33,7 +33,7 @@
         
           <Tab text="Goals">
          	 <content>
-         	 	
+         	 	<fx:include source="goalsTab.fxml" />
          	 </content>
           </Tab>
           
