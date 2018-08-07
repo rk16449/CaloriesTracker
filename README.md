@@ -20,6 +20,14 @@ Full Requirements:
 9. Have HIIT training methods
 10. Suggest supplement usage
 
+11. Dashboard should contain various widgets: 
+	11. a. Progress of today and previous days in form of a bar chart (for calories eaten per day)
+	11. b. Pie chart of the daily Macros break down (protein, fats, carbs) 
+	11. c. Summary of current goal, workout intensity set, and when goal is estimated to be completed
+	11. d. Circular progress bar (or pie chart?) of weight progress with estimate of weeks left till goal etc
+	11. e. Water intake status
+	11. f. Sleep per day status
+
 
 
 Minimum Requirements:

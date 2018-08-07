@@ -18,7 +18,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="909.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SummaryTabController">
    <children>
-      <BarChart layoutX="60.0" layoutY="58.0" prefHeight="220.0" prefWidth="378.0">
+      <BarChart layoutX="59.0" layoutY="202.0" prefHeight="221.0" prefWidth="361.0" title="Progress">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -26,5 +26,6 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
+      <PieChart id="dailyMacros" fx:id="dailyMacros" layoutX="475.0" layoutY="186.0" prefHeight="253.0" prefWidth="371.0" title="Daily Macros" />
    </children>
 </AnchorPane>
