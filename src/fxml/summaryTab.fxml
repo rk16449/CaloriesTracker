@@ -18,12 +18,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="909.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SummaryTabController">
    <children>
-      <BarChart layoutX="59.0" layoutY="202.0" prefHeight="221.0" prefWidth="361.0" title="Progress">
+      <BarChart id="dailyProgress" fx:id="dailyProgress" layoutX="59.0" layoutY="202.0" prefHeight="221.0" prefWidth="361.0" title="Progress">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis fx:id="categoryAxisDate" label="Date" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis fx:id="numberAxisCalories" label="Calories" side="LEFT" upperBound="3000.0" />
         </yAxis>
       </BarChart>
       <PieChart id="dailyMacros" fx:id="dailyMacros" layoutX="475.0" layoutY="186.0" prefHeight="253.0" prefWidth="371.0" title="Daily Macros" />
