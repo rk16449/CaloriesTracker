@@ -45,7 +45,7 @@
           
           <Tab text="Diet">
          	 <content>
-         	 	
+         	 	<fx:include source="dietTab.fxml" />
          	 </content>
           </Tab>
           
