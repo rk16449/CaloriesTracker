@@ -18,32 +18,5 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="909.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ProfileTabController">
    <children>
-      <VBox layoutX="287.0" layoutY="37.0" prefHeight="102.0" prefWidth="335.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="110.0" prefWidth="335.0" text="Current Goal: Gain Weight">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-      <Button layoutX="120.0" layoutY="390.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Lose Weight" />
-      <Button layoutX="379.0" layoutY="390.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Maintain Weight" />
-      <Button layoutX="669.0" layoutY="390.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Gain Weight" />
-      <VBox layoutX="82.0" layoutY="149.0" prefHeight="213.0" prefWidth="185.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Losing Weight text here" />
-         </children>
-      </VBox>
-      <VBox layoutX="341.0" layoutY="159.0" prefHeight="213.0" prefWidth="185.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Maintaining weight text here" />
-         </children>
-      </VBox>
-      <VBox layoutX="631.0" layoutY="159.0" prefHeight="213.0" prefWidth="185.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="gaining weight text here" />
-         </children>
-      </VBox>
    </children>
 </AnchorPane>
