@@ -16,6 +16,24 @@ import javafx.scene.chart.PieChart;
 
 public class ProfileTabController implements Initializable {
 
+	// PROFILE TAB
+	
+	// TODO
+	
+	// Be able to select gender
+	
+	// Be able to set age of person
+	
+	// Be able to set weight of person
+	
+	// Be able to set height
+	
+	// Be able to set bodyfat %
+	
+	// Be able to set body measurements (waist, chest, neck, legs, biceps)
+	
+	// All this data will then be updated on the database and reflect on the calculators
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 	}
