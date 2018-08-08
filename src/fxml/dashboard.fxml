@@ -39,7 +39,7 @@
           
           <Tab text="Profile">
          	 <content>
-         	 	
+         	 	<fx:include source="profileTab.fxml" />
          	 </content>
           </Tab>
           
