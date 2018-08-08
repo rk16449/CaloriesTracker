@@ -51,7 +51,7 @@
           
           <Tab text="Account">
          	 <content>
-         	 	
+         	 	<fx:include source="accountTab.fxml" />
          	 </content>
           </Tab>
           
