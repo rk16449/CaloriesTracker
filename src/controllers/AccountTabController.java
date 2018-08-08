@@ -15,6 +15,14 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 
 public class AccountTabController implements Initializable {
+	
+	// Account Tab
+
+	// TODO
+	
+	// Be able to change passwords and update on database
+	
+	// Be able to change email and update on database
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
