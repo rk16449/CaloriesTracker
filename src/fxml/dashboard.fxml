@@ -37,12 +37,6 @@
          	 </content>
           </Tab>
           
-          <Tab text="Profile">
-         	 <content>
-         	 	<fx:include source="profileTab.fxml" />
-         	 </content>
-          </Tab>
-          
           <Tab text="Diet">
          	 <content>
          	 	<fx:include source="dietTab.fxml" />
@@ -52,6 +46,12 @@
           <Tab text="Exercises">
          	 <content>
          	 	<fx:include source="exercisesTab.fxml" />
+         	 </content>
+          </Tab>
+          
+          <Tab text="Profile">
+         	 <content>
+         	 	<fx:include source="profileTab.fxml" />
          	 </content>
           </Tab>
           
