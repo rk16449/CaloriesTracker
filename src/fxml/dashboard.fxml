@@ -49,6 +49,12 @@
          	 </content>
           </Tab>
           
+          <Tab text="Exercises">
+         	 <content>
+         	 	<fx:include source="exercisesTab.fxml" />
+         	 </content>
+          </Tab>
+          
           <Tab text="Account">
          	 <content>
          	 	<fx:include source="accountTab.fxml" />
