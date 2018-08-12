@@ -52,10 +52,12 @@ public class DietTabController implements Initializable {
 		Food food1 = new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 });
 		food1.setQuantity(3.6);
 		
+		Food food2 = new Food("Protein Powder", 30, new double[] { 3.77, 0.2, 23.71 });
+		food2.setQuantity(2);
 		
 		// add to arraylist
 		addedFoods.add(food1);
-		
+		addedFoods.add(food2);
 		
 		// Add sample data
 		for(int i=0; i<addedFoods.size(); i++) {

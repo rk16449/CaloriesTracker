@@ -29,6 +29,14 @@ public class Food extends Item {
 
 	public void setQuantity(double quantity) {
 		this.quantity = quantity;
+		
+		// Multiply everything else by quantity automatically
+		this.amount *= quantity;
+		this.calories *= quantity;
+		this.carbohydrates *= quantity;
+		this.fats *= quantity;
+		this.proteins *= quantity;
+		
 	}
 
 	public int getAmount() {
