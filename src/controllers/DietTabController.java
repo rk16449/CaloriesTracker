@@ -72,6 +72,8 @@ public class DietTabController implements Initializable {
 		carbsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrCarbs());
 		fatsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrFats());
 		protsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrProts());
+		
+		quantityColumn.setCellValueFactory(cellData -> cellData.getValue().getStrQuantity());
 
 		// Add observable list data to the table
 		tableDiets.setItems(foodData);
