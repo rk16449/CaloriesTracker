@@ -27,7 +27,7 @@ public class Food extends Item {
 	}
 	
 
-	public void setQuantity(double quanity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 
