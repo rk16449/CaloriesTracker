@@ -17,9 +17,10 @@ public class Food extends Item {
 		super(name);
 
 		this.amount = amount;
-		this.proteins = values[0];
-		this.carbohydrates = values[1];
-		this.fats = values[2];
+		
+		this.carbohydrates = values[0];
+		this.fats = values[1];
+		this.proteins = values[2];
 		
 		this.calories = (this.proteins*4) + (this.carbohydrates*4) + (this.fats*9);
 	}

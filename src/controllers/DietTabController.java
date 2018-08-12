@@ -42,10 +42,14 @@ public class DietTabController implements Initializable {
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Add some sample data
-		foodData.add(new Food("Milk", 100, new double[] { 6.7, 5.5, 4 }));
+		foodData.add(new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 }));
 
 		// Initialize the person table with the two columns.
 		foodsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrFood());
+		
+		amountColumn.setCellValueFactory(cellData -> cellData.getValue().getStrAmount());
+		caloriesColumn.setCellValueFactory(cellData -> cellData.getValue().getStrCalories());
+		
 		carbsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrCarbs());
 		fatsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrFats());
 		protsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrProts());
