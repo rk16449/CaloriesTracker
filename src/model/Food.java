@@ -91,4 +91,8 @@ public class Food extends Item {
 	public StringProperty getStrProts() {
         return new SimpleStringProperty(Double.toString(proteins));
     }
+	
+	public StringProperty getStrQuantity() {
+		return new SimpleStringProperty(Double.toString(quantity));
+	}
 }
