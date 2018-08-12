@@ -18,7 +18,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="909.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DietTabController">
    <children>
-      <TableView fx:id="tableDiets" layoutX="14.0" layoutY="133.0" prefHeight="326.0" prefWidth="489.0">
+      <TableView fx:id="tableDiets" layoutX="14.0" layoutY="133.0" prefHeight="326.0" prefWidth="552.0">
         <columns>
             <TableColumn fx:id="foodsColumn" prefWidth="155.0" text="Food" />
             <TableColumn fx:id="caloriesColumn" prefWidth="79.0" text="Calories" />
@@ -26,11 +26,12 @@
           <TableColumn fx:id="carbsColumn" prefWidth="60.0" text="Carbs" />
             <TableColumn fx:id="fatsColumn" prefWidth="59.0" text="Fats" />
           <TableColumn fx:id="protsColumn" prefWidth="64.0" text="Protein" />
+            <TableColumn fx:id="quantityColumn" prefWidth="64.0" text="Quantity" />
         </columns>
       </TableView>
       <DatePicker layoutX="37.0" layoutY="45.0" prefHeight="29.0" prefWidth="217.0" />
       <Label layoutX="37.0" layoutY="98.0" prefHeight="17.0" prefWidth="234.0" text="Foods eaten on this day" />
-      <PieChart layoutX="556.0" layoutY="155.0" prefHeight="282.0" prefWidth="296.0" />
+      <PieChart layoutX="587.0" layoutY="155.0" prefHeight="282.0" prefWidth="296.0" />
       <Button layoutX="37.0" layoutY="483.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="99.0" text="Add Entry" />
       <Button layoutX="154.0" layoutY="483.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="99.0" text="Add Food" />
       <Button layoutX="271.0" layoutY="483.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="99.0" text="Edit" />

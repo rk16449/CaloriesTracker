@@ -37,6 +37,9 @@ public class DietTabController implements Initializable {
 	private TableColumn<Food, String> fatsColumn;
 	@FXML
 	private TableColumn<Food, String> protsColumn;
+	
+	@FXML
+	private TableColumn<Food, String> quantityColumn;
 
 	private ObservableList<Food> foodData = FXCollections.observableArrayList();
 
