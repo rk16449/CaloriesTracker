@@ -7,9 +7,11 @@ public class Food extends Item {
 
 	private int amount;
 	private double proteins;
-
 	private double carbohydrates;
 	private double fats;
+	
+	// Calulated from proteins, carbs and fats
+	private double calories;
 	
 	public Food(String name, int amount, double[] values) {
 		super(name);
@@ -18,6 +20,8 @@ public class Food extends Item {
 		this.proteins = values[0];
 		this.carbohydrates = values[1];
 		this.fats = values[2];
+		
+		this.calories = (this.proteins*4) + (this.carbohydrates*4) + (this.fats*9);
 	}
 
 	public int getAmount() {
@@ -59,6 +63,14 @@ public class Food extends Item {
 	 */
 	public StringProperty getStrFood() {
 		return new SimpleStringProperty(this.getName());
+	}
+	
+	public StringProperty getStrAmount() {
+		return new SimpleStringProperty(Integer.toString(amount));
+	}
+	
+	public StringProperty getStrCalories() {
+		return new SimpleStringProperty(Double.toString(calories));
 	}
 	
 	public StringProperty getStrCarbs() {
