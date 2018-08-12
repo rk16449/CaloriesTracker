@@ -35,7 +35,7 @@ public class MainProgramController implements Initializable {
     	// Logout
     	if (result.get() == buttonTypeOne){
     		// Reset the users data
-    		Parent loginFXML = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+    		Parent loginFXML = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
     		Scene scene = new Scene(loginFXML);
     		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     		appStage.setScene(scene);

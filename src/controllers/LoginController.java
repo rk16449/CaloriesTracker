@@ -38,7 +38,7 @@ public class LoginController implements Initializable {
 		
 		
 		// Go to main program dashboard
-		Parent parent = FXMLLoader.load(getClass().getResource("/fxml/dashboard.fxml"));
+		Parent parent = FXMLLoader.load(getClass().getResource("/view/dashboard.fxml"));
 		Scene scene = new Scene(parent);
 		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		appStage.setScene(scene);
@@ -53,7 +53,7 @@ public class LoginController implements Initializable {
 		System.out.println("Create new account btn pressed");
 		
 		
-		Parent parent = FXMLLoader.load(getClass().getResource("/fxml/createAccount.fxml"));
+		Parent parent = FXMLLoader.load(getClass().getResource("/view/createAccount.fxml"));
 		Scene scene = new Scene(parent);
 		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		appStage.setScene(scene);

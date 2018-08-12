@@ -26,7 +26,7 @@ public class Main extends Application {
     
     @Override
     public void start(Stage appStage) throws Exception {
-    	Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+    	Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
         appStage.setTitle("Calories Tracker");
         appStage.setScene(new Scene(root, 944, 600));
 		appStage.show();

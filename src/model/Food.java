@@ -5,5 +5,7 @@ public class Food extends Item{
 	private double carbohydrates;
 	private double fats;
 	
-	
+	public Food() {
+		
+	}
 }
