@@ -12,6 +12,7 @@ public class Food extends Item {
 	
 	// Calulated from proteins, carbs and fats
 	private double calories;
+	private double quantity;
 	
 	public Food(String name, int amount, double[] values) {
 		super(name);
@@ -23,6 +24,11 @@ public class Food extends Item {
 		this.proteins = values[2];
 		
 		this.calories = (this.proteins*4) + (this.carbohydrates*4) + (this.fats*9);
+	}
+	
+
+	public void setQuantity(double quanity) {
+		this.quantity = quantity;
 	}
 
 	public int getAmount() {

@@ -2,6 +2,7 @@ package controllers;
 
 /* Import java, javafx, mainPackage */
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -43,9 +44,24 @@ public class DietTabController implements Initializable {
 
 	private ObservableList<Food> foodData = FXCollections.observableArrayList();
 
+	
+	private ArrayList<Food> addedFoods = new ArrayList<Food>();
+
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// Add some sample data
-		foodData.add(new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 }));
+		
+		Food food1 = new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 });
+		food1.setQuantity(3.6);
+		
+		
+		// add to arraylist
+		addedFoods.add(food1);
+		
+		
+		// Add sample data
+		for(int i=0; i<addedFoods.size(); i++) {
+			foodData.add(addedFoods.get(i));
+		}
+		
 
 		// Initialize the person table with the two columns.
 		foodsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrFood());
