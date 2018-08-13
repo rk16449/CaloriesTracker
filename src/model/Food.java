@@ -85,22 +85,33 @@ public class Food extends Item {
 	}
 	
 	public StringProperty getStrCalories() {
-		return new SimpleStringProperty(Double.toString(calories));
+		return new SimpleStringProperty(Double.toString(round(calories, 2)));
 	}
 	
 	public StringProperty getStrCarbs() {
-        return new SimpleStringProperty(Double.toString(carbohydrates));
+        return new SimpleStringProperty(Double.toString(round(carbohydrates, 2)));
     }
 	
 	public StringProperty getStrFats() {
-        return new SimpleStringProperty(Double.toString(fats));
+        return new SimpleStringProperty(Double.toString(round(fats, 2)));
     }
 	
 	public StringProperty getStrProts() {
-        return new SimpleStringProperty(Double.toString(proteins));
+        return new SimpleStringProperty(Double.toString(round(proteins, 2)));
     }
 	
 	public StringProperty getStrQuantity() {
 		return new SimpleStringProperty(Double.toString(quantity));
+	}
+	
+	// Taken from https://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
+	// Used to round numbers before they are converted into text above
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    long factor = (long) Math.pow(10, places);
+	    value = value * factor;
+	    long tmp = Math.round(value);
+	    return (double) tmp / factor;
 	}
 }
