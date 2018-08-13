@@ -15,7 +15,7 @@
         <buttons>
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Quantity:" />
             <Spinner fx:id="spinnerQuantity" editable="true" />
-          <Button fx:id="buttonAddFood" mnemonicParsing="false" text="Add Food" />
+          <Button fx:id="buttonAddFood" mnemonicParsing="false" onAction="#handleAddFood" text="Add Food" />
         </buttons>
       </ButtonBar>
       <TableView fx:id="tableviewFoods" layoutX="31.0" layoutY="73.0" prefHeight="253.0" prefWidth="528.0">

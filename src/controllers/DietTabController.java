@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Food;
 
 public class DietTabController implements Initializable {
@@ -141,6 +143,23 @@ public class DietTabController implements Initializable {
 	        stage.setTitle("Add Entry");
 	        stage.setScene(scene);
 	        stage.show();
+	        
+	        AddFoodController controller = fxmlLoader.<AddFoodController>getController();
+	        
+	        stage.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
+	            public void handle(WindowEvent we) {
+	            	
+	            	int returnedQuantity = controller.getQuantity();
+	                Food returnedFood = controller.getFood();
+	                System.out.println(returnedFood.getName());
+	                // static class can be used aswell -> System.out.println(Context.getMyString());
+	                
+	                // Add it to the 
+	                addedFoods.add(returnedFood);
+	            }
+	        });
+	        
+	        
 	    } catch (IOException e) {
 	        System.out.println("failed to create a window");
 	    }

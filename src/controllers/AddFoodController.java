@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,9 +10,12 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -43,6 +47,9 @@ public class AddFoodController implements Initializable {
 	
 	@FXML
 	private Button buttonSearch, buttonAddFood;
+	
+	@FXML
+	private Spinner<Integer> spinnerQuantity;
 	
 	// Hold the food data on the table in text form
 	private ObservableList<Food> foodData = FXCollections.observableArrayList();
@@ -86,15 +93,50 @@ public class AddFoodController implements Initializable {
 		
 		
 		
-		// Setup textfield filter
+		// Setup textfield filter (based off food name)
 		textfieldSearch.setPromptText("Search here!");
         textfieldSearch.setOnKeyReleased(keyEvent ->
         {
         	System.out.println("textfield search activated");
         	flFoods.setPredicate(p -> p.getName().toLowerCase().contains(textfieldSearch.getText().toLowerCase().trim()));
         });
+        
+        
+        // Setup spinner to increase quantity >= 1
+        spinnerQuantity.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100));
+        
+        // TODO(minor bug) Typing over 100 will result in an error NumberFormatException 
+	}
+	
+	private Food returnFoodData;
+	
+	public Food getFood() {
+		return returnFoodData;
 	}
 
 	// Listener to adding foods
-	
+	@FXML
+	protected void handleAddFood(ActionEvent event) throws IOException {
+		System.out.println("Add the food to the table behind us!");
+		
+		try {
+			Food selectedFood = tableviewFoods.getSelectionModel().getSelectedItem();
+			System.out.println("We want to add: " + selectedFood.getName());
+			System.out.println("The quantity to add is: " + spinnerQuantity.getValue());
+			
+			// save the food selected to the return value this controller will return when closed
+			returnFoodData = selectedFood;
+			
+			// close the controller
+			
+			
+		}catch(NullPointerException e) {
+			System.out.println("A table row wasn't selected");
+		}
+
+	}
+
+	public int getQuantity() {
+		return spinnerQuantity.getValue();
+	}
 }
