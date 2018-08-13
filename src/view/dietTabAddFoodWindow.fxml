@@ -3,8 +3,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -17,7 +18,16 @@
           <Button fx:id="buttonAddFood" mnemonicParsing="false" text="Add Food" />
         </buttons>
       </ButtonBar>
-      <ListView fx:id="listviewFoods" layoutX="30.0" layoutY="77.0" prefHeight="253.0" prefWidth="528.0" />
+      <TableView fx:id="tableviewFoods" layoutX="31.0" layoutY="73.0" prefHeight="253.0" prefWidth="528.0">
+        <columns>
+          <TableColumn fx:id="foodColumn" prefWidth="150.0" text="Food" />
+          <TableColumn fx:id="amountColumn" prefWidth="74.0" text="Amount" />
+            <TableColumn fx:id="caloriesColumn" prefWidth="78.0" text="Calories" />
+            <TableColumn fx:id="carbsColumn" prefWidth="77.0" text="Carbs" />
+            <TableColumn fx:id="fatsColumn" prefWidth="74.0" text="Fats" />
+            <TableColumn fx:id="proteinColumn" prefWidth="74.0" text="Protein" />
+        </columns>
+      </TableView>
       <TextField fx:id="textfieldSearch" layoutX="189.0" layoutY="39.0" />
       <Label layoutX="256.0" layoutY="14.0" text="Adding Foods" />
       <Button fx:id="buttonSearch" layoutX="347.0" layoutY="39.0" mnemonicParsing="false" text="Search" />
