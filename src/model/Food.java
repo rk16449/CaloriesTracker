@@ -14,6 +14,10 @@ public class Food extends Item {
 	private double calories;
 	private double quantity;
 	
+	// static values
+	private final int ogAmount;
+	private final double ogCalories, ogProteins, ogCarbohydrates, ogFats;
+	
 	public Food(String name, int amount, double[] values) {
 		super(name);
 
@@ -23,6 +27,13 @@ public class Food extends Item {
 		this.fats = values[1];
 		this.proteins = values[2];
 		this.calories = (this.proteins*4) + (this.carbohydrates*4) + (this.fats*9);
+		
+		// Store static values (that will never change)
+		ogAmount = amount;
+		ogCarbohydrates = values[0];
+		ogFats = values[1];
+		ogProteins = values[2];
+		ogCalories = (proteins*4) + (carbohydrates*4) + (fats*9);
 	}
 	
 
@@ -30,11 +41,11 @@ public class Food extends Item {
 		this.quantity = quantity;
 		
 		// Multiply everything else by quantity automatically
-		this.amount *= quantity;
-		this.calories *= quantity;
-		this.carbohydrates *= quantity;
-		this.fats *= quantity;
-		this.proteins *= quantity;
+		this.amount = (int) (ogAmount * quantity);
+		this.calories = ogCalories * quantity;
+		this.carbohydrates = ogCarbohydrates * quantity;
+		this.fats = ogFats * quantity;
+		this.proteins = ogProteins * quantity;
 		
 	}
 
@@ -112,5 +123,10 @@ public class Food extends Item {
 	    value = value * factor;
 	    long tmp = Math.round(value);
 	    return (double) tmp / factor;
+	}
+
+
+	public double getQuantity() {
+		return this.quantity;
 	}
 }

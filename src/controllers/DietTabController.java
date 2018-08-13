@@ -128,12 +128,29 @@ public class DietTabController implements Initializable {
 			controller.setStageAndSetupListeners(stage);
 			
 	        System.out.println("DietTabController: " + controller.getFood().getName());
-	        controller.getFood().setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
 	        
 	        
-	        // Add values to the table!
-	        addedFoods.add(controller.getFood());
-	        foodData.add(controller.getFood());
+	        boolean found = false;
+	        // Check if this food already exists in the table, if it does increase its quantity instead
+	        for(int i=0; i<addedFoods.size(); i++) {
+	        	// Assumes we don't have foods with exactly the same name.. (try adding id in later)
+	        	if(addedFoods.get(i).getName().equals(controller.getFood().getName())) {
+	        		found = true;
+	        		addedFoods.get(i).setQuantity(addedFoods.get(i).getQuantity() + controller.getQuantity());
+	        		tableviewEntries.refresh();
+	        		break;
+	        	}
+	        }
+	        
+	        // Add a new row entry if same food isn't already added
+	        if(!found) {
+	        	controller.getFood().setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
+		        // Add values to the table!
+		        addedFoods.add(controller.getFood());
+		        foodData.add(controller.getFood());
+	        }
+	        
+	        
 
 		} catch (IOException e) {
 			System.out.println("Failed to create a window");
