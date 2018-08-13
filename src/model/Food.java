@@ -10,19 +10,18 @@ public class Food extends Item {
 	private double carbohydrates;
 	private double fats;
 	
-	// Calulated from proteins, carbs and fats
+	// Calculated from proteins, carbohydrates and fats
 	private double calories;
 	private double quantity;
 	
 	public Food(String name, int amount, double[] values) {
 		super(name);
 
+		// Needs validation 
 		this.amount = amount;
-		
 		this.carbohydrates = values[0];
 		this.fats = values[1];
 		this.proteins = values[2];
-		
 		this.calories = (this.proteins*4) + (this.carbohydrates*4) + (this.fats*9);
 	}
 	

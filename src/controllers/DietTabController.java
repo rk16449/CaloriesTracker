@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,14 +9,20 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Food;
 
 public class DietTabController implements Initializable {
@@ -45,12 +52,15 @@ public class DietTabController implements Initializable {
 	
 	@FXML
 	private PieChart pieChartMacros;
-
-	private ObservableList<Food> foodData = FXCollections.observableArrayList();
-
 	
-	private ArrayList<Food> addedFoods = new ArrayList<Food>();
+	@FXML 
+	private Button addEntryButton;
 
+	// Hold the food data on the table in text form
+	private ObservableList<Food> foodData = FXCollections.observableArrayList();
+	// Hold the objects of foods
+	private ArrayList<Food> addedFoods = new ArrayList<Food>();
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		Food food1 = new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 });
@@ -107,4 +117,35 @@ public class DietTabController implements Initializable {
 		pieChartMacros.setData(pieChartData);
 		pieChartMacros.setTitle("Daily Macros");
 	}
+	
+	@FXML
+	protected void handleAddEntry(ActionEvent event) throws IOException {
+		// Open a window which has a search bar to search for foods on the database
+		System.out.println("Create add food window here");
+		
+		try {
+	        FXMLLoader fxmlLoader = new FXMLLoader();
+	        fxmlLoader.setLocation(getClass().getResource("/view/dietTabAddFoodWindow.fxml"));
+	        /* 
+	         * if "fx:controller" is not set in fxml
+	         * fxmlLoader.setController(NewWindowController);
+	         */
+	        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+	        Stage stage = new Stage();
+	        
+	        Stage parent = (Stage) addEntryButton.getScene().getWindow();
+	        
+	        stage.initOwner(parent);                       
+	        stage.initModality(Modality.WINDOW_MODAL); 
+	        
+	        stage.setTitle("Add Entry");
+	        stage.setScene(scene);
+	        stage.show();
+	    } catch (IOException e) {
+	        System.out.println("failed to create a window");
+	    }
+		
+		// There should also be a listbox to choose from the certain foods
+	}
+
 }
