@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="156.0" prefWidth="352.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="151.0" layoutY="23.0" text="Edit Food" />
+      <TextField fx:id="textfieldQuantity" layoutX="160.0" layoutY="69.0" />
+      <Label layoutX="82.0" layoutY="73.0" text="Set Quantity:" />
+      <Button fx:id="buttonSave" layoutX="241.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleSaveButton" text="Save" />
+   </children>
+</AnchorPane>
