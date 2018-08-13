@@ -9,22 +9,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import model.Food;
+
 
 public class AddFoodController implements Initializable {
 
-	// Account Tab
-
-	// TODO
-
-	// Be able to change passwords and update on database
-
-	// Be able to change email and update on database
-
+	@FXML
+	private ListView<Food> listviewFoods;
+	
+	@FXML
+	private TextField textfieldSearch;
+	
+	@FXML
+	private Button buttonSearch, buttonAddFood;
+	
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		// Fill listview with dummy data
 	}
 }
