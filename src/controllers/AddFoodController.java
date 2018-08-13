@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -75,9 +76,23 @@ public class AddFoodController implements Initializable {
 		fatsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrFats());
 		proteinColumn.setCellValueFactory(cellData -> cellData.getValue().getStrProts());
 		
+		
+		
+		FilteredList<Food> flFoods = new FilteredList<Food>(foodData, p -> true);
 
-		// Add observable list data to the table
-		tableviewFoods.setItems(foodData);
+		// Add filtered list data to the table
+		tableviewFoods.setItems(flFoods);
+		
+		
+		
+		
+		// Setup textfield filter
+		textfieldSearch.setPromptText("Search here!");
+        textfieldSearch.setOnKeyReleased(keyEvent ->
+        {
+        	System.out.println("textfield search activated");
+        	flFoods.setPredicate(p -> p.getName().toLowerCase().contains(textfieldSearch.getText().toLowerCase().trim()));
+        });
 	}
 
 	// Listener to adding foods
