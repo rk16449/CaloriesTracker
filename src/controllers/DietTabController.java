@@ -41,6 +41,10 @@ public class DietTabController implements Initializable {
 	
 	@FXML
 	private TableColumn<Food, String> quantityColumn;
+	
+	
+	@FXML
+	private PieChart pieChartMacros;
 
 	private ObservableList<Food> foodData = FXCollections.observableArrayList();
 
@@ -59,9 +63,19 @@ public class DietTabController implements Initializable {
 		addedFoods.add(food1);
 		addedFoods.add(food2);
 		
+		double protein = 0, fats = 0, carbs = 0;
+		
 		// Add sample data
 		for(int i=0; i<addedFoods.size(); i++) {
-			foodData.add(addedFoods.get(i));
+			
+			Food f = addedFoods.get(i);
+			
+			// Add up sum total of proteins, carbs, fats
+			protein += f.getProteins();
+			carbs += f.getCarbohydrates();
+			fats += f.getFats();
+			
+			foodData.add(f);
 		}
 		
 
@@ -79,5 +93,18 @@ public class DietTabController implements Initializable {
 
 		// Add observable list data to the table
 		tableDiets.setItems(foodData);
+		
+		
+
+		// Setup pie chart
+		ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                new PieChart.Data("Protein", protein),
+                new PieChart.Data("Fats", fats),
+                new PieChart.Data("Carbohydrates", carbs)
+                );
+                
+		pieChartMacros.setData(pieChartData);
+		pieChartMacros.setTitle("Daily Macros");
 	}
 }
