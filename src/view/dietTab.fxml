@@ -32,8 +32,8 @@
       <DatePicker layoutX="37.0" layoutY="45.0" prefHeight="29.0" prefWidth="217.0" />
       <Label layoutX="37.0" layoutY="98.0" prefHeight="17.0" prefWidth="234.0" text="Foods eaten on this day" />
       <PieChart fx:id="pieChartMacros" layoutX="587.0" layoutY="155.0" prefHeight="282.0" prefWidth="296.0" />
-      <Button layoutX="37.0" layoutY="483.0" mnemonicParsing="false" fx:id="addEntryButton" onAction="#handleAddEntry" prefHeight="29.0" prefWidth="99.0" text="Add Entry" />
-      <Button layoutX="154.0" layoutY="483.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="99.0" text="Add Food" />
-      <Button layoutX="271.0" layoutY="483.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="99.0" text="Edit" />
+      <Button fx:id="buttonAddEntry" layoutX="37.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleAddEntry" prefHeight="29.0" prefWidth="99.0" text="Add Entry" />
+      <Button fx:id="buttonEdit" layoutX="146.0" layoutY="483.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="99.0" text="Edit" />
+      <Button fx:id="buttonDelete" layoutX="478.0" layoutY="483.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="99.0" text="Delete" />
    </children>
 </AnchorPane>

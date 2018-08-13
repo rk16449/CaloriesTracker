@@ -49,7 +49,7 @@ public class DietTabController implements Initializable {
 	private PieChart pieChartMacros;
 
 	@FXML
-	private Button addEntryButton;
+	private Button buttonAddEntry, buttonEdit, buttonDelete;
 
 	// Hold the food data on the table in text form
 	private ObservableList<Food> foodData = FXCollections.observableArrayList();
@@ -115,7 +115,7 @@ public class DietTabController implements Initializable {
 
 			Scene scene = new Scene(fxmlLoader.load(), 600, 400);
 			Stage stage = new Stage();
-			Stage parent = (Stage) addEntryButton.getScene().getWindow();
+			Stage parent = (Stage) buttonAddEntry.getScene().getWindow();
 			stage.initOwner(parent);
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.setTitle("Add Entry");
