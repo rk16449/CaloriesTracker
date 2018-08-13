@@ -19,6 +19,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.Food;
 
 
@@ -127,8 +128,9 @@ public class AddFoodController implements Initializable {
 			// save the food selected to the return value this controller will return when closed
 			returnFoodData = selectedFood;
 			
-			// close the controller
-			
+			// close the controller/window
+		    Stage stage = (Stage) buttonAddFood.getScene().getWindow();
+		    stage.close();
 			
 		}catch(NullPointerException e) {
 			System.out.println("A table row wasn't selected");

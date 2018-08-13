@@ -18,7 +18,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="909.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DietTabController">
    <children>
-      <TableView fx:id="tableDiets" layoutX="25.0" layoutY="133.0" prefHeight="326.0" prefWidth="552.0">
+      <TableView fx:id="tableviewEntries" layoutX="25.0" layoutY="133.0" prefHeight="326.0" prefWidth="552.0">
         <columns>
             <TableColumn fx:id="foodsColumn" prefWidth="155.0" text="Food" />
             <TableColumn fx:id="caloriesColumn" prefWidth="79.0" text="Calories" />

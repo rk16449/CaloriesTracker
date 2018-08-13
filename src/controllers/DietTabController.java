@@ -30,7 +30,7 @@ import model.Food;
 public class DietTabController implements Initializable {
 
 	@FXML
-	private TableView<Food> tableDiets;
+	private TableView<Food> tableviewEntries;
 
 	@FXML
 	private TableColumn<Food, String> foodsColumn;
@@ -104,7 +104,7 @@ public class DietTabController implements Initializable {
 		quantityColumn.setCellValueFactory(cellData -> cellData.getValue().getStrQuantity());
 
 		// Add observable list data to the table
-		tableDiets.setItems(foodData);
+		tableviewEntries.setItems(foodData);
 		
 		
 
@@ -149,13 +149,18 @@ public class DietTabController implements Initializable {
 	        stage.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
 	            public void handle(WindowEvent we) {
 	            	
+	            	
+	            	
+	            	
 	            	int returnedQuantity = controller.getQuantity();
 	                Food returnedFood = controller.getFood();
-	                System.out.println(returnedFood.getName());
-	                // static class can be used aswell -> System.out.println(Context.getMyString());
+	                returnedFood.setQuantity(returnedQuantity);
 	                
-	                // Add it to the 
-	                addedFoods.add(returnedFood);
+	                System.out.println(returnedFood.getName());
+	                
+	                // Add it to the arraylist & tableview items
+	                //addedFoods.add(returnedFood);
+	                //foodData.add(returnedFood);
 	            }
 	        });
 	        
