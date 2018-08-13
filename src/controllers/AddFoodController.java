@@ -124,7 +124,8 @@ public class AddFoodController implements Initializable {
 			System.out.println("We want to add: " + selectedFood.getName());
 			System.out.println("The quantity to add is: " + spinnerQuantity.getValue());
 			returnFoodData = selectedFood;
-			stage.close();
+			
+			buttonAddFood.getScene().getWindow().hide();
 		} catch (NullPointerException e) {
 			System.out.println("A table row wasn't selected");
 		}

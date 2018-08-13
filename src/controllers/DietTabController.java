@@ -120,9 +120,20 @@ public class DietTabController implements Initializable {
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.setTitle("Add Entry");
 			stage.setScene(scene);
-			stage.show();
+			
+			// showAndWait will block execution until the window closes...
+			stage.showAndWait();
+			
 			AddFoodController controller = fxmlLoader.<AddFoodController>getController();
 			controller.setStageAndSetupListeners(stage);
+			
+	        System.out.println("DietTabController: " + controller.getFood().getName());
+	        controller.getFood().setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
+	        
+	        
+	        // Add values to the table!
+	        addedFoods.add(controller.getFood());
+	        foodData.add(controller.getFood());
 
 		} catch (IOException e) {
 			System.out.println("Failed to create a window");
