@@ -53,10 +53,12 @@ public class AddFoodController implements Initializable {
 		
 		Food food1 = new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 });
 		Food food2 = new Food("Protein Powder", 30, new double[] { 3.77, 0.2, 23.71 });
+		Food food3 = new Food("White Rice", 100, new double[] { 78.90, 0.70, 6.70 });
 		
 		// add to arraylist
 		addedFoods.add(food1);
 		addedFoods.add(food2);
+		addedFoods.add(food3);
 		
 		// Add sample data
 		for(int i=0; i<addedFoods.size(); i++) {
@@ -77,4 +79,7 @@ public class AddFoodController implements Initializable {
 		// Add observable list data to the table
 		tableviewFoods.setItems(foodData);
 	}
+
+	// Listener to adding foods
+	
 }
