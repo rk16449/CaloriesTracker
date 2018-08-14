@@ -224,6 +224,13 @@ public class DietTabController implements Initializable {
 			stage.showAndWait();
 			
 			// Add values to the local database/memory table
+			String[] createFoodData = controller.getValues();
+			
+			for(int i=0; i< createFoodData.length; i++) {
+				System.out.println("----> " + createFoodData[i]);
+			}
+			
+			// Add to the table of today and add to the table of saved foods to add later
 
 		//} catch (Exception e) {
 		//	System.out.println("Couldn't make create food window..?");
