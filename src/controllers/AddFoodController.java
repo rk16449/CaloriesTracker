@@ -63,29 +63,32 @@ public class AddFoodController implements Initializable {
 	
 	
 	// Hold the food data on the table in text form
-	private ObservableList<Food> foodData = FXCollections.observableArrayList();
+	public static ObservableList<Food> foodData = FXCollections.observableArrayList();
 	// Hold the objects of foods
-	private ArrayList<Food> addedFoods = new ArrayList<Food>();
+	public static ArrayList<Food> addedFoods = new ArrayList<Food>();
 
 	
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
-		// Fill tableview with dummy data (later from database)
-		Food food1 = new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 });
-		Food food2 = new Food("Protein Powder", 30, new double[] { 3.77, 0.2, 23.71 });
-		Food food3 = new Food("White Rice", 100, new double[] { 78.90, 0.70, 6.70 });
-		Food food4 = new Food("Semi Skimmed Milk", 100, new double[] { 4.80, 1.80, 3.60 });
-
-		// add to arraylist
-		addedFoods.add(food1);
-		addedFoods.add(food2);
-		addedFoods.add(food3);
-		addedFoods.add(food4);
-
-		// Add sample data
-		for (int i = 0; i < addedFoods.size(); i++) {
-			foodData.add(addedFoods.get(i));
+		// Temporarily used instead of database
+		if(addedFoods.size() == 0) {
+			System.out.println("ADDING WHOLE MILK...");
+			// Fill tableview with dummy data (later from database)
+			Food food1 = new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 });
+			Food food2 = new Food("Protein Powder", 30, new double[] { 3.77, 0.2, 23.71 });
+			Food food3 = new Food("White Rice", 100, new double[] { 78.90, 0.70, 6.70 });
+			Food food4 = new Food("Semi Skimmed Milk", 100, new double[] { 4.80, 1.80, 3.60 });
+	
+			// add to arraylist
+			addedFoods.add(food1);
+			addedFoods.add(food2);
+			addedFoods.add(food3);
+			addedFoods.add(food4);
+	
+			// Add sample data
+			for (int i = 0; i < addedFoods.size(); i++) {
+				foodData.add(addedFoods.get(i));
+			}
 		}
 
 		// Initialize the person table with the two columns.

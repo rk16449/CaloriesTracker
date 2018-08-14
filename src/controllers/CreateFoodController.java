@@ -142,4 +142,8 @@ public class CreateFoodController implements Initializable {
 		System.out.println("Checkbox pressed");
 		spinnerQuantity.setDisable(!spinnerQuantity.isDisable());
 	}
+
+	public boolean addToTable() {
+		return checkboxToday.isSelected();
+	}
 }

@@ -242,11 +242,20 @@ public class DietTabController implements Initializable {
 			Food newFood = new Food(name, amount, values);
 			newFood.setQuantity(quant);
 
-			// Add it to daily the table
-			addedFoods.add(newFood);
-			foodData.add(newFood);
+			System.out.println("ADDING TO ADDFOOD TABLE!!!");
+			
+			
+			
+			if(controller.addToTable()) {
+				// Add it to daily the table (if we selected to)
+				addedFoods.add(newFood);
+				foodData.add(newFood);
+			}
+			
 
 			// TODO - Add it to the foods database/favourites
+			AddFoodController.addedFoods.add(newFood);
+			AddFoodController.foodData.add(newFood);
 
 			update();
 		}
