@@ -42,7 +42,7 @@ public class LoginController implements Initializable {
 		Scene scene = new Scene(parent);
 		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		appStage.setScene(scene);
-		appStage.setTitle("Dashboard");
+		appStage.setTitle("Calories Tracker");
 		appStage.setWidth(944);
 		appStage.setHeight(600);
 		appStage.show();

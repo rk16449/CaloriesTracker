@@ -200,61 +200,62 @@ public class DietTabController implements Initializable {
 			System.out.println("Couldn't create edit window..?");
 		}
 	}
-	
-	
+
 	@FXML
 	protected void handleCustom(ActionEvent event) throws IOException {
-		//try {
-			// Create window
-			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("/view/dietTabCreateFoodWindow.fxml"));
-			Scene scene = new Scene(fxmlLoader.load(), 355, 275);
-			Stage stage = new Stage();
-			Stage parent = (Stage) buttonCustom.getScene().getWindow();
-			stage.initOwner(parent);
-			stage.initModality(Modality.WINDOW_MODAL);
-			stage.setTitle("Create Custom Food");
-			stage.setScene(scene);
+		// try {
+		// Create window
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setLocation(getClass().getResource("/view/dietTabCreateFoodWindow.fxml"));
+		Scene scene = new Scene(fxmlLoader.load(), 355, 275);
+		Stage stage = new Stage();
+		Stage parent = (Stage) buttonCustom.getScene().getWindow();
+		stage.initOwner(parent);
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.setTitle("Create Custom Food");
+		stage.setScene(scene);
 
-			// Controller access
-			CreateFoodController controller = fxmlLoader.<CreateFoodController>getController();
-			controller.setStageAndSetupListeners(stage);
+		// Controller access
+		CreateFoodController controller = fxmlLoader.<CreateFoodController>getController();
+		controller.setStageAndSetupListeners(stage);
 
-			// showAndWait will block execution until the window closes...
-			stage.showAndWait();
-			
-			// Add values to the local database/memory table
-			if(controller.valid()) {
-				String[] rgFoodData = controller.getValues();
-				
-				// Debug values
-				for(int i=0; i< rgFoodData.length; i++) {
-					System.out.println("----> " + rgFoodData[i]);
-				}
-				
-				// Create the food
-				String name = rgFoodData[0];
-				double amount = Double.parseDouble(rgFoodData[1]);
-				double[] values = {Double.parseDouble(rgFoodData[2]), 
-						Double.parseDouble(rgFoodData[3]), 
-						Double.parseDouble(rgFoodData[4])};
-				double quant = Double.parseDouble(rgFoodData[5]);
-				
-				// Create it in object form
-				Food newFood = new Food(name, amount, values);
-				newFood.setQuantity(quant);
-				
-				// Add it to the table
-				addedFoods.add(newFood);
-				foodData.add(newFood);
-				update();
+		// showAndWait will block execution until the window closes...
+		stage.showAndWait();
+
+		// Add values to the local database/memory table
+		if (controller.valid()) {
+			String[] rgFoodData = controller.getValues();
+
+			// Debug values
+			for (int i = 0; i < rgFoodData.length; i++) {
+				System.out.println("----> " + rgFoodData[i]);
 			}
-			
-			// Add to the table of today and add to the table of saved foods to add later
 
-		//} catch (Exception e) {
-		//	System.out.println("Couldn't make create food window..?");
-		//}
+			// Create the food
+			String name = rgFoodData[0];
+			double amount = Double.parseDouble(rgFoodData[1]);
+			double[] values = { Double.parseDouble(rgFoodData[2]), Double.parseDouble(rgFoodData[3]),
+					Double.parseDouble(rgFoodData[4]) };
+			double quant = Double.parseDouble(rgFoodData[5]);
+
+			// Create it in object form
+			Food newFood = new Food(name, amount, values);
+			newFood.setQuantity(quant);
+
+			// Add it to daily the table
+			addedFoods.add(newFood);
+			foodData.add(newFood);
+
+			// TODO - Add it to the foods database/favourites
+
+			update();
+		}
+
+		// Add to the table of today and add to the table of saved foods to add later
+
+		// } catch (Exception e) {
+		// System.out.println("Couldn't make create food window..?");
+		// }
 	}
 
 	@FXML
@@ -281,30 +282,35 @@ public class DietTabController implements Initializable {
 			// showAndWait will block execution until the window closes...
 			stage.showAndWait();
 
-			System.out.println("DietTabController: " + controller.getFood().getName());
-			boolean found = false;
-			// Check if this food already exists in the table, if it does increase its
-			// quantity instead
-			for (int i = 0; i < addedFoods.size(); i++) {
-				// Assumes we don't have foods with exactly the same name.. (try adding id in
-				// later)
-				if (addedFoods.get(i).getName().equals(controller.getFood().getName())) {
-					found = true;
-					addedFoods.get(i).setQuantity(addedFoods.get(i).getQuantity() + controller.getQuantity());
-					break;
+			
+			try {
+				System.out.println("DietTabController: " + controller.getFood().getName());
+				boolean found = false;
+				// Check if this food already exists in the table, if it does increase its
+				// quantity instead
+				for (int i = 0; i < addedFoods.size(); i++) {
+					// Assumes we don't have foods with exactly the same name.. (try adding id in
+					// later)
+					if (addedFoods.get(i).getName().equals(controller.getFood().getName())) {
+						found = true;
+						addedFoods.get(i).setQuantity(addedFoods.get(i).getQuantity() + controller.getQuantity());
+						break;
+					}
 				}
+	
+				// Add a new row entry if same food isn't already added
+				if (!found) {
+					controller.getFood().setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
+					// Add values to the table!
+					addedFoods.add(controller.getFood());
+					foodData.add(controller.getFood());
+				}
+	
+				// Update GUI
+				update();
+			}catch(NullPointerException e) {
+				System.out.println("Nullpointerexception, probably because we hit the X");
 			}
-
-			// Add a new row entry if same food isn't already added
-			if (!found) {
-				controller.getFood().setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
-				// Add values to the table!
-				addedFoods.add(controller.getFood());
-				foodData.add(controller.getFood());
-			}
-
-			// Update GUI
-			update();
 		} catch (IOException e) {
 			System.out.println("Failed to create a window");
 		}
