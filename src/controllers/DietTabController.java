@@ -51,7 +51,7 @@ public class DietTabController implements Initializable {
 	private PieChart pieChartMacros;
 
 	@FXML
-	private Button buttonAddEntry, buttonEdit, buttonDelete;
+	private Button buttonAddEntry, buttonEdit, buttonDelete, buttonCustom;
 
 	@FXML
 	private TextField tfCalories, tfCarbs, tfFats, tfProtein;
@@ -70,6 +70,8 @@ public class DietTabController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		// Create dummy starting data
+		Food food3 = new Food("Semi Skimmed Milk", 100, new double[] { 4.80, 1.80, 3.60 });
+		food3.setQuantity(3.6);
 		Food food1 = new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 });
 		food1.setQuantity(3.6);
 		Food food2 = new Food("Protein Powder", 30, new double[] { 3.77, 0.2, 23.71 });
@@ -196,6 +198,35 @@ public class DietTabController implements Initializable {
 
 		} catch (Exception e) {
 			System.out.println("Couldn't create edit window..?");
+		}
+	}
+	
+	
+	@FXML
+	protected void handleCustom(ActionEvent event) throws IOException {
+		try {
+			// Create window
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource("/view/dietTabCreateFoodWindow.fxml"));
+			Scene scene = new Scene(fxmlLoader.load(), 355, 275);
+			Stage stage = new Stage();
+			Stage parent = (Stage) buttonCustom.getScene().getWindow();
+			stage.initOwner(parent);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("Create Custom Food");
+			stage.setScene(scene);
+
+			// Controller access
+			CreateFoodController controller = fxmlLoader.<CreateFoodController>getController();
+			controller.setStageAndSetupListeners(stage);
+
+			// showAndWait will block execution until the window closes...
+			stage.showAndWait();
+			
+			// Add values to the local database/memory table
+
+		} catch (Exception e) {
+			System.out.println("Couldn't make create food window..?");
 		}
 	}
 

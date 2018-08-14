@@ -11,13 +11,16 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Food;
 
@@ -47,7 +50,7 @@ public class AddFoodController implements Initializable {
 	private TextField textfieldSearch;
 
 	@FXML
-	private Button buttonSearch, buttonAddFood;
+	private Button buttonSearch, buttonAddFood, buttonCreateCustom;
 
 	@FXML
 	private Spinner<Double> spinnerQuantity;
@@ -72,11 +75,13 @@ public class AddFoodController implements Initializable {
 		Food food1 = new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 });
 		Food food2 = new Food("Protein Powder", 30, new double[] { 3.77, 0.2, 23.71 });
 		Food food3 = new Food("White Rice", 100, new double[] { 78.90, 0.70, 6.70 });
+		Food food4 = new Food("Semi Skimmed Milk", 100, new double[] { 4.80, 1.80, 3.60 });
 
 		// add to arraylist
 		addedFoods.add(food1);
 		addedFoods.add(food2);
 		addedFoods.add(food3);
+		addedFoods.add(food4);
 
 		// Add sample data
 		for (int i = 0; i < addedFoods.size(); i++) {
@@ -112,8 +117,6 @@ public class AddFoodController implements Initializable {
 		// TODO(minor bug) Typing over 100 will result in an error NumberFormatException
 
 	}
-	
-	
 
 	@FXML
 	protected void handleAddFood(ActionEvent event) throws IOException {
