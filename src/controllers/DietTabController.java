@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javax.print.attribute.standard.PrinterLocation;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -55,6 +57,13 @@ public class DietTabController implements Initializable {
 	private ObservableList<Food> foodData = FXCollections.observableArrayList();
 	// Hold the objects of foods
 	private ArrayList<Food> addedFoods = new ArrayList<Food>();
+	
+	
+	private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+	private ArrayList<PieChart.Data> addedSlices = new ArrayList<PieChart.Data>();
+	
+	// Object holding values of doubles
+	private Double protein = (double) 0, fats = (double) 0, carbs = (double) 0;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -68,7 +77,7 @@ public class DietTabController implements Initializable {
 		addedFoods.add(food1);
 		addedFoods.add(food2);
 
-		double protein = 0, fats = 0, carbs = 0;
+		
 
 		// Add sample data
 		for (int i = 0; i < addedFoods.size(); i++) {
@@ -96,12 +105,53 @@ public class DietTabController implements Initializable {
 		tableviewEntries.setItems(foodData);
 
 		// Setup pie chart
-		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-				new PieChart.Data("Protein", protein), new PieChart.Data("Fats", fats),
-				new PieChart.Data("Carbohydrates", carbs));
-
+		PieChart.Data sliceProteins = new PieChart.Data("Protein", protein);
+		PieChart.Data sliceFats = new PieChart.Data("Fats", fats);
+		PieChart.Data sliceCarbs = new PieChart.Data("Carbohydrates", carbs);
+		
+		
+		
+		
+		
+		
+		addedSlices.add(sliceProteins);
+		addedSlices.add(sliceFats);
+		addedSlices.add(sliceCarbs);
+		
+		
+		
+		pieChartData.add(sliceProteins);
+		pieChartData.add(sliceFats);
+		pieChartData.add(sliceCarbs);
+		
+		
+		
+		
 		pieChartMacros.setData(pieChartData);
 		pieChartMacros.setTitle("Daily Macros");
+	}
+	
+	private void updatePieChart() {
+		
+		protein = (double) 0;
+		carbs = (double) 0;
+		fats = (double) 0;
+		
+		for(int i=0; i<foodData.size(); i++) {
+			Food f = foodData.get(i);
+			protein += f.getProteins();
+			carbs += f.getCarbohydrates();
+			fats += f.getFats();
+		}
+		
+		// now update the slices manually (good enough for such small amount of slices)
+		addedSlices.get(0).setPieValue(protein);
+		addedSlices.get(1).setPieValue(fats);
+		addedSlices.get(2).setPieValue(carbs);
+		
+		System.out.println("total protein: " + protein);
+		System.out.println("total carbs: " + carbs);
+		System.out.println("total fats: " + fats);
 	}
 	
 	@FXML
@@ -137,6 +187,7 @@ public class DietTabController implements Initializable {
 			
 			// Refresh the table
 			tableviewEntries.refresh();
+			updatePieChart();
 			
 		}catch(Exception e) {
 			System.out.println("Couldn't create edit window..?");
@@ -179,7 +230,6 @@ public class DietTabController implements Initializable {
 	        	if(addedFoods.get(i).getName().equals(controller.getFood().getName())) {
 	        		found = true;
 	        		addedFoods.get(i).setQuantity(addedFoods.get(i).getQuantity() + controller.getQuantity());
-	        		tableviewEntries.refresh();
 	        		break;
 	        	}
 	        }
@@ -190,10 +240,13 @@ public class DietTabController implements Initializable {
 		        // Add values to the table!
 		        addedFoods.add(controller.getFood());
 		        foodData.add(controller.getFood());
+		        
 	        }
 	        
 	        
-
+	        // Update table and piechart
+	        tableviewEntries.refresh();
+	        updatePieChart();
 		} catch (IOException e) {
 			System.out.println("Failed to create a window");
 		}
@@ -212,8 +265,9 @@ public class DietTabController implements Initializable {
 			foodData.remove(selectedFood);
 			
 			tableviewEntries.refresh();
+			updatePieChart();
 		}catch(NullPointerException e) {
-			
+			System.out.println("Couldn't delete item, probably haven't selected anything");
 		}
 		
 	}
