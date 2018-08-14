@@ -4,15 +4,12 @@ import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -21,9 +18,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import model.Food;
 
 public class AddFoodController implements Initializable {
@@ -55,7 +50,7 @@ public class AddFoodController implements Initializable {
 	private Button buttonSearch, buttonAddFood;
 
 	@FXML
-	private Spinner<Integer> spinnerQuantity;
+	private Spinner<Double> spinnerQuantity;
 
 	
 	// The current selected food we need to pass back to the DietTabController
@@ -110,7 +105,7 @@ public class AddFoodController implements Initializable {
 		});
 
 		// Setup spinner to increase quantity >= 1
-		spinnerQuantity.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100));
+		spinnerQuantity.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 100));
 
 		// TODO(minor bug) Typing over 100 will result in an error NumberFormatException
 
@@ -135,7 +130,7 @@ public class AddFoodController implements Initializable {
 		return returnFoodData.getName();
 	}
 
-	public int getQuantity() {
+	public double getQuantity() {
 		return spinnerQuantity.getValue();
 	}
 
