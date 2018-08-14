@@ -204,7 +204,7 @@ public class DietTabController implements Initializable {
 	
 	@FXML
 	protected void handleCustom(ActionEvent event) throws IOException {
-		try {
+		//try {
 			// Create window
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("/view/dietTabCreateFoodWindow.fxml"));
@@ -225,9 +225,9 @@ public class DietTabController implements Initializable {
 			
 			// Add values to the local database/memory table
 
-		} catch (Exception e) {
-			System.out.println("Couldn't make create food window..?");
-		}
+		//} catch (Exception e) {
+		//	System.out.println("Couldn't make create food window..?");
+		//}
 	}
 
 	@FXML
