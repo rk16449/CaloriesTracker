@@ -34,9 +34,11 @@ Minimum Requirements:
 1. Login/account system
 2. Input food per day and save to database
 
+## Login Page
+
 ![Main](../master/screenshots/loginpage.JPG)
 
 
-Diet Page
+## Diet Page
 
 ![Main](../master/screenshots/dietpage.JPG)
