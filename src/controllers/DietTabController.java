@@ -173,11 +173,17 @@ public class DietTabController implements Initializable {
 			stage.setTitle("Edit Food");
 			stage.setScene(scene);
 			
+			
+			EditFoodController controller = fxmlLoader.<EditFoodController>getController();
+			controller.setTextFieldValue(Double.toString(selectedFood.getQuantity()));
+			controller.setStageAndSetupListeners(stage);
+			
+			
 			// showAndWait will block execution until the window closes...
 			stage.showAndWait();
 			
-			EditFoodController controller = fxmlLoader.<EditFoodController>getController();
-			controller.setStageAndSetupListeners(stage);
+			
+			
 			
 			System.out.println("New Quantity is: " + controller.getQuantity());
 			
