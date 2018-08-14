@@ -103,6 +103,45 @@ public class DietTabController implements Initializable {
 		pieChartMacros.setData(pieChartData);
 		pieChartMacros.setTitle("Daily Macros");
 	}
+	
+	@FXML
+	protected void handleEdit(ActionEvent event) throws IOException {
+		System.out.println("Create edit food window here");
+		
+		try {
+			// Get the current selected food before we edit it so we can update its quantity later
+			Food selectedFood = tableviewEntries.getSelectionModel().getSelectedItem();
+		
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource("/view/dietTabEditFoodWindow.fxml"));
+
+			Scene scene = new Scene(fxmlLoader.load(), 352, 156);
+			Stage stage = new Stage();
+			Stage parent = (Stage) buttonEdit.getScene().getWindow();
+			stage.initOwner(parent);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("Edit Food");
+			stage.setScene(scene);
+			
+			// showAndWait will block execution until the window closes...
+			stage.showAndWait();
+			
+			EditFoodController controller = fxmlLoader.<EditFoodController>getController();
+			controller.setStageAndSetupListeners(stage);
+			
+			System.out.println("New Quantity is: " + controller.getQuantity());
+			
+			selectedFood.setQuantity(controller.getQuantity());
+			
+			System.out.println("New Quantity is: " + selectedFood.getQuantity());
+			
+			// Refresh the table
+			tableviewEntries.refresh();
+			
+		}catch(Exception e) {
+			System.out.println("Couldn't create edit window..?");
+		}
+	}
 
 	@FXML
 	protected void handleAddEntry(ActionEvent event) throws IOException {
@@ -110,6 +149,9 @@ public class DietTabController implements Initializable {
 		System.out.println("Create add food window here");
 
 		try {
+			
+			
+			
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("/view/dietTabAddFoodWindow.fxml"));
 
@@ -156,5 +198,23 @@ public class DietTabController implements Initializable {
 			System.out.println("Failed to create a window");
 		}
 	}
-
+	
+	@FXML
+	protected void handleDeleteEntry(ActionEvent event) throws IOException {
+		
+		// Make sure we selected an entry on the table
+		
+		try {
+			// Get the current selected food before we edit it so we can update its quantity later
+			Food selectedFood = tableviewEntries.getSelectionModel().getSelectedItem();
+			
+			addedFoods.remove(selectedFood);
+			foodData.remove(selectedFood);
+			
+			tableviewEntries.refresh();
+		}catch(NullPointerException e) {
+			
+		}
+		
+	}
 }
