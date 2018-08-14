@@ -203,25 +203,33 @@ public class DietTabController implements Initializable {
 
 	@FXML
 	protected void handleCustom(ActionEvent event) throws IOException {
-		// try {
-		// Create window
-		FXMLLoader fxmlLoader = new FXMLLoader();
-		fxmlLoader.setLocation(getClass().getResource("/view/dietTabCreateFoodWindow.fxml"));
-		Scene scene = new Scene(fxmlLoader.load(), 355, 275);
-		Stage stage = new Stage();
-		Stage parent = (Stage) buttonCustom.getScene().getWindow();
-		stage.initOwner(parent);
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.setTitle("Create Custom Food");
-		stage.setScene(scene);
+		try {
+			// Create window
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource("/view/dietTabCreateFoodWindow.fxml"));
+			Scene scene = new Scene(fxmlLoader.load(), 355, 275);
+			Stage stage = new Stage();
+			Stage parent = (Stage) buttonCustom.getScene().getWindow();
+			stage.initOwner(parent);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("Create Custom Food");
+			stage.setScene(scene);
 
-		// Controller access
-		CreateFoodController controller = fxmlLoader.<CreateFoodController>getController();
-		controller.setStageAndSetupListeners(stage);
+			// Controller access
+			CreateFoodController controller = fxmlLoader.<CreateFoodController>getController();
+			controller.setStageAndSetupListeners(stage);
 
-		// showAndWait will block execution until the window closes...
-		stage.showAndWait();
+			// showAndWait will block execution until the window closes...
+			stage.showAndWait();
 
+			// continue with the controller
+			addCustom(controller);
+		} catch (Exception e) {
+			System.out.println("Couldn't make create food window..?");
+		}
+	}
+
+	private void addCustom(CreateFoodController controller) {
 		// Add values to the local database/memory table
 		if (controller.valid()) {
 			String[] rgFoodData = controller.getValues();
@@ -243,15 +251,12 @@ public class DietTabController implements Initializable {
 			newFood.setQuantity(quant);
 
 			System.out.println("ADDING TO ADDFOOD TABLE!!!");
-			
-			
-			
-			if(controller.addToTable()) {
+
+			if (controller.addToTable()) {
 				// Add it to daily the table (if we selected to)
 				addedFoods.add(newFood);
 				foodData.add(newFood);
 			}
-			
 
 			// TODO - Add it to the foods database/favourites
 			AddFoodController.addedFoods.add(newFood);
@@ -259,12 +264,6 @@ public class DietTabController implements Initializable {
 
 			update();
 		}
-
-		// Add to the table of today and add to the table of saved foods to add later
-
-		// } catch (Exception e) {
-		// System.out.println("Couldn't make create food window..?");
-		// }
 	}
 
 	@FXML
@@ -293,12 +292,12 @@ public class DietTabController implements Initializable {
 
 			// continue on adding entry with controller
 			addEntry(controller);
-			
+
 		} catch (IOException e) {
 			System.out.println("Failed to create a window");
 		}
 	}
-	
+
 	private void addEntry(AddFoodController controller) {
 		try {
 			System.out.println("DietTabController: " + controller.getFood().getName());
@@ -325,7 +324,7 @@ public class DietTabController implements Initializable {
 
 			// Update GUI
 			update();
-		}catch(NullPointerException e) {
+		} catch (NullPointerException e) {
 			System.out.println("Nullpointerexception, probably because we hit the X");
 		}
 	}
