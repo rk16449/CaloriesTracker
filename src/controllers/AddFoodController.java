@@ -51,6 +51,8 @@ public class AddFoodController implements Initializable {
 
 	@FXML
 	private Spinner<Double> spinnerQuantity;
+	
+	
 
 	
 	// The current selected food we need to pass back to the DietTabController
@@ -110,6 +112,8 @@ public class AddFoodController implements Initializable {
 		// TODO(minor bug) Typing over 100 will result in an error NumberFormatException
 
 	}
+	
+	
 
 	@FXML
 	protected void handleAddFood(ActionEvent event) throws IOException {

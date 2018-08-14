@@ -49,15 +49,19 @@
         </rowConstraints>
          <children>
             <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="261.0" text="Total Calories:" textAlignment="RIGHT" />
-            <TextField fx:id="tfCalories" disable="true" editable="false" GridPane.columnIndex="2" />
+            <TextField fx:id="tfCalories" editable="false" opacity="0.9" GridPane.columnIndex="2" />
             <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="229.0" text="Total Carbs:" GridPane.rowIndex="1" />
-            <TextField fx:id="tfCarbs" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="tfCarbs" editable="false" opacity="0.9" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="238.0" text="Total Fats:" GridPane.rowIndex="2" />
             <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="219.0" text="Total Protein:" GridPane.rowIndex="3" />
-            <TextField fx:id="tfFats" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField fx:id="tfProtein" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <TextField fx:id="tfFats" editable="false" opacity="0.9" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="tfProtein" editable="false" opacity="0.9" GridPane.columnIndex="2" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <Label alignment="CENTER" layoutX="605.0" layoutY="60.0" prefHeight="17.0" prefWidth="270.0" text="Macros Information" textAlignment="CENTER" />
+      <Label alignment="CENTER" layoutX="605.0" layoutY="60.0" prefHeight="17.0" prefWidth="270.0" text="Macros Information" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
