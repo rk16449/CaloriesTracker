@@ -291,37 +291,42 @@ public class DietTabController implements Initializable {
 			// showAndWait will block execution until the window closes...
 			stage.showAndWait();
 
+			// continue on adding entry with controller
+			addEntry(controller);
 			
-			try {
-				System.out.println("DietTabController: " + controller.getFood().getName());
-				boolean found = false;
-				// Check if this food already exists in the table, if it does increase its
-				// quantity instead
-				for (int i = 0; i < addedFoods.size(); i++) {
-					// Assumes we don't have foods with exactly the same name.. (try adding id in
-					// later)
-					if (addedFoods.get(i).getName().equals(controller.getFood().getName())) {
-						found = true;
-						addedFoods.get(i).setQuantity(addedFoods.get(i).getQuantity() + controller.getQuantity());
-						break;
-					}
-				}
-	
-				// Add a new row entry if same food isn't already added
-				if (!found) {
-					controller.getFood().setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
-					// Add values to the table!
-					addedFoods.add(controller.getFood());
-					foodData.add(controller.getFood());
-				}
-	
-				// Update GUI
-				update();
-			}catch(NullPointerException e) {
-				System.out.println("Nullpointerexception, probably because we hit the X");
-			}
 		} catch (IOException e) {
 			System.out.println("Failed to create a window");
+		}
+	}
+	
+	private void addEntry(AddFoodController controller) {
+		try {
+			System.out.println("DietTabController: " + controller.getFood().getName());
+			boolean found = false;
+			// Check if this food already exists in the table, if it does increase its
+			// quantity instead
+			for (int i = 0; i < addedFoods.size(); i++) {
+				// Assumes we don't have foods with exactly the same name.. (try adding id in
+				// later)
+				if (addedFoods.get(i).getName().equals(controller.getFood().getName())) {
+					found = true;
+					addedFoods.get(i).setQuantity(addedFoods.get(i).getQuantity() + controller.getQuantity());
+					break;
+				}
+			}
+
+			// Add a new row entry if same food isn't already added
+			if (!found) {
+				controller.getFood().setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
+				// Add values to the table!
+				addedFoods.add(controller.getFood());
+				foodData.add(controller.getFood());
+			}
+
+			// Update GUI
+			update();
+		}catch(NullPointerException e) {
+			System.out.println("Nullpointerexception, probably because we hit the X");
 		}
 	}
 
