@@ -6,7 +6,7 @@ import main.Helper;
 
 public class Food extends Item {
 
-	private int amount;
+	private double amount;
 	private double proteins;
 	private double carbohydrates;
 	private double fats;
@@ -16,10 +16,10 @@ public class Food extends Item {
 	private double quantity;
 	
 	// static values
-	private final int ogAmount;
+	private final double ogAmount;
 	private final double ogCalories, ogProteins, ogCarbohydrates, ogFats;
 	
-	public Food(String name, int amount, double[] values) {
+	public Food(String name, double amount, double[] values) {
 		super(name);
 
 		// Needs validation 
@@ -42,7 +42,7 @@ public class Food extends Item {
 		this.quantity = quantity;
 		
 		// Multiply everything else by quantity automatically
-		this.amount = (int) (ogAmount * quantity);
+		this.amount = ogAmount * quantity;
 		this.calories = ogCalories * quantity;
 		this.carbohydrates = ogCarbohydrates * quantity;
 		this.fats = ogFats * quantity;
@@ -50,11 +50,11 @@ public class Food extends Item {
 		
 	}
 
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 
@@ -92,7 +92,7 @@ public class Food extends Item {
 	}
 	
 	public StringProperty getStrAmount() {
-		return new SimpleStringProperty(Integer.toString(amount));
+		return new SimpleStringProperty(Double.toString(amount));
 	}
 	
 	public StringProperty getStrCalories() {

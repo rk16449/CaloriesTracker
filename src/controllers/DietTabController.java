@@ -224,10 +224,30 @@ public class DietTabController implements Initializable {
 			stage.showAndWait();
 			
 			// Add values to the local database/memory table
-			String[] createFoodData = controller.getValues();
-			
-			for(int i=0; i< createFoodData.length; i++) {
-				System.out.println("----> " + createFoodData[i]);
+			if(controller.valid()) {
+				String[] rgFoodData = controller.getValues();
+				
+				// Debug values
+				for(int i=0; i< rgFoodData.length; i++) {
+					System.out.println("----> " + rgFoodData[i]);
+				}
+				
+				// Create the food
+				String name = rgFoodData[0];
+				double amount = Double.parseDouble(rgFoodData[1]);
+				double[] values = {Double.parseDouble(rgFoodData[2]), 
+						Double.parseDouble(rgFoodData[3]), 
+						Double.parseDouble(rgFoodData[4])};
+				double quant = Double.parseDouble(rgFoodData[5]);
+				
+				// Create it in object form
+				Food newFood = new Food(name, amount, values);
+				newFood.setQuantity(quant);
+				
+				// Add it to the table
+				addedFoods.add(newFood);
+				foodData.add(newFood);
+				update();
 			}
 			
 			// Add to the table of today and add to the table of saved foods to add later

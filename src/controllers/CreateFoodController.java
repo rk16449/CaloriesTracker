@@ -68,7 +68,7 @@ public class CreateFoodController implements Initializable {
 		}
 	}
 	
-	private boolean valid() {
+	public boolean valid() {
 		
 		// Assume everything is valid
 		boolean valid = true;
@@ -131,7 +131,7 @@ public class CreateFoodController implements Initializable {
 	public String[] getValues() {
 		// pre validation (make sure values are correct)
 		if(!checkboxToday.isSelected()) {
-			return new String[] {tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(), tfProteins.getText(), "-1"};
+			return new String[] {tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(), tfProteins.getText(), "1"};
 		}else {
 			return new String[] {tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(), tfProteins.getText(), Double.toString(spinnerQuantity.getValue())};
 		}
