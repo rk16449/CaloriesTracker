@@ -26,25 +26,15 @@ import model.Food;
 
 public class AddFoodController implements Initializable {
 	
-	private Stage stage;
-	
 	/**********************************************************
 	 * TABLE GUI
 	 **********************************************************/
 	@FXML
 	private TableView<Food> tableviewFoods;
+	
 	@FXML
-	private TableColumn<Food, String> foodColumn;
-	@FXML
-	private TableColumn<Food, String> amountColumn;
-	@FXML
-	private TableColumn<Food, String> caloriesColumn;
-	@FXML
-	private TableColumn<Food, String> carbsColumn;
-	@FXML
-	private TableColumn<Food, String> fatsColumn;
-	@FXML
-	private TableColumn<Food, String> proteinColumn;
+	private TableColumn<Food, String> foodColumn, 
+	amountColumn, caloriesColumn, carbsColumn, fatsColumn, proteinColumn;
 
 	@FXML
 	private TextField textfieldSearch;
@@ -57,14 +47,10 @@ public class AddFoodController implements Initializable {
 	
 	// The current selected food we need to pass back to the DietTabController
 	private Food returnFoodData;
-	
-	
 	// Hold the food data on the table in text form
 	public static ObservableList<Food> foodData = FXCollections.observableArrayList();
 	// Hold the objects of foods
 	public static ArrayList<Food> addedFoods = new ArrayList<Food>();
-
-	
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Temporarily used instead of database
@@ -194,10 +180,6 @@ public class AddFoodController implements Initializable {
 		return spinnerQuantity.getValue();
 	}
 
-	public void setStageAndSetupListeners(Stage stage) {
-		this.stage = stage;
-	}
-	
 	public Food getFood() {
 		return returnFoodData;
 	}

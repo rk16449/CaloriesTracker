@@ -392,7 +392,6 @@ public class DietTabController implements Initializable {
 
 			// Setup controller
 			AddFoodController controller = fxmlLoader.<AddFoodController>getController();
-			controller.setStageAndSetupListeners(stage);
 
 			// showAndWait will block execution until the window closes...
 			stage.showAndWait();

@@ -55,76 +55,77 @@ public class CreateFoodController implements Initializable {
 
 	@FXML
 	protected void handleCreate(ActionEvent event) throws IOException {
-		
+
 		// Make sure we have valid data to create
-		if(this.valid()) {
+		if (this.valid()) {
 			// Make sure to save everything
 			System.out.println("We have valid data to work with");
-			
+
 			// Close this window and continue (DietTabController)
 			buttonCreate.getScene().getWindow().hide();
-			
-		}else {
+
+		} else {
 			System.out.println("We don't have valid data to create food");
 		}
 	}
-	
+
 	public boolean valid() {
-		
+
 		// Assume everything is valid
 		boolean valid = true;
-		
+
 		// Make sure we have valid data
-		if(tfName.getText().isEmpty() || tfName.getText().equals("")) {
+		if (tfName.getText().isEmpty() || tfName.getText().equals("")) {
 			valid = false;
 		}
-		
-		
+
 		// Save textfields to an arraylist so we can loop and call same methods
 		ArrayList<TextField> tfs = new ArrayList<TextField>();
 		tfs.add(tfAmount);
 		tfs.add(tfCarbohydrates);
 		tfs.add(tfFats);
 		tfs.add(tfProteins);
-		
+
 		// Loop through textfields, make sure they are not empty and they are doubles
-		for(int i=0; i<tfs.size(); i++) {
-			if(isObjEmpty(tfs.get(i))) {
+		for (int i = 0; i < tfs.size(); i++) {
+			if (isObjEmpty(tfs.get(i))) {
 				valid = false;
 				break;
-			}else {
+			} else {
 				System.out.println("Textfield wasn't empty so now check if its a number!");
 				valid = Helper.isDouble(tfs.get(i).getText());
-				if(!valid) break;
+				if (!valid)
+					break;
 			}
 		}
-		
-		
+
 		// Check if we ticked add today and retrieve the quantity
-		if(checkboxToday.isSelected()) {
-			if(!(spinnerQuantity.getValue() >= 1 &&  spinnerQuantity.getValue() <= 100)) {
+		if (checkboxToday.isSelected()) {
+			if (!(spinnerQuantity.getValue() >= 1 && spinnerQuantity.getValue() <= 100)) {
 				valid = false;
 			}
 		}
-		
+
 		return valid;
 	}
-	
+
 	private boolean isObjEmpty(TextField tf) {
 		return tf.getText().isEmpty() || tf.getText().equals("");
 	}
-	
+
 	public String[] getValues() {
 		// pre validation (make sure values are correct)
-		if(!checkboxToday.isSelected()) {
-			return new String[] {tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(), tfProteins.getText(), "1"};
-		}else {
-			return new String[] {tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(), tfProteins.getText(), Double.toString(spinnerQuantity.getValue())};
+		if (!checkboxToday.isSelected()) {
+			return new String[] { tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(),
+					tfProteins.getText(), "1" };
+		} else {
+			return new String[] { tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(),
+					tfProteins.getText(), Double.toString(spinnerQuantity.getValue()) };
 		}
 	}
-	
+
 	@FXML
-	protected void handleCheckBoxToday(ActionEvent event) throws IOException{
+	protected void handleCheckBoxToday(ActionEvent event) throws IOException {
 		System.out.println("Checkbox pressed");
 		spinnerQuantity.setDisable(!spinnerQuantity.isDisable());
 	}
