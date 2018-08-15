@@ -203,7 +203,8 @@ public class DietTabController implements Initializable {
 		// pass food values into textfield
 		String[] values = new String[] 
 				{
-						selectedFood.getName(), 
+						// Remove (custom) 
+						selectedFood.getName(),
 						Double.toString(selectedFood.getAmount()), 
 						Double.toString(selectedFood.getCarbohydrates()),
 						Double.toString(selectedFood.getFats()),
