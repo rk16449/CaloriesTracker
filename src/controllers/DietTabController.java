@@ -221,12 +221,15 @@ public class DietTabController implements Initializable {
 		String[] retVals = controller.getValues();
 		
 		// Get values back from controller and update them into the food object
-		selectedFood.setQuantity(controller.getQuantity());
+		
 		selectedFood.setName(retVals[0]);
 		selectedFood.setAmount(Double.parseDouble(retVals[1]));
 		selectedFood.setCarbohydrates(Double.parseDouble(retVals[2]));
 		selectedFood.setFats(Double.parseDouble(retVals[3]));
 		selectedFood.setProteins(Double.parseDouble(retVals[4]));
+		
+		// Quantity last value that gets updated because we need new values above
+		selectedFood.setQuantity(controller.getQuantity());
 	}
 	
 	private void handleNormalEdit(Food selectedFood) throws IOException {

@@ -31,6 +31,8 @@ public class EditCustomFoodController implements Initializable {
 	private Button buttonSave;
 	
 	private SpinnerValueFactory defaultFactory;
+	
+	private double quantity = 1;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -49,7 +51,8 @@ public class EditCustomFoodController implements Initializable {
 		if (this.valid()) {
 			// Make sure to save everything
 			System.out.println("We have valid data to work with");
-
+			quantity = spinnerQuantity.getValue();
+			
 			// Close this window and continue (DietTabController)
 			buttonSave.getScene().getWindow().hide();
 
@@ -57,6 +60,7 @@ public class EditCustomFoodController implements Initializable {
 			System.out.println("We don't have valid data to create food");
 		}
 	}
+
 
 	public boolean valid() {
 
@@ -128,6 +132,7 @@ public class EditCustomFoodController implements Initializable {
 	}
 	
 	public double getQuantity() {
-		return spinnerQuantity.getValue();
+		quantity = spinnerQuantity.getValue();
+		return quantity;
 	}
 }
