@@ -50,13 +50,10 @@ public class AddFoodController implements Initializable {
 	private TextField textfieldSearch;
 
 	@FXML
-	private Button buttonSearch, buttonAddFood, buttonCreateCustom;
+	private Button buttonSearch, buttonAddFood, buttonCreateCustom, buttonDelete;
 
 	@FXML
 	private Spinner<Double> spinnerQuantity;
-	
-	
-
 	
 	// The current selected food we need to pass back to the DietTabController
 	private Food returnFoodData;
@@ -105,6 +102,30 @@ public class AddFoodController implements Initializable {
 
 		// Add filtered list data to the table
 		tableviewFoods.setItems(flFoods);
+		
+		
+		// Add event listener to the table rows
+		
+		
+		// Check for if we clicked on a custom food, and if we did then show the delete button
+		tableviewFoods.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+		    if (newSelection != null) {
+		        if(newSelection.getCustom()) {
+		        	buttonDelete.setDisable(false);
+		        	buttonDelete.setVisible(true);
+		        }else {
+		        	buttonDelete.setDisable(true);
+		        	buttonDelete.setVisible(false);
+		        }
+		    }
+		});
+		
+		
+		
+		
+		
+		
+		
 
 		// Setup textfield filter (based off food name)
 		textfieldSearch.setPromptText("Search here!");

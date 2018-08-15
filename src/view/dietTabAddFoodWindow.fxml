@@ -13,6 +13,7 @@
    <children>
       <ButtonBar layoutX="30.0" layoutY="339.0" prefHeight="33.0" prefWidth="528.0">
         <buttons>
+            <Button fx:id="buttonDelete" disable="true" mnemonicParsing="false" text="Delete" visible="false" />
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Quantity:" />
             <Spinner fx:id="spinnerQuantity" editable="true" />
           <Button fx:id="buttonAddFood" mnemonicParsing="false" onAction="#handleAddFood" text="Add Food" />
