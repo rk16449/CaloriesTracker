@@ -25,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import main.Helper;
 import model.Food;
 
 public class CreateFoodController implements Initializable {
@@ -93,7 +94,7 @@ public class CreateFoodController implements Initializable {
 				break;
 			}else {
 				System.out.println("Textfield wasn't empty so now check if its a number!");
-				valid = isDouble(tfs.get(i).getText());
+				valid = Helper.isDouble(tfs.get(i).getText());
 				if(!valid) break;
 			}
 		}
@@ -111,21 +112,6 @@ public class CreateFoodController implements Initializable {
 	
 	private boolean isObjEmpty(TextField tf) {
 		return tf.getText().isEmpty() || tf.getText().equals("");
-	}
-	
-	private boolean isDouble(String value) {
-		boolean valid = true;
-		// Check if its numerical
-		try
-		{
-			Double.parseDouble(value);
-		}
-		catch(NumberFormatException e)
-		{
-			//not a double
-			valid = false;
-		}
-		return valid;
 	}
 	
 	public String[] getValues() {
