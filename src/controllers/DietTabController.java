@@ -377,6 +377,11 @@ public class DietTabController implements Initializable {
 		System.out.println("New Quantity is: " + selectedFood.getQuantity());
 	}
 	
+	/**
+	 * Loops through the selected date, and adds a food to its Food ArrayList
+	 * @param date
+	 * @param food
+	 */
 	private void addFood(LocalDate date, Food food) {
 		// Find the date
 		for(int i=0; i<days.size(); i++) {
@@ -388,6 +393,12 @@ public class DietTabController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Loops through selected date, and removes a food from its Food ArrayList
+	 * @param date
+	 * @param food
+	 * @return
+	 */
 	private boolean deleteFood(LocalDate date, Food food) {
 		for(int i=0; i<days.size(); i++) {
 			Day d = days.get(i);
@@ -475,6 +486,7 @@ public class DietTabController implements Initializable {
 			// TODO - Add it to the foods database/favourites
 			AddFoodController.addedFoods.add(newFood);
 			AddFoodController.foodData.add(newFood);
+			addFood(datePickerDiet.getValue(), newFood);
 
 			update();
 		}
