@@ -376,6 +376,42 @@ public class DietTabController implements Initializable {
 		selectedFood.setQuantity(controller.getQuantity());
 		System.out.println("New Quantity is: " + selectedFood.getQuantity());
 	}
+	
+	private void addFood(LocalDate date, Food food) {
+		// Find the date
+		for(int i=0; i<days.size(); i++) {
+			Day d = days.get(i);
+			
+			if(d.getDate().isEqual(date)) {
+				d.getFoods().add(food);
+			}
+		}
+	}
+	
+	private boolean deleteFood(LocalDate date, Food food) {
+		for(int i=0; i<days.size(); i++) {
+			Day d = days.get(i);
+			
+			if(d.getDate().isEqual(date)) {
+				
+				
+				// Find the food in descending order
+				for(int z=d.getFoods().size()-1; z >= 0; z--) {
+					
+					Food f = d.getFoods().get(z);
+					
+					if(f.getName().equals(food.getName())) {
+						// Remove it
+						return d.getFoods().remove(f);
+					}
+					
+				}
+				
+			}
+		}
+		
+		return false;
+	}
 
 	@FXML
 	protected void handleCustom(ActionEvent event) throws IOException {
