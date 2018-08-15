@@ -52,6 +52,11 @@ public class Food extends Item {
 		this.proteins = ogProteins * quantity;
 	}
 	
+	// Replaces all the values of this food with another food
+	public void setFood(Food food) {
+		//this = food;
+	}
+	
 	public void setCustom(boolean custom) {
 		this.custom = custom;
 		// This also means we should change the name to have (custom) in brackets

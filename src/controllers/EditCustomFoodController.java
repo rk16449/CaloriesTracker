@@ -29,9 +29,13 @@ public class EditCustomFoodController implements Initializable {
 
 	@FXML
 	private Button buttonSave;
+	
+	private SpinnerValueFactory defaultFactory;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		spinnerQuantity.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 100));
+		
+		defaultFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 100);
+		spinnerQuantity.setValueFactory(defaultFactory);
 	}
 
 	public void setStageAndSetupListeners(Stage stage) {
@@ -101,5 +105,29 @@ public class EditCustomFoodController implements Initializable {
 		// pre validation (make sure values are correct)
 		return new String[] { tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(),
 					tfProteins.getText(), Double.toString(spinnerQuantity.getValue()) };
+	}
+	
+	public void setTextFieldValues(String[] values) {
+		
+		tfName.setText(values[0]);
+		tfAmount.setText(values[1]);
+		tfCarbohydrates.setText(values[2]);
+		tfFats.setText(values[3]);
+		tfProteins.setText(values[4]);
+		
+		// tfName, tfAmount, tfCarbohydrates, tfFats, tfProteins;
+		
+	}
+
+	public void setSpinnerValue(String value) {
+		try {
+			defaultFactory.setValue(Double.parseDouble(value));
+		}catch(NumberFormatException e) {
+			
+		}
+	}
+	
+	public double getQuantity() {
+		return spinnerQuantity.getValue();
 	}
 }

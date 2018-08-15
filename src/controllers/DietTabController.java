@@ -167,38 +167,87 @@ public class DietTabController implements Initializable {
 		System.out.println("Create edit food window here");
 
 		try {
-			// Get the current selected food before we edit it so we can update its quantity
-			// later
+			// Get the current selected food
 			Food selectedFood = tableviewEntries.getSelectionModel().getSelectedItem();
-
-			// Create window
-			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("/view/dietTabEditFoodWindow.fxml"));
-			Scene scene = new Scene(fxmlLoader.load(), 352, 156);
-			Stage stage = new Stage();
-			Stage parent = (Stage) buttonEdit.getScene().getWindow();
-			stage.initOwner(parent);
-			stage.initModality(Modality.WINDOW_MODAL);
-			stage.setTitle("Edit Food");
-			stage.setScene(scene);
-
-			// Controller access
-			EditFoodController controller = fxmlLoader.<EditFoodController>getController();
-			controller.setTextFieldValue(Double.toString(selectedFood.getQuantity()));
-			controller.setStageAndSetupListeners(stage);
-
-			// showAndWait will block execution until the window closes...
-			stage.showAndWait();
-			System.out.println("New Quantity is: " + controller.getQuantity());
-			selectedFood.setQuantity(controller.getQuantity());
-			System.out.println("New Quantity is: " + selectedFood.getQuantity());
-
+			
+			// Check if this is a custom food
+			if(selectedFood.getCustom()) {
+				handleCustomEdit(selectedFood);
+			}else {
+				handleNormalEdit(selectedFood);
+			}
+			
 			// Refresh the table
 			update();
 
 		} catch (Exception e) {
 			System.out.println("Couldn't create edit window..?");
 		}
+	}
+	
+	private void handleCustomEdit(Food selectedFood) throws IOException {
+		// Create window
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setLocation(getClass().getResource("/view/dietTabEditCustomFoodWindow.fxml"));
+		Scene scene = new Scene(fxmlLoader.load(), 355, 270);
+		Stage stage = new Stage();
+		Stage parent = (Stage) buttonEdit.getScene().getWindow();
+		stage.initOwner(parent);
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.setTitle("Edit Food");
+		stage.setScene(scene);
+		// Controller access
+		EditCustomFoodController controller = fxmlLoader.<EditCustomFoodController>getController();
+		controller.setSpinnerValue(Double.toString(selectedFood.getQuantity()));
+		
+		// pass food values into textfield
+		String[] values = new String[] 
+				{
+						selectedFood.getName(), 
+						Double.toString(selectedFood.getAmount()), 
+						Double.toString(selectedFood.getCarbohydrates()),
+						Double.toString(selectedFood.getFats()),
+						Double.toString(selectedFood.getProteins())
+				};
+		
+		
+		controller.setTextFieldValues(values);
+		controller.setStageAndSetupListeners(stage);
+		// showAndWait will block execution until the window closes...
+		stage.showAndWait();
+		
+		// get the updated values and set them into the selected food
+		String[] retVals = controller.getValues();
+		
+		// Get values back from controller and update them into the food object
+		selectedFood.setQuantity(controller.getQuantity());
+		selectedFood.setName(retVals[0]);
+		selectedFood.setAmount(Double.parseDouble(retVals[1]));
+		selectedFood.setCarbohydrates(Double.parseDouble(retVals[2]));
+		selectedFood.setFats(Double.parseDouble(retVals[3]));
+		selectedFood.setProteins(Double.parseDouble(retVals[4]));
+	}
+	
+	private void handleNormalEdit(Food selectedFood) throws IOException {
+		// Create window
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setLocation(getClass().getResource("/view/dietTabEditFoodWindow.fxml"));
+		Scene scene = new Scene(fxmlLoader.load(), 352, 156);
+		Stage stage = new Stage();
+		Stage parent = (Stage) buttonEdit.getScene().getWindow();
+		stage.initOwner(parent);
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.setTitle("Edit Food");
+		stage.setScene(scene);
+		// Controller access
+		EditFoodController controller = fxmlLoader.<EditFoodController>getController();
+		controller.setTextFieldValue(Double.toString(selectedFood.getQuantity()));
+		controller.setStageAndSetupListeners(stage);
+		// showAndWait will block execution until the window closes...
+		stage.showAndWait();
+		System.out.println("New Quantity is: " + controller.getQuantity());
+		selectedFood.setQuantity(controller.getQuantity());
+		System.out.println("New Quantity is: " + selectedFood.getQuantity());
 	}
 
 	@FXML

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="269.0" prefWidth="355.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CreateFoodController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="269.0" prefWidth="355.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditCustomFoodController">
    <children>
       <GridPane layoutX="57.0" layoutY="43.0" prefHeight="141.0" prefWidth="242.0">
         <columnConstraints>
@@ -38,7 +38,7 @@
       </GridPane>
       <Label layoutX="122.0" layoutY="14.0" text="Editing custom foods" />
       <Button fx:id="buttonSave" layoutX="152.0" layoutY="228.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="53.0" text="Save" />
-      <Spinner fx:id="spinnerQuantity" disable="true" editable="true" layoutX="228.0" layoutY="191.0" prefHeight="25.0" prefWidth="73.0" />
+      <Spinner fx:id="spinnerQuantity" editable="true" layoutX="228.0" layoutY="191.0" prefHeight="25.0" prefWidth="73.0" />
       <Label layoutX="169.0" layoutY="195.0" text="Quantity:" />
    </children>
 </AnchorPane>
