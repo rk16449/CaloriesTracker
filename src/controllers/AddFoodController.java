@@ -141,6 +141,35 @@ public class AddFoodController implements Initializable {
 		// TODO(minor bug) Typing over 100 will result in an error NumberFormatException
 
 	}
+	
+	@FXML
+	protected void handleDelete(ActionEvent event) throws IOException {
+		
+		// Check if button is visible
+		if(buttonDelete.isVisible()) {
+			// Make sure something is selected
+			try {
+				Food selectedFood = tableviewFoods.getSelectionModel().getSelectedItem();
+				
+				// Make sure its a custom food
+				if(selectedFood.getCustom()) {
+					// Now delete it from the table
+					addedFoods.remove(selectedFood);
+					foodData.remove(selectedFood);
+
+					update();
+				}
+				
+			}catch(NullPointerException e) {
+				
+			}
+		}
+		
+	}
+	
+	private void update() {
+		tableviewFoods.refresh();
+	}
 
 	@FXML
 	protected void handleAddFood(ActionEvent event) throws IOException {
