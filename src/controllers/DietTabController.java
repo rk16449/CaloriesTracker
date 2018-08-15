@@ -3,24 +3,29 @@ package controllers;
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.Helper;
+import model.Day;
 import model.Food;
 
 public class DietTabController implements Initializable {
@@ -55,6 +60,9 @@ public class DietTabController implements Initializable {
 
 	@FXML
 	private TextField tfCalories, tfCarbs, tfFats, tfProtein;
+	
+	@FXML
+	private DatePicker datePickerDiet;
 
 	// Hold the food data on the table in text form
 	private ObservableList<Food> foodData = FXCollections.observableArrayList();
@@ -67,30 +75,46 @@ public class DietTabController implements Initializable {
 	// Object holding values of doubles
 	private Double calories = (double) 0, protein = (double) 0, fats = (double) 0, carbs = (double) 0;
 
+	
+	// Used to check the current loaded date
+	private static LocalDate currentDate;
+	// Static values of days
+	private static ArrayList<Day> days = new ArrayList<Day>();
+ 	
+	@SuppressWarnings("unchecked")
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		
+		// Setup the date to today and in turn only load that days data
+		datePickerDiet.setValue(LocalDate.now());
+		currentDate = datePickerDiet.getValue();
+		
+		
+		
+		Day dayOne = new Day(datePickerDiet.getValue());
+		
 		// Create dummy starting data
-		Food food3 = new Food("Semi Skimmed Milk", 100, new double[] { 4.80, 1.80, 3.60 });
-		food3.setQuantity(3.6);
+		
 		Food food1 = new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 });
 		food1.setQuantity(3.6);
 		Food food2 = new Food("Protein Powder", 30, new double[] { 3.77, 0.2, 23.71 });
 		food2.setQuantity(2);
+		Food food3 = new Food("Semi Skimmed Milk", 100, new double[] { 4.80, 1.80, 3.60 });
+		food3.setQuantity(3.6);
+		
+		dayOne.getFoods().add(food1);
+		dayOne.getFoods().add(food2);
+		dayOne.getFoods().add(food3);
+		
+		// Add to static days Arraylist
+		days.add(dayOne);
 
-		// add to Arraylist
-		addedFoods.add(food1);
-		addedFoods.add(food2);
-
-		// Add sample data
-		for (int i = 0; i < addedFoods.size(); i++) {
-			Food f = addedFoods.get(i);
-			// Add up sum total of proteins, carbs, fats
-			protein += f.getProteins();
-			carbs += f.getCarbohydrates();
-			fats += f.getFats();
-			foodData.add(f);
-		}
-
+		
+		
+		
+		
+		
+		
+		
 		// Initialize the person table with the two columns.
 		foodsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrFood());
 		amountColumn.setCellValueFactory(cellData -> cellData.getValue().getStrAmount());
@@ -115,9 +139,108 @@ public class DietTabController implements Initializable {
 		pieChartData.add(sliceCarbs);
 		pieChartMacros.setData(pieChartData);
 		pieChartMacros.setTitle("Daily Macros");
+		
+		
+		
+		
+		// Load the foods on this date
+		for(int i=0; i<days.size(); i++) {
+			
+			Day d = days.get(i);
+			
+			
+			if(d.getDate().isEqual(currentDate)) {
+				// Load up food values into table arrayList
+				
+				for(int z=0; z<d.getFoods().size(); z++) {
+					Food f = d.getFoods().get(z);
+					
+					// Insert 
+					addedFoods.add(f);
+					
+				}
+				
+				// Stop checking other days
+				break;
+			}
+		}
+		
+		
+		calculateTotalData();
+		
+		
+		
+		datePickerDiet.setOnAction(new EventHandler() {
+		     public void handle(Event t) {
+		         LocalDate date = datePickerDiet.getValue();
+		         
+		         System.out.println("Year: " + date.getYear());
+		         System.out.println("Month: " + date.getMonth());
+		         System.out.println("Day: " + date.getDayOfMonth());
+		         System.err.println("Selected date: " + date);
+		         
+		         
+		         // Clear the table
+		         addedFoods.clear();
+		         foodData.clear();
+		         
+		         
+		         
+		         
+		         // TODO - scalability issue here could be fixed by only checking values next to the date
+		         boolean found = false;
+		         // Check if this date exists
+		         for(int i=0; i<days.size(); i++) {
+		        	 
+		        	 Day d = days.get(i);
+		        	 
+		        	 // If it exists, load the foods onto the table
+		        	 if(d.getDate().isEqual(date)) {
+		        		 // This date exists
+		        		 System.out.println("Date exists, loading food entries...");
+		        		 
+		        		 
+		        		 // Loop through the foods stored on this day
+		        		 for(int z=0; z<d.getFoods().size(); z++) {
+		        			 Food f = d.getFoods().get(z);
+		        			 addedFoods.add(f);
+		        		 }
+		        		 
+		        		 
+		        		 // Recalculate total data of protein, fats, carbs etc
+		        		 calculateTotalData();
+
+		        		 found = true;
+		        		 break;
+		        	 }
+		         }
+		         
+		         // If it doesn't exist, create the day object and store the local date value
+	        	 if(!found) {
+	        		 System.out.println("Date didn't exist, creating new entry!");
+	        		 // Create
+	        		 days.add(new Day(date));
+	        	 }
+	        	 
+	        	 
+	        	 update();
+		     }
+		 });
 
 		// Update the GUI
 		update();
+	}
+
+	private void calculateTotalData() {
+		// Calculate total data
+		for (int i = 0; i < addedFoods.size(); i++) {
+			Food f = addedFoods.get(i);
+			// Add up sum total of proteins, carbs, fats
+			protein += f.getProteins();
+			carbs += f.getCarbohydrates();
+			fats += f.getFats();
+			foodData.add(f);
+		}
 	}
 
 	private void update() {
