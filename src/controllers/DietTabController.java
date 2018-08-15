@@ -249,6 +249,9 @@ public class DietTabController implements Initializable {
 			// Create it in object form
 			Food newFood = new Food(name, amount, values);
 			newFood.setQuantity(quant);
+			// Make sure we apply it as a custom food
+			newFood.setCustom(true);
+			
 
 			System.out.println("ADDING TO ADDFOOD TABLE!!!");
 

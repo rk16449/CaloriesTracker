@@ -11,6 +11,9 @@ public class Food extends Item {
 	private double carbohydrates;
 	private double fats;
 	
+	// Used to tell if this food was imported from the database or if we added it ourselves
+	private boolean custom;
+	
 	// Calculated from proteins, carbohydrates and fats
 	private double calories;
 	private double quantity;
@@ -47,7 +50,16 @@ public class Food extends Item {
 		this.carbohydrates = ogCarbohydrates * quantity;
 		this.fats = ogFats * quantity;
 		this.proteins = ogProteins * quantity;
-		
+	}
+	
+	public void setCustom(boolean custom) {
+		this.custom = custom;
+		// This also means we should change the name to have (custom) in brackets
+		this.setName(this.getName() + " (custom) ");
+	}
+	
+	public boolean getCustom() {
+		return this.custom;
 	}
 
 	public double getAmount() {
