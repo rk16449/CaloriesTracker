@@ -34,23 +34,8 @@ public class DietTabController implements Initializable {
 	private TableView<Food> tableviewEntries;
 
 	@FXML
-	private TableColumn<Food, String> foodsColumn;
-
-	@FXML
-	private TableColumn<Food, String> amountColumn;
-
-	@FXML
-	private TableColumn<Food, String> caloriesColumn;
-
-	@FXML
-	private TableColumn<Food, String> carbsColumn;
-	@FXML
-	private TableColumn<Food, String> fatsColumn;
-	@FXML
-	private TableColumn<Food, String> protsColumn;
-
-	@FXML
-	private TableColumn<Food, String> quantityColumn;
+	private TableColumn<Food, String> foodsColumn, amountColumn, caloriesColumn, carbsColumn, fatsColumn, protsColumn,
+			quantityColumn;
 
 	@FXML
 	private PieChart pieChartMacros;
@@ -60,61 +45,54 @@ public class DietTabController implements Initializable {
 
 	@FXML
 	private TextField tfCalories, tfCarbs, tfFats, tfProtein;
-	
+
 	@FXML
 	private DatePicker datePickerDiet;
 
-	// Hold the food data on the table in text form
-	private ObservableList<Food> foodData = FXCollections.observableArrayList();
-	// Hold the objects of foods
-	private ArrayList<Food> addedFoods = new ArrayList<Food>();
-
+	// Pie chart data
 	private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 	private ArrayList<PieChart.Data> addedSlices = new ArrayList<PieChart.Data>();
+
+	// Hold the food data on the table in text form
+	private ObservableList<Food> foodData = FXCollections.observableArrayList();
+	// Hold the objects of foods local memory
+	private ArrayList<Food> addedFoods = new ArrayList<Food>();
 
 	// Object holding values of doubles
 	private Double calories = (double) 0, protein = (double) 0, fats = (double) 0, carbs = (double) 0;
 
-	
-	// Used to check the current loaded date
+	// Used to check the current loaded date and day
 	private static LocalDate currentDate;
-	// Static values of days
+	private static Day currentDay;
+
+	// (Global) static array of days
 	private static ArrayList<Day> days = new ArrayList<Day>();
- 	
-	@SuppressWarnings("unchecked")
+
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
 		// Setup the date to today and in turn only load that days data
+		setupDay();
+		setupTable();
+		setupPieChart();
+		setupDatePicker();
+
+		// Load the foods into an arraylist
+		loadAddedFoods();
+		// Loads the foods into the GUI table
+		loadTableFoods();
+		// Update the values of total calories, carbs, fats, protein etc
+		updateTotalValues();
+		// Update the GUI
+		update();
+	}
+
+	private void setupDay() {
 		datePickerDiet.setValue(LocalDate.now());
 		currentDate = datePickerDiet.getValue();
-		
-		
-		
-		Day dayOne = new Day(datePickerDiet.getValue());
-		
-		// Create dummy starting data
-		
-		Food food1 = new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 });
-		food1.setQuantity(3.6);
-		Food food2 = new Food("Protein Powder", 30, new double[] { 3.77, 0.2, 23.71 });
-		food2.setQuantity(2);
-		Food food3 = new Food("Semi Skimmed Milk", 100, new double[] { 4.80, 1.80, 3.60 });
-		food3.setQuantity(3.6);
-		
-		dayOne.getFoods().add(food1);
-		dayOne.getFoods().add(food2);
-		dayOne.getFoods().add(food3);
-		
-		// Add to static days Arraylist
-		days.add(dayOne);
+		currentDay = getDay(currentDate);
+	}
 
-		
-		
-		
-		
-		
-		
-		
+	private void setupTable() {
 		// Initialize the person table with the two columns.
 		foodsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrFood());
 		amountColumn.setCellValueFactory(cellData -> cellData.getValue().getStrAmount());
@@ -126,7 +104,9 @@ public class DietTabController implements Initializable {
 
 		// Add observable list data to the table
 		tableviewEntries.setItems(foodData);
+	}
 
+	private void setupPieChart() {
 		// Setup pie chart
 		PieChart.Data sliceProteins = new PieChart.Data("Protein", protein);
 		PieChart.Data sliceFats = new PieChart.Data("Fats", fats);
@@ -139,106 +119,63 @@ public class DietTabController implements Initializable {
 		pieChartData.add(sliceCarbs);
 		pieChartMacros.setData(pieChartData);
 		pieChartMacros.setTitle("Daily Macros");
-		
-		
-		
-		
-		// Load the foods on this date
-		for(int i=0; i<days.size(); i++) {
-			
-			Day d = days.get(i);
-			
-			
-			if(d.getDate().isEqual(currentDate)) {
-				// Load up food values into table arrayList
-				
-				for(int z=0; z<d.getFoods().size(); z++) {
-					Food f = d.getFoods().get(z);
-					
-					// Insert 
-					addedFoods.add(f);
-					
-				}
-				
-				// Stop checking other days
-				break;
-			}
-		}
-		
-		
-		calculateTotalData();
-		
-		
-		
-		datePickerDiet.setOnAction(new EventHandler() {
-		     public void handle(Event t) {
-		         LocalDate date = datePickerDiet.getValue();
-		         
-		         System.out.println("Year: " + date.getYear());
-		         System.out.println("Month: " + date.getMonth());
-		         System.out.println("Day: " + date.getDayOfMonth());
-		         System.err.println("Selected date: " + date);
-		         
-		         
-		         // Clear the table
-		         addedFoods.clear();
-		         foodData.clear();
-		         
-		         
-		         
-		         
-		         // TODO - scalability issue here could be fixed by only checking values next to the date
-		         boolean found = false;
-		         // Check if this date exists
-		         for(int i=0; i<days.size(); i++) {
-		        	 
-		        	 Day d = days.get(i);
-		        	 
-		        	 // If it exists, load the foods onto the table
-		        	 if(d.getDate().isEqual(date)) {
-		        		 // This date exists
-		        		 System.out.println("Date exists, loading food entries...");
-		        		 
-		        		 
-		        		 // Loop through the foods stored on this day
-		        		 for(int z=0; z<d.getFoods().size(); z++) {
-		        			 Food f = d.getFoods().get(z);
-		        			 addedFoods.add(f);
-		        		 }
-		        		 
-		        		 
-		        		 // Recalculate total data of protein, fats, carbs etc
-		        		 calculateTotalData();
-
-		        		 found = true;
-		        		 break;
-		        	 }
-		         }
-		         
-		         // If it doesn't exist, create the day object and store the local date value
-	        	 if(!found) {
-	        		 System.out.println("Date didn't exist, creating new entry!");
-	        		 // Create
-	        		 days.add(new Day(date));
-	        	 }
-	        	 
-	        	 
-	        	 update();
-		     }
-		 });
-
-		// Update the GUI
-		update();
 	}
 
-	private void calculateTotalData() {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void setupDatePicker() {
+		datePickerDiet.setOnAction(new EventHandler() {
+			public void handle(Event t) {
+				LocalDate date = datePickerDiet.getValue();
+
+				// Update the currentDay
+				currentDay = getDay(date);
+
+				// Clear the table
+				addedFoods.clear();
+				foodData.clear();
+
+				// Load the food into the table
+				loadAddedFoods();
+				loadTableFoods();
+				updateTotalValues();
+				update();
+			}
+		});
+	}
+
+	private void loadAddedFoods() {
+		// loop through the currentDay food
+		for (int i = 0; i < currentDay.getFoods().size(); i++) {
+			Food f = currentDay.getFoods().get(i);
+			addedFoods.add(f);
+		}
+	}
+
+	// Finds the current Day in the days ArrayList (used to set currentDay)
+	private Day getDay(LocalDate date) {
+		for (int i = 0; i < days.size(); i++) {
+			Day d = days.get(i);
+
+			if (d.getDate().isEqual(date)) {
+				return d;
+			}
+		}
+
+		// Save to static arrayList if we didn't find it above
+		Day newDay = new Day(date);
+		days.add(newDay);
+
+		// Else return a new date
+		return newDay;
+	}
+
+	/**
+	 * loads the local memory arraylist into the GUI table arraylist
+	 */
+	private void loadTableFoods() {
 		// Calculate total data
 		for (int i = 0; i < addedFoods.size(); i++) {
 			Food f = addedFoods.get(i);
-			// Add up sum total of proteins, carbs, fats
-			protein += f.getProteins();
-			carbs += f.getCarbohydrates();
-			fats += f.getFats();
 			foodData.add(f);
 		}
 	}
@@ -292,14 +229,14 @@ public class DietTabController implements Initializable {
 		try {
 			// Get the current selected food
 			Food selectedFood = tableviewEntries.getSelectionModel().getSelectedItem();
-			
+
 			// Check if this is a custom food
-			if(selectedFood.getCustom()) {
+			if (selectedFood.getCustom()) {
 				handleCustomEdit(selectedFood);
-			}else {
+			} else {
 				handleNormalEdit(selectedFood);
 			}
-			
+
 			// Refresh the table
 			update();
 
@@ -307,7 +244,7 @@ public class DietTabController implements Initializable {
 			System.out.println("Couldn't create edit window..?");
 		}
 	}
-	
+
 	private void handleCustomEdit(Food selectedFood) throws IOException {
 		// Create window
 		FXMLLoader fxmlLoader = new FXMLLoader();
@@ -322,39 +259,33 @@ public class DietTabController implements Initializable {
 		// Controller access
 		EditCustomFoodController controller = fxmlLoader.<EditCustomFoodController>getController();
 		controller.setSpinnerValue(Double.toString(selectedFood.getQuantity()));
-		
+
 		// pass food values into textfield
-		String[] values = new String[] 
-				{
-						// Remove (custom) 
-						selectedFood.getName(),
-						Double.toString(selectedFood.getAmount()), 
-						Double.toString(selectedFood.getCarbohydrates()),
-						Double.toString(selectedFood.getFats()),
-						Double.toString(selectedFood.getProteins())
-				};
-		
-		
+		String[] values = new String[] {
+				// Remove (custom)
+				selectedFood.getName(), Double.toString(selectedFood.getAmount()),
+				Double.toString(selectedFood.getCarbohydrates()), Double.toString(selectedFood.getFats()),
+				Double.toString(selectedFood.getProteins()) };
+
 		controller.setTextFieldValues(values);
 		controller.setStageAndSetupListeners(stage);
 		// showAndWait will block execution until the window closes...
 		stage.showAndWait();
-		
+
 		// get the updated values and set them into the selected food
 		String[] retVals = controller.getValues();
-		
+
 		// Get values back from controller and update them into the food object
-		
 		selectedFood.setName(retVals[0]);
 		selectedFood.setAmount(Double.parseDouble(retVals[1]));
 		selectedFood.setCarbohydrates(Double.parseDouble(retVals[2]));
 		selectedFood.setFats(Double.parseDouble(retVals[3]));
 		selectedFood.setProteins(Double.parseDouble(retVals[4]));
-		
+
 		// Quantity last value that gets updated because we need new values above
 		selectedFood.setQuantity(controller.getQuantity());
 	}
-	
+
 	private void handleNormalEdit(Food selectedFood) throws IOException {
 		// Create window
 		FXMLLoader fxmlLoader = new FXMLLoader();
@@ -372,55 +303,9 @@ public class DietTabController implements Initializable {
 		controller.setStageAndSetupListeners(stage);
 		// showAndWait will block execution until the window closes...
 		stage.showAndWait();
-		System.out.println("New Quantity is: " + controller.getQuantity());
+
+		// Update the selectedFood Quantity
 		selectedFood.setQuantity(controller.getQuantity());
-		System.out.println("New Quantity is: " + selectedFood.getQuantity());
-	}
-	
-	/**
-	 * Loops through the selected date, and adds a food to its Food ArrayList
-	 * @param date
-	 * @param food
-	 */
-	private void addFood(LocalDate date, Food food) {
-		// Find the date
-		for(int i=0; i<days.size(); i++) {
-			Day d = days.get(i);
-			
-			if(d.getDate().isEqual(date)) {
-				d.getFoods().add(food);
-			}
-		}
-	}
-	
-	/**
-	 * Loops through selected date, and removes a food from its Food ArrayList
-	 * @param date
-	 * @param food
-	 * @return
-	 */
-	private boolean deleteFood(LocalDate date, Food food) {
-		for(int i=0; i<days.size(); i++) {
-			Day d = days.get(i);
-			
-			if(d.getDate().isEqual(date)) {
-				
-				
-				// Find the food in descending order
-				for(int z=d.getFoods().size()-1; z >= 0; z--) {
-					
-					Food f = d.getFoods().get(z);
-					
-					if(f.getName().equals(food.getName())) {
-						// Remove it
-						return d.getFoods().remove(f);
-					}
-					
-				}
-			}
-		}
-		
-		return false;
 	}
 
 	@FXML
@@ -473,21 +358,17 @@ public class DietTabController implements Initializable {
 			newFood.setQuantity(quant);
 			// Make sure we apply it as a custom food
 			newFood.setCustom(true);
-			
 
-			System.out.println("ADDING TO ADDFOOD TABLE!!!");
-
+			// Add it to daily the table (if we selected to)
 			if (controller.addToTable()) {
-				// Add it to daily the table (if we selected to)
 				addedFoods.add(newFood);
 				foodData.add(newFood);
 			}
 
-			// TODO - Add it to the foods database/favourites
+			// Add to the local memory arraylist, the table gui and the currentDay arraylist
 			AddFoodController.addedFoods.add(newFood);
 			AddFoodController.foodData.add(newFood);
-			addFood(datePickerDiet.getValue(), newFood);
-
+			currentDay.addFood(newFood);
 			update();
 		}
 	}
@@ -543,13 +424,11 @@ public class DietTabController implements Initializable {
 			// Add a new row entry if same food isn't already added
 			if (!found) {
 				controller.getFood().setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
-				
-				
+
 				// Add values to the table!
 				addedFoods.add(controller.getFood());
 				foodData.add(controller.getFood());
-				
-				addFood(datePickerDiet.getValue(), controller.getFood());
+				currentDay.addFood(controller.getFood());
 			}
 
 			// Update GUI
@@ -569,8 +448,7 @@ public class DietTabController implements Initializable {
 
 			addedFoods.remove(selectedFood);
 			foodData.remove(selectedFood);
-			
-			deleteFood(datePickerDiet.getValue(), selectedFood);
+			currentDay.deleteFood(selectedFood);
 
 			update();
 		} catch (NullPointerException e) {
