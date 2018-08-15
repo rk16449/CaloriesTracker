@@ -11,4 +11,16 @@ public class Helper {
 	    long tmp = Math.round(value);
 	    return (double) tmp / factor;
 	}
+	
+	public static boolean isDouble(String value) {
+		boolean valid = true;
+		// Check if its numerical
+		try {
+			Double.parseDouble(value);
+		} catch (NumberFormatException e) {
+			// not a double
+			valid = false;
+		}
+		return valid;
+	}
 }
