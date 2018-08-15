@@ -406,7 +406,6 @@ public class DietTabController implements Initializable {
 					}
 					
 				}
-				
 			}
 		}
 		
@@ -532,9 +531,13 @@ public class DietTabController implements Initializable {
 			// Add a new row entry if same food isn't already added
 			if (!found) {
 				controller.getFood().setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
+				
+				
 				// Add values to the table!
 				addedFoods.add(controller.getFood());
 				foodData.add(controller.getFood());
+				
+				addFood(datePickerDiet.getValue(), controller.getFood());
 			}
 
 			// Update GUI
@@ -554,6 +557,8 @@ public class DietTabController implements Initializable {
 
 			addedFoods.remove(selectedFood);
 			foodData.remove(selectedFood);
+			
+			deleteFood(datePickerDiet.getValue(), selectedFood);
 
 			update();
 		} catch (NullPointerException e) {
