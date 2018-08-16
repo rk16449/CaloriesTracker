@@ -2,21 +2,20 @@ package model;
 
 public abstract class Item {
 
-	private String id;
-	private String name;
+	private static int start_id = 0;
+	
+	private int id = 0;
+	protected String name;
 	
 	public Item(String name) {
 		this.name = name;
+		this.id += start_id;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
+	
 	public String getName() {
 		return name;
 	}

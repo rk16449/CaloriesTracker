@@ -210,9 +210,9 @@ public class DietTabController implements Initializable {
 		addedSlices.get(1).setPieValue(fats);
 		addedSlices.get(2).setPieValue(carbs);
 
-		System.out.println("total protein: " + protein);
-		System.out.println("total carbs: " + carbs);
-		System.out.println("total fats: " + fats);
+	//	System.out.println("total protein: " + protein);
+	//	System.out.println("total carbs: " + carbs);
+	//	System.out.println("total fats: " + fats);
 	}
 
 	private void updateGUIMacrosInfo() {
@@ -410,24 +410,33 @@ public class DietTabController implements Initializable {
 			boolean found = false;
 			// Check if this food already exists in the table, if it does increase its
 			// quantity instead
-			for (int i = 0; i < addedFoods.size(); i++) {
+			
+			
+			for (int i = 0; i < currentDay.getFoods().size(); i++) {
 				// Assumes we don't have foods with exactly the same name.. (try adding id in
 				// later)
-				if (addedFoods.get(i).getName().equals(controller.getFood().getName())) {
+				if (currentDay.getFoods().get(i).getName().equals(controller.getFood().getName())) {
 					found = true;
-					addedFoods.get(i).setQuantity(addedFoods.get(i).getQuantity() + controller.getQuantity());
+					
+					System.out.println("Updating quantity on addEntry");
+					
+					currentDay.getFoods().get(i).setQuantity(currentDay.getFoods().get(i).getQuantity() + controller.getQuantity());
 					break;
 				}
 			}
 
 			// Add a new row entry if same food isn't already added
 			if (!found) {
-				controller.getFood().setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
+				System.out.println("No Food was found, creating a new entry here!");
+				
+				// Copy the object
+				Food newFood = new Food(controller.getFood().getName(), controller.getFood());
+				newFood.setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
 
 				// Add values to the table!
-				addedFoods.add(controller.getFood());
-				foodData.add(controller.getFood());
-				currentDay.addFood(controller.getFood());
+				addedFoods.add(newFood);
+				foodData.add(newFood);
+				currentDay.addFood(newFood);
 			}
 
 			// Update GUI
