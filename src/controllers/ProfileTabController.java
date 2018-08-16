@@ -13,8 +13,12 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
 
 public class ProfileTabController implements Initializable {
+	
+	@FXML Button buttonEditProfile;
+	
 
 	// PROFILE TAB
 	
