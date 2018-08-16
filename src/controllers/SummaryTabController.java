@@ -40,6 +40,9 @@ public class SummaryTabController implements Initializable {
 
 		dailyMacros.setData(pieChartData);
 		dailyMacros.setTitle("Daily Macros");
+		
+		dailyProgress.setBarGap(-30);
+		dailyProgress.setLegendVisible(false);
 
 		// Setup bar chart based of total calories per day
 		updateBarChart();
