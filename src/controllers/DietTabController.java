@@ -66,7 +66,7 @@ public class DietTabController implements Initializable {
 	private static Day currentDay;
 
 	// (Global) static array of days
-	private static ArrayList<Day> days = new ArrayList<Day>();
+	public static ArrayList<Day> days = new ArrayList<Day>();
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -209,10 +209,6 @@ public class DietTabController implements Initializable {
 		addedSlices.get(0).setPieValue(protein);
 		addedSlices.get(1).setPieValue(fats);
 		addedSlices.get(2).setPieValue(carbs);
-
-	//	System.out.println("total protein: " + protein);
-	//	System.out.println("total carbs: " + carbs);
-	//	System.out.println("total fats: " + fats);
 	}
 
 	private void updateGUIMacrosInfo() {

@@ -21,12 +21,12 @@
 
 <AnchorPane id="ap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="944.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainProgramController">
    <children>
-      <TabPane prefHeight="600.0" prefWidth="944.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabPane" prefHeight="600.0" prefWidth="944.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
         
-        <Tab text="Dashboard">
+        <Tab fx:id="tabDashboard" text="Dashboard">
          	 <content>
-         	 	<fx:include source="summaryTab.fxml" />
+         	 	<fx:include fx:id="SummaryTab" source="summaryTab.fxml" />
          	 </content>
           </Tab>
         

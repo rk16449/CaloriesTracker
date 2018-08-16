@@ -16,12 +16,24 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
 
 
 
 public class MainProgramController implements Initializable {
+	
+	@FXML
+	private TabPane tabPane;
+	
+	
+	@FXML
+	private Tab tabDashboard;
+	@FXML
+	private SummaryTabController SummaryTabController;
+	
 	
     @FXML
 	protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
@@ -50,6 +62,18 @@ public class MainProgramController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		// Set listener on tab
+		tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
+	        System.err.println("changed");
+	        
+	        System.out.println("New tab name: " + newTab.getText());
+	        
+	        if(newTab == tabDashboard) {
+	        	// Run an update on the barchart pie chart etc
+	        	SummaryTabController.updateBarChart();
+	        }
+	    });
 		
 	}
 }
