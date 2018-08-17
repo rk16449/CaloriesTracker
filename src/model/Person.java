@@ -10,6 +10,7 @@ public class Person {
 	private int age;
 	private double weight;
 	private double height;
+	private String gender;
 
 	/* Singleton class */
 	private Person() {
@@ -51,5 +52,9 @@ public class Person {
 
 	public void setHeight(double height) {
 		this.height = height;
+	}
+
+	public void setGender(String newValue) {
+		this.gender = newValue;
 	}
 }

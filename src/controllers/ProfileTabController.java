@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import model.Person;
 
 public class ProfileTabController implements Initializable {
 	
@@ -60,7 +61,6 @@ public class ProfileTabController implements Initializable {
 	
 	
 	
-	
 	// Used to tell what units we are using
 	private String units = "Metric";
 	// Used to tell if we need to unlock textfields or not
@@ -94,7 +94,7 @@ public class ProfileTabController implements Initializable {
             		String oldValue, String newValue) {
                 if (newValue != null) {
                     //greetingLabel.setText(newValue.getGreeting());
-                	System.out.println("new value: " + newValue);
+                	Person.getInstance().setGender(newValue);
                 }
             }
         };
