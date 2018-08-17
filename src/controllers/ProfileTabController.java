@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -85,7 +87,19 @@ public class ProfileTabController implements Initializable {
 		cbGender.setItems(FXCollections.observableArrayList(
 			    "Male", "Female", "Other"));
 		
-		
+		// Add event listener
+		ChangeListener<String> changeListener = new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, //
+            		String oldValue, String newValue) {
+                if (newValue != null) {
+                    //greetingLabel.setText(newValue.getGreeting());
+                	System.out.println("new value: " + newValue);
+                }
+            }
+        };
+        // Selected Item Changed.
+        cbGender.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
 	
 	private void updateButtonUnderline() {
