@@ -11,10 +11,33 @@ public class Person {
 	private double weight;
 	private double height;
 	private String gender;
+	private String firstName;
+	private String lastName;
 
 	/* Singleton class */
 	private Person() {
 
+	}
+	
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getGender() {
+		return gender;
 	}
 	
 	//static block initialization for exception handling
@@ -56,5 +79,17 @@ public class Person {
 
 	public void setGender(String newValue) {
 		this.gender = newValue;
+	}
+
+
+	public double getBodyfat() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	public double getWaist() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

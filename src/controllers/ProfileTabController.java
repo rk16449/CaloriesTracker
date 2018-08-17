@@ -67,6 +67,17 @@ public class ProfileTabController implements Initializable {
 	private boolean editMode = false;
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		// Setup values
+		tfFirstName.setText(Person.getInstance().getFirstName());
+		tfLastName.setText(Person.getInstance().getLastName());
+		tfAge.setText(Integer.toString(Person.getInstance().getAge()));
+		tfWeight.setText(Double.toString(Person.getInstance().getWeight()));
+		tfHeight.setText(Double.toString(Person.getInstance().getHeight()));
+		tfBodyfat.setText(Double.toString(Person.getInstance().getBodyfat()));
+		tfWaist.setText(Double.toString(Person.getInstance().getWaist()));
+
+		
 		// Add textfields into a reference arraylist (so we can loop better)
 		refTF.addAll(Arrays.asList(tfAge, tfFirstName, tfLastName, 
 				tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist,
