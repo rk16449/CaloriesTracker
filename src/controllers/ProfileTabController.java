@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -28,7 +29,7 @@ public class ProfileTabController implements Initializable {
 	TextField tfFirstName, tfLastName, tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist;
 	
 	// Reference to textfields above
-	private ArrayList<TextField> refTF = new ArrayList<TextField>();
+	private ArrayList<Node> refTF = new ArrayList<Node>();
 	
 	@FXML
 	ChoiceBox cbGender;
@@ -65,7 +66,22 @@ public class ProfileTabController implements Initializable {
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Add textfields into a reference arraylist (so we can loop better)
-		refTF.addAll(Arrays.asList(tfAge, tfFirstName, tfLastName, tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist));
+		refTF.addAll(Arrays.asList(tfAge, tfFirstName, tfLastName, 
+				tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist,
+				btnMetric, btnImperial, cbGender
+				));
+		
+		// Set all components disabled
+		disableTF(true);
+		
+		// Setup buttons
+		if(units.equals("Metric")) {
+			btnMetric.setUnderline(true);
+			btnImperial.setUnderline(false);
+		}else {
+			btnMetric.setUnderline(false);
+			btnImperial.setUnderline(true);
+		}
 	}
 	
 	private void disableTF(boolean value) {

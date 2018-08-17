@@ -44,7 +44,7 @@
             <TextField fx:id="tfHeight" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextField fx:id="tfWeight" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Label text="Gender:" GridPane.rowIndex="2" />
-            <ChoiceBox fx:id="cbGender" prefHeight="25.0" prefWidth="291.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="cbGender" disable="true" prefHeight="25.0" prefWidth="291.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label prefHeight="17.0" prefWidth="366.0" text="Last Name:" GridPane.rowIndex="1" />
             <TextField fx:id="tfLastName" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="tfFirstName" disable="true" GridPane.columnIndex="1" />
