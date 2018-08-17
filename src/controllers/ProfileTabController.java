@@ -3,6 +3,8 @@ package controllers;
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -24,6 +26,9 @@ public class ProfileTabController implements Initializable {
 	
 	@FXML
 	TextField tfFirstName, tfLastName, tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist;
+	
+	// Reference to textfields above
+	private ArrayList<TextField> refTF = new ArrayList<TextField>();
 	
 	@FXML
 	ChoiceBox cbGender;
@@ -50,14 +55,48 @@ public class ProfileTabController implements Initializable {
 	
 	// All this data will then be updated on the database and reflect on the calculators
 	
+	
+	
+	
+	// Used to tell what units we are using
+	private String units = "Metric";
+	// Used to tell if we need to unlock textfields or not
+	private boolean editMode = false;
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		// Add textfields into a reference arraylist (so we can loop better)
+		refTF.addAll(Arrays.asList(tfAge, tfFirstName, tfLastName, tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist));
+	}
+	
+	private void disableTF(boolean value) {
+		// Activate the textfields based on value
+		for(int i=0; i<refTF.size(); i++) {
+			refTF.get(i).setDisable(value);
+		}
 	}
 	
 	
 	@FXML
 	protected void handleEditProfile(ActionEvent event) throws IOException {
 		
+		// Flip
+		editMode = !editMode;
+		
+		// If we are in editmode
+		if(editMode) {
+			
+			System.out.println("Edit mode activated");
+			
+			btnEditProfile.setText("Save Changes");
+			
+			// Activate textfields
+			disableTF(false);
+		}else {
+			btnEditProfile.setText("Edit Profile");
+			
+			// Disable the textfields
+			disableTF(true);
+		}
 	}
 	
 	@FXML
