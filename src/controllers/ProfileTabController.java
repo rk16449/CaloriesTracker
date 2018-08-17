@@ -32,7 +32,7 @@ public class ProfileTabController implements Initializable {
 	private ArrayList<Node> refTF = new ArrayList<Node>();
 	
 	@FXML
-	ChoiceBox cbGender;
+	ChoiceBox<String> cbGender;
 
 	@FXML 
 	Button btnEditProfile, btnMetric, btnImperial;
@@ -74,6 +74,21 @@ public class ProfileTabController implements Initializable {
 		// Set all components disabled
 		disableTF(true);
 		
+		// Setup button underlines for units
+		updateButtonUnderline();
+		
+		// Setup choicebox
+		setupChoiceBox();
+	}
+	
+	private void setupChoiceBox() {
+		cbGender.setItems(FXCollections.observableArrayList(
+			    "Male", "Female", "Other"));
+		
+		
+	}
+	
+	private void updateButtonUnderline() {
 		// Setup buttons
 		if(units.equals("Metric")) {
 			btnMetric.setUnderline(true);
@@ -117,11 +132,13 @@ public class ProfileTabController implements Initializable {
 	
 	@FXML
 	protected void handleMetric(ActionEvent event) throws IOException {
-		
+		units = "Metric";
+		updateButtonUnderline();
 	}
 	
 	@FXML
 	protected void handleImperial(ActionEvent event) throws IOException {
-		
+		units = "Imperial";
+		updateButtonUnderline();
 	}
 }
