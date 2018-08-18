@@ -21,6 +21,11 @@ public class Person {
 	private Person() {
 
 	}
+	
+	private double getTDEE() {
+		// Calculates TDEE and returns it
+		return TDEE;
+	}
 
 	public String getFirstName() {
 		return firstName;
