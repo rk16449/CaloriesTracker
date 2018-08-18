@@ -2,7 +2,10 @@ package model;
 
 public class Goal extends Item {
 	
-	public Goal(String name) {
+	private double multiplier;
+	
+	public Goal(String name, double multiplier) {
 		super(name);
+		this.multiplier = multiplier;
 	}
 }
