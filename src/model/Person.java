@@ -15,6 +15,7 @@ public class Person {
 	private String gender = "Male";
 	private String firstName = "Hello";
 	private String lastName = "World";
+	private double TDEE = 0;
 
 	/* Singleton class */
 	private Person() {
