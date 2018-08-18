@@ -13,9 +13,16 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 public class GoalsTabController implements Initializable {
 
+	@FXML TextField tfCurrentGoal;
+	
+	@FXML Button btnMaintainWeight, btnGainWeight, btnLoseWeight;
+	
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 	}
