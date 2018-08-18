@@ -7,19 +7,20 @@ public class Person {
 	/*
 	 * Keep track of users: age, height, weight
 	 */
-	private int age;
-	private double weight;
-	private double height;
-	private String gender;
-	private String firstName;
-	private String lastName;
+	private int age = 20;
+	private double weight = 70;
+	private double height = 183;
+	private double bodyfat = 19.0;
+	private double waist = 85;
+	private String gender = "Male";
+	private String firstName = "Hello";
+	private String lastName = "World";
 
 	/* Singleton class */
 	private Person() {
 
 	}
-	
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -39,15 +40,15 @@ public class Person {
 	public String getGender() {
 		return gender;
 	}
-	
-	//static block initialization for exception handling
-    static{
-        try{
-            instance = new Person();
-        }catch(Exception e){
-            throw new RuntimeException("Exception occured in creating singleton user instance");
-        }
-    }
+
+	// static block initialization for exception handling
+	static {
+		try {
+			instance = new Person();
+		} catch (Exception e) {
+			throw new RuntimeException("Exception occured in creating singleton user instance");
+		}
+	}
 
 	public static Person getInstance() {
 		return instance;
@@ -81,15 +82,11 @@ public class Person {
 		this.gender = newValue;
 	}
 
-
 	public double getBodyfat() {
-		// TODO Auto-generated method stub
-		return 0;
+		return bodyfat;
 	}
 
-
 	public double getWaist() {
-		// TODO Auto-generated method stub
-		return 0;
+		return waist;
 	}
 }

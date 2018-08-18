@@ -76,6 +76,8 @@ public class ProfileTabController implements Initializable {
 		tfHeight.setText(Double.toString(Person.getInstance().getHeight()));
 		tfBodyfat.setText(Double.toString(Person.getInstance().getBodyfat()));
 		tfWaist.setText(Double.toString(Person.getInstance().getWaist()));
+		
+		cbGender.setValue(Person.getInstance().getGender());
 
 		
 		// Add textfields into a reference arraylist (so we can loop better)
