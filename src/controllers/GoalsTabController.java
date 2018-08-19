@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import model.Activity;
 import model.Goal;
 import model.Person;
 
@@ -23,6 +24,9 @@ public class GoalsTabController implements Initializable {
 	
 	private Double BMR;
 	private Goal currentGoal;
+	
+	
+	private ArrayList<Activity> activities = new ArrayList<Activity>();
 	private ArrayList<Goal> goals = new ArrayList<Goal>();
 	
 	private void calculateBMR() {
@@ -39,7 +43,21 @@ public class GoalsTabController implements Initializable {
 	
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setupActivityLevels();
+		setupGoals();
+	}
+	
+	private void setupActivityLevels() {
+		Activity sedentary = new Activity("Sedentary", 1.2);
+		Activity lightlyActive = new Activity("Lightly Active", 1.375);
+		Activity moderateActive = new Activity("Moderately Active", 1.55);
+		Activity veryActive = new Activity("Very Active", 1.725);
+		Activity extremelyActive = new Activity("Extremely Active", 1.9);
 		
+		activities.addAll(Arrays.asList(sedentary, lightlyActive, moderateActive, veryActive, extremelyActive));	
+	}
+	
+	private void setupGoals() {
 		// Create the types of goals
 		Goal loseWeight = new Goal("Lose Weight", 0.8);
 		Goal maintainWeight = new Goal("Maintain Weight", 1.0);
