@@ -31,7 +31,7 @@ public class GoalsTabController implements Initializable {
 	@FXML
 	ChoiceBox<Activity> cbActivityLevel;
 
-	private Double BMR;
+	private Double BMR, TDEE;
 	private Goal currentGoal;
 	private Activity currentActivity;
 
@@ -50,6 +50,10 @@ public class GoalsTabController implements Initializable {
 			// age in Yrs)
 			BMR = 655 + (9.6 * p.getWeight()) + (1.8 * p.getHeight()) - (4.7 * p.getAge());
 		}
+	}
+	
+	private void calculateTDEE() {
+		TDEE = BMR * currentActivity.getActivityLevel();
 	}
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -108,6 +112,9 @@ public class GoalsTabController implements Initializable {
 
 		calculateBMR();
 		tfBMR.setText(BMR.toString());
+		
+		calculateTDEE();
+		tfTDEE.setText(TDEE.toString());
 	}
 
 	@FXML
