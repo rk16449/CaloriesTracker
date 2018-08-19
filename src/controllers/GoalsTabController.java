@@ -13,15 +13,24 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import model.Goal;
+import model.Person;
 
 public class GoalsTabController implements Initializable {
 
-	@FXML TextField tfCurrentGoal;
+	@FXML TextField tfCurrentGoal, tfTDEE, tfBMR;
 	
 	@FXML Button btnMaintainWeight, btnGainWeight, btnLoseWeight;
 	
+	private Double BMR;
 	private Goal currentGoal;
 	private ArrayList<Goal> goals = new ArrayList<Goal>();
+	
+	private void calculateBMR() {
+		Person p = Person.getInstance();
+		// Formula - BMR = 66 + (13.75 x weight in kg) + (5 x height in cm) – (6.8 x age in yrs)
+		BMR = 66 + (13.75 * p.getWeight()) + (5 * p.getHeight()) - (6.8 * p.getAge());
+	}
+	
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -45,6 +54,9 @@ public class GoalsTabController implements Initializable {
 	private void updateGoal(String name) {
 		currentGoal = getGoal(name);
 		tfCurrentGoal.setText(currentGoal.getName());
+		
+		calculateBMR();
+		tfBMR.setText(BMR.toString());
 	}
 	
 	@FXML
