@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import model.Activity;
 import model.Goal;
@@ -18,9 +20,11 @@ import model.Person;
 
 public class GoalsTabController implements Initializable {
 
-	@FXML TextField tfCurrentGoal, tfTDEE, tfBMR;
+	@FXML TextField tfCurrentGoal, tfTDEE, tfBMR, tfCaloricReqs;
 	
 	@FXML Button btnMaintainWeight, btnGainWeight, btnLoseWeight;
+	
+	@FXML ChoiceBox<Activity> cbActivityLevel;
 	
 	private Double BMR;
 	private Goal currentGoal;
@@ -54,7 +58,10 @@ public class GoalsTabController implements Initializable {
 		Activity veryActive = new Activity("Very Active", 1.725);
 		Activity extremelyActive = new Activity("Extremely Active", 1.9);
 		
-		activities.addAll(Arrays.asList(sedentary, lightlyActive, moderateActive, veryActive, extremelyActive));	
+		activities.addAll(Arrays.asList(sedentary, lightlyActive, moderateActive, veryActive, extremelyActive));
+		
+		// Fill choicebox with Activities
+		cbActivityLevel.setItems(FXCollections.observableArrayList(activities));
 	}
 	
 	private void setupGoals() {

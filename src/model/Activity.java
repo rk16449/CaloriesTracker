@@ -17,4 +17,8 @@ public class Activity extends Item {
 	public void setActivityLevel(double activityLevel) {
 		this.activityLevel = activityLevel;
 	}
+	
+	public String toString() {
+		return this.getName();
+	}
 }
