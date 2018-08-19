@@ -18,9 +18,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="909.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GoalsTabController">
    <children>
-      <Button fx:id="btnLoseWeight" layoutX="104.0" layoutY="390.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Lose Weight" />
-      <Button fx:id="btnMaintainWeight" layoutX="379.0" layoutY="390.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Maintain Weight" />
-      <Button fx:id="btnGainWeight" layoutX="656.0" layoutY="390.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Gain Weight" />
+      <Button fx:id="btnLoseWeight" layoutX="104.0" layoutY="390.0" mnemonicParsing="false" onAction="#handleLoseWeight" prefHeight="37.0" prefWidth="109.0" text="Lose Weight" />
+      <Button fx:id="btnMaintainWeight" layoutX="379.0" layoutY="390.0" mnemonicParsing="false" onAction="#handleMaintainWeight" prefHeight="37.0" prefWidth="109.0" text="Maintain Weight" />
+      <Button fx:id="btnGainWeight" layoutX="656.0" layoutY="390.0" mnemonicParsing="false" onAction="#handleGainWeight" prefHeight="37.0" prefWidth="109.0" text="Gain Weight" />
       <VBox layoutX="80.0" layoutY="282.0" prefHeight="90.0" prefWidth="185.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Losing Weight text here" wrappingWidth="126.140625" />
