@@ -27,8 +27,14 @@ public class GoalsTabController implements Initializable {
 	
 	private void calculateBMR() {
 		Person p = Person.getInstance();
-		// Formula - BMR = 66 + (13.75 x weight in kg) + (5 x height in cm) – (6.8 x age in yrs)
-		BMR = 66 + (13.75 * p.getWeight()) + (5 * p.getHeight()) - (6.8 * p.getAge());
+		
+		if(p.getGender().equals("Male")) {
+			// Formula - BMR = 66 + (13.75 x weight in kg) + (5 x height in cm) – (6.8 x age in yrs)
+			BMR = 66 + (13.75 * p.getWeight()) + (5 * p.getHeight()) - (6.8 * p.getAge());
+		}else if(p.getGender().equals("Female")) {
+			// Formula - BMR = 655 + (9.6 x weight in kg) + (1.8 x height in cm) – (4.7 x age in Yrs)
+			BMR = 655 + (9.6 * p.getWeight()) + (1.8 * p.getHeight()) - (4.7 * p.getAge());
+		}
 	}
 	
 	
