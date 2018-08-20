@@ -89,6 +89,7 @@ public class SummaryTabController implements Initializable {
 	}
 	
 	public void update() {
+		updateProgressBar();
 		updatePieChart();
 		updateBarChart();
 	}
