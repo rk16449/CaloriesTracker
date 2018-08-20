@@ -69,7 +69,7 @@ public class SummaryTabController implements Initializable {
 	
 	private void updateProgressBar() {
 		// Finds out the current goal of calories is
-		
+		totalCalories = GoalsTabController.GoalCalories;
 		// Changes the max values to the calorie goal
 		
 		// Adjusts the current total food calories to the value of the progress bar

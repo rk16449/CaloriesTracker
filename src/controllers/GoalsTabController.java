@@ -31,7 +31,8 @@ public class GoalsTabController implements Initializable {
 	@FXML
 	ChoiceBox<Activity> cbActivityLevel;
 
-	private Double BMR, TDEE, GoalCalories;
+	private Double BMR, TDEE;
+	public static double GoalCalories;
 	private Goal currentGoal;
 	private Activity currentActivity;
 
@@ -117,7 +118,7 @@ public class GoalsTabController implements Initializable {
 		tfTDEE.setText(TDEE.toString());
 		
 		GoalCalories = TDEE * currentGoal.getMultiplier();
-		tfCaloricReqs.setText(GoalCalories.toString());
+		tfCaloricReqs.setText(Double.toString(GoalCalories));
 	}
 
 	@FXML
