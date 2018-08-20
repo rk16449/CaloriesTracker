@@ -40,7 +40,7 @@ public class SummaryTabController implements Initializable {
 	
 	// Object holding values of doubles
 	private Double calories = (double) 0, protein = (double) 0, fats = (double) 0, carbs = (double) 0;
-	private Double totalCalories = (double) 3200;
+	private double totalCalories = (double) 3200;
 	
 	
 	// Pie chart data
@@ -92,9 +92,10 @@ public class SummaryTabController implements Initializable {
 	}
 	
 	public void update() {
-		updateProgressBar();
+		updateTotalValues();
 		updatePieChart();
 		updateBarChart();
+		updateProgressBar();
 	}
 	
 	private void updateTotalValues() {
