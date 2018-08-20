@@ -40,7 +40,9 @@ public class SummaryTabController implements Initializable {
 	
 	// Object holding values of doubles
 	private Double calories = (double) 0, protein = (double) 0, fats = (double) 0, carbs = (double) 0;
-
+	private Double totalCalories = (double) 3200;
+	
+	
 	// Pie chart data
 	private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 	private ArrayList<PieChart.Data> addedSlices = new ArrayList<PieChart.Data>();
@@ -71,6 +73,7 @@ public class SummaryTabController implements Initializable {
 		// Changes the max values to the calorie goal
 		
 		// Adjusts the current total food calories to the value of the progress bar
+		progressBarCalories.setProgress(calories / totalCalories);
 	}
 	
 	private void setupPieChart() {
