@@ -8,4 +8,8 @@ public class Goal extends Item {
 		super(name);
 		this.multiplier = multiplier;
 	}
+	
+	public double getMultiplier() {
+		return this.multiplier;
+	}
 }
