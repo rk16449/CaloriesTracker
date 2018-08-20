@@ -31,7 +31,7 @@
          <children>
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="303.0" text="Daily Goal" />
             <ProgressBar fx:id="progressBarCalories" opacity="0.8" prefHeight="18.0" prefWidth="286.0" progress="0.76" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="303.0" text="Weight gain, medium intensity, 3200 Calories" />
+            <Label fx:id="labelCalories" alignment="CENTER" prefHeight="17.0" prefWidth="303.0" text="Weight gain, medium intensity, 3200 Calories" />
          </children>
       </VBox>
    </children>

@@ -76,6 +76,9 @@ public class SummaryTabController implements Initializable {
 		
 		// Adjusts the current total food calories to the value of the progress bar
 		progressBarCalories.setProgress(calories / totalCalories);
+		
+		// Text form of values 
+		labelCalories.setText("Calories remaining: " + Double.toString(calories) + " / " + Double.toString(totalCalories));
 	}
 	
 	private void setupPieChart() {
