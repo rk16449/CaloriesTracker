@@ -60,8 +60,17 @@ public class SummaryTabController implements Initializable {
 		dailyProgress.setLegendVisible(false);
 
 		// Setup bar chart based of total calories per day
+		updateProgressBar();
 		updateBarChart();
 		updatePieChart();
+	}
+	
+	private void updateProgressBar() {
+		// Finds out the current goal of calories is
+		
+		// Changes the max values to the calorie goal
+		
+		// Adjusts the current total food calories to the value of the progress bar
 	}
 	
 	private void setupPieChart() {
