@@ -71,7 +71,7 @@ public class MainProgramController implements Initializable {
 	        
 	        if(newTab == tabDashboard) {
 	        	// Run an update on the barchart pie chart etc
-	        	SummaryTabController.updateBarChart();
+	        	SummaryTabController.update();
 	        }
 	    });
 		

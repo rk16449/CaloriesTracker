@@ -49,6 +49,10 @@ public class DietTabController implements Initializable {
 	@FXML
 	private DatePicker datePickerDiet;
 
+	
+	// Object holding values of doubles
+	private Double calories = (double) 0, protein = (double) 0, fats = (double) 0, carbs = (double) 0;
+
 	// Pie chart data
 	private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 	private ArrayList<PieChart.Data> addedSlices = new ArrayList<PieChart.Data>();
@@ -58,9 +62,7 @@ public class DietTabController implements Initializable {
 	// Hold the objects of foods local memory
 	private ArrayList<Food> addedFoods = new ArrayList<Food>();
 
-	// Object holding values of doubles
-	private Double calories = (double) 0, protein = (double) 0, fats = (double) 0, carbs = (double) 0;
-
+	
 	// Used to check the current loaded date and day
 	private static LocalDate currentDate;
 	private static Day currentDay;
@@ -152,7 +154,7 @@ public class DietTabController implements Initializable {
 	}
 
 	// Finds the current Day in the days ArrayList (used to set currentDay)
-	private Day getDay(LocalDate date) {
+	public static Day getDay(LocalDate date) {
 		for (int i = 0; i < days.size(); i++) {
 			Day d = days.get(i);
 
