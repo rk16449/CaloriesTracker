@@ -21,6 +21,7 @@ public class Person {
 	private double BMI = 0;
 	private double BMR = 0;
 	private double TDEE = 0;
+	private String units = "Metric";
 	
 
 	/* Singleton class */
@@ -132,5 +133,13 @@ public class Person {
 
 	public void setCurrentGoal(Goal currentGoal) {
 		this.currentGoal = currentGoal;
+	}
+
+	public String getUnits() {
+		return units;
+	}
+
+	public void setUnits(String units) {
+		this.units = units;
 	}
 }
