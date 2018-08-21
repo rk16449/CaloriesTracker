@@ -7,6 +7,8 @@ public class Person {
 	/*
 	 * Keep track of users: age, height, weight
 	 */
+	private Goal currentGoal;
+	private String activityLevel = "Sedentary";
 	private int age = 20;
 	private double weight = 70;
 	private double height = 183;
@@ -15,6 +17,8 @@ public class Person {
 	private String gender = "Male";
 	private String firstName = "Hello";
 	private String lastName = "World";
+	private double BMI = 0;
+	private double BMR = 0;
 	private double TDEE = 0;
 
 	/* Singleton class */
@@ -22,6 +26,22 @@ public class Person {
 
 	}
 	
+	public String getActivityLevel() {
+		return activityLevel;
+	}
+
+	public void setActivityLevel(String activityLevel) {
+		this.activityLevel = activityLevel;
+	}
+
+	public void setBodyfat(double bodyfat) {
+		this.bodyfat = bodyfat;
+	}
+
+	public void setWaist(double waist) {
+		this.waist = waist;
+	}
+
 	private double getTDEE() {
 		// Calculates TDEE and returns it
 		return TDEE;
