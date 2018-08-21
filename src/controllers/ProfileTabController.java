@@ -150,6 +150,15 @@ public class ProfileTabController implements Initializable {
 			// Activate textfields
 			disableTF(false);
 		}else {
+			// Save changes to Profile
+			Person.getInstance().setFirstName(tfFirstName.getText());
+			Person.getInstance().setLastName(tfLastName.getText());
+			Person.getInstance().setAge(Integer.parseInt(tfAge.getText()));
+			Person.getInstance().setWeight(Double.parseDouble(tfWeight.getText()));
+			Person.getInstance().setHeight(Double.parseDouble(tfHeight.getText()));
+			Person.getInstance().setGender(cbGender.getValue());
+
+			
 			btnEditProfile.setText("Edit Profile");
 			
 			// Disable the textfields
