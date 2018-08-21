@@ -8,7 +8,7 @@ public class Person {
 	 * Keep track of users: age, height, weight
 	 */
 	private Goal currentGoal;
-	private String activityLevel = "Sedentary";
+	private Activity activityLevel = new Activity("Sedentary", 1.2);
 	private int age = 20;
 	private double weight = 70;
 	private double height = 183;
@@ -26,11 +26,11 @@ public class Person {
 
 	}
 	
-	public String getActivityLevel() {
+	public Activity getActivityLevel() {
 		return activityLevel;
 	}
 
-	public void setActivityLevel(String activityLevel) {
+	public void setActivityLevel(Activity activityLevel) {
 		this.activityLevel = activityLevel;
 	}
 

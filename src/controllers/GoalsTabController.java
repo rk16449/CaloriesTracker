@@ -61,6 +61,24 @@ public class GoalsTabController implements Initializable {
 		setupActivityLevels();
 		setupGoals();
 	}
+	
+	private Activity getActivityLevel(Activity ac) {
+		
+		for(int i=0; i<activities.size(); i++) {
+			
+			System.out.println(activities.get(i).getName());
+			// Basically checks the activity stored on person with all the activities 
+			// and returns the one exactly the same as the person one in here
+			
+			
+			if(activities.get(i).getActivityLevel() == ac.getActivityLevel()) {
+				System.out.println("ACTIVITY FOUND!!");
+				return activities.get(i);
+			}
+		}
+
+		return null;
+	}
 
 	private void setupActivityLevels() {
 		Activity sedentary = new Activity("Sedentary", 1.2);
@@ -73,6 +91,10 @@ public class GoalsTabController implements Initializable {
 
 		// Fill choicebox with Activities
 		cbActivityLevel.setItems(FXCollections.observableArrayList(activities));
+		
+		System.out.println("Setting activity level here -----");
+		cbActivityLevel.setValue(getActivityLevel(Person.getInstance().getActivityLevel()));
+		
 
 		// Add event listener
 		ChangeListener<Activity> changeListener = new ChangeListener<Activity>() {
