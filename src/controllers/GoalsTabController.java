@@ -81,6 +81,10 @@ public class GoalsTabController implements Initializable {
 	}
 
 	private void setupActivityLevels() {
+		
+		// Set value of the currentActivity
+		currentActivity = Person.getInstance().getActivityLevel();
+		
 		Activity sedentary = new Activity("Sedentary", 1.2);
 		Activity lightlyActive = new Activity("Lightly Active", 1.375);
 		Activity moderateActive = new Activity("Moderately Active", 1.55);
