@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import main.Helper;
 import model.Activity;
 import model.Goal;
 import model.Person;
@@ -138,13 +139,13 @@ public class GoalsTabController implements Initializable {
 		tfCurrentGoal.setText(currentGoal.getName());
 
 		calculateBMR();
-		tfBMR.setText(BMR.toString());
+		tfBMR.setText(Double.toString(Helper.round(BMR, 2)));
 		
 		calculateTDEE();
-		tfTDEE.setText(TDEE.toString());
+		tfTDEE.setText(Double.toString(Helper.round(TDEE, 2)));
 		
 		GoalCalories = TDEE * currentGoal.getMultiplier();
-		tfCaloricReqs.setText(Double.toString(GoalCalories));
+		tfCaloricReqs.setText(Double.toString(Helper.round(GoalCalories, 2)));
 	}
 
 	@FXML
