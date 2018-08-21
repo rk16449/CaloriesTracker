@@ -180,6 +180,9 @@ public class ProfileTabController implements Initializable {
 			
 			double metricHeight = Double.parseDouble(tfHeight.getText()) / 0.0328084;
 			tfHeight.setText(Double.toString(metricHeight));
+			
+			double metricWaist = Double.parseDouble(tfWaist.getText()) / 0.393701;
+			tfWaist.setText(Double.toString(metricWaist));
 		}
 		
 		
@@ -188,14 +191,6 @@ public class ProfileTabController implements Initializable {
 		
 		
 		
-	}
-	
-	private String convertToImperial(String str) {
-		return Double.toString(Double.parseDouble(str) * 2.20462);
-	}
-	
-	private String convertToMetric(String str) {
-		return Double.toString(Double.parseDouble(str) / 2.20462);
 	}
 	
 	@FXML
@@ -210,6 +205,9 @@ public class ProfileTabController implements Initializable {
 			
 			double imperialHeight = Double.parseDouble(tfHeight.getText()) * 0.0328084;
 			tfHeight.setText(Double.toString(imperialHeight));
+			
+			double imperialWaist = Double.parseDouble(tfWaist.getText()) * 0.393701;
+			tfWaist.setText(Double.toString(imperialWaist));
 		}
 		
 		units = "Imperial";
