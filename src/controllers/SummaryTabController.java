@@ -19,6 +19,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import main.Helper;
 import model.Day;
 import model.Food;
 
@@ -74,11 +75,13 @@ public class SummaryTabController implements Initializable {
 		totalCalories = GoalsTabController.GoalCalories;
 		// Changes the max values to the calorie goal
 		
+		
+		double percentage = calories / totalCalories;
 		// Adjusts the current total food calories to the value of the progress bar
-		progressBarCalories.setProgress(calories / totalCalories);
+		progressBarCalories.setProgress(percentage);
 		
 		// Text form of values 
-		labelCalories.setText("Calories remaining: " + Double.toString(calories) + " / " + Double.toString(totalCalories));
+		labelCalories.setText("Calories remaining: " + Double.toString(Helper.round(calories, 2)) + " / " + Double.toString(Helper.round(totalCalories, 2)));
 	}
 	
 	private void setupPieChart() {
