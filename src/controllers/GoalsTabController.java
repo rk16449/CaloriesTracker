@@ -33,8 +33,10 @@ public class GoalsTabController implements Initializable {
 	ChoiceBox<Activity> cbActivityLevel;
 
 	private Double BMR, TDEE;
+	
 	private Goal currentGoal;
 	private Activity currentActivity;
+	
 	private ArrayList<Activity> activities = new ArrayList<Activity>();
 	private ArrayList<Goal> goals = new ArrayList<Goal>();
 
@@ -59,6 +61,8 @@ public class GoalsTabController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setupActivityLevels();
 		setupGoals();
+		
+		calculateValues();
 	}
 	
 	private Activity getActivityLevel(Activity ac) {
@@ -115,12 +119,17 @@ public class GoalsTabController implements Initializable {
 	}
 
 	private void setupGoals() {
+		// Setup currentGoal from Person
+		currentGoal = Person.getInstance().getCurrentGoal();
+		
 		// Create the types of goals
 		Goal loseWeight = new Goal("Lose Weight", 0.8);
 		Goal maintainWeight = new Goal("Maintain Weight", 1.0);
 		Goal gainWeight = new Goal("Gain Weight", 1.2);
 
 		goals.addAll(Arrays.asList(loseWeight, maintainWeight, gainWeight));
+		
+		tfCurrentGoal.setText(currentGoal.getName());
 	}
 
 	private Goal getGoal(String name) {
@@ -135,7 +144,11 @@ public class GoalsTabController implements Initializable {
 	private void updateGoal(String name) {
 		currentGoal = getGoal(name);
 		tfCurrentGoal.setText(currentGoal.getName());
-
+		
+		calculateValues();
+	}
+	
+	private void calculateValues() {
 		calculateBMR();
 		tfBMR.setText(Double.toString(Helper.round(BMR, 2)));
 		

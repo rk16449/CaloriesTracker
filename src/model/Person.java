@@ -7,9 +7,8 @@ public class Person {
 	/*
 	 * Keep track of users: age, height, weight
 	 */
-	private Goal currentGoal;
+	private Goal currentGoal = new Goal("Maintain Weight", 1.0);;
 	private  double goalCalories;
-	
 	private Activity activityLevel = new Activity("Sedentary", 1.2);
 	private int age = 20;
 	private double weight = 70;
@@ -125,5 +124,13 @@ public class Person {
 	
 	public void setGoalCalories(double value) {
 		this.goalCalories = value;
+	}
+
+	public Goal getCurrentGoal() {
+		return currentGoal;
+	}
+
+	public void setCurrentGoal(Goal currentGoal) {
+		this.currentGoal = currentGoal;
 	}
 }
