@@ -170,12 +170,34 @@ public class ProfileTabController implements Initializable {
 	
 	@FXML
 	protected void handleMetric(ActionEvent event) throws IOException {
+		
+		// Change values to metric if we was on Imperial before
+		if(units.equals("Imperial")) {
+			// TODO
+			
+			double metricWeight = Double.parseDouble(tfWeight.getText()) / 2.20462;
+			tfWeight.setText(Double.toString(metricWeight));
+		}
+		
+		
 		units = "Metric";
 		updateButtonUnderline();
+		
+		
+		
 	}
 	
 	@FXML
 	protected void handleImperial(ActionEvent event) throws IOException {
+		
+		// Change values to Imperial if we was on Metric before
+		if(units.equals("Metric")) {
+			// TODO
+			
+			double imperialWeight = Double.parseDouble(tfWeight.getText()) * 2.20462;
+			tfWeight.setText(Double.toString(imperialWeight));
+		}
+		
 		units = "Imperial";
 		updateButtonUnderline();
 	}
