@@ -111,6 +111,12 @@ public class GoalsTabController implements Initializable {
 				if (newValue != null) {
 					System.out.println("Activity: " + newValue);
 					currentActivity = newValue;
+					
+					// Save it into person
+					Person.getInstance().setActivityLevel(currentActivity);
+					
+					// Update values
+					calculateValues();
 				}
 			}
 		};
