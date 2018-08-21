@@ -157,6 +157,8 @@ public class ProfileTabController implements Initializable {
 			Person.getInstance().setWeight(Double.parseDouble(tfWeight.getText()));
 			Person.getInstance().setHeight(Double.parseDouble(tfHeight.getText()));
 			Person.getInstance().setGender(cbGender.getValue());
+			Person.getInstance().setWaist(Double.parseDouble(tfWaist.getText()));
+			Person.getInstance().setBodyfat(Double.parseDouble(tfBodyfat.getText()));
 
 			
 			btnEditProfile.setText("Edit Profile");
