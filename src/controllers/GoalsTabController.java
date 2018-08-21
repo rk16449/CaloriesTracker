@@ -181,4 +181,9 @@ public class GoalsTabController implements Initializable {
 	protected void handleMaintainWeight(ActionEvent event) throws IOException {
 		updateGoal("Maintain Weight");
 	}
+
+	public void update() {
+		// Updates everything on this tab page
+		calculateValues();
+	}
 }

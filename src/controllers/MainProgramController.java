@@ -34,6 +34,11 @@ public class MainProgramController implements Initializable {
 	@FXML
 	private SummaryTabController SummaryTabController;
 	
+	@FXML
+	private Tab tabGoals;
+	@FXML
+	private GoalsTabController GoalsTabController;
+	
 	
     @FXML
 	protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
@@ -72,6 +77,8 @@ public class MainProgramController implements Initializable {
 	        if(newTab == tabDashboard) {
 	        	// Run an update on the barchart pie chart etc
 	        	SummaryTabController.update();
+	        }else if(newTab == tabGoals) {
+	        	GoalsTabController.update();
 	        }
 	    });
 		

@@ -31,9 +31,9 @@
           </Tab>
         
         
-          <Tab text="Goals">
+          <Tab fx:id="tabGoals" text="Goals">
          	 <content>
-         	 	<fx:include source="goalsTab.fxml" />
+         	 	<fx:include fx:id="GoalsTab" source="goalsTab.fxml" />
          	 </content>
           </Tab>
           
