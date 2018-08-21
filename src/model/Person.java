@@ -8,6 +8,8 @@ public class Person {
 	 * Keep track of users: age, height, weight
 	 */
 	private Goal currentGoal;
+	private  double goalCalories;
+	
 	private Activity activityLevel = new Activity("Sedentary", 1.2);
 	private int age = 20;
 	private double weight = 70;
@@ -20,6 +22,7 @@ public class Person {
 	private double BMI = 0;
 	private double BMR = 0;
 	private double TDEE = 0;
+	
 
 	/* Singleton class */
 	private Person() {
@@ -114,5 +117,13 @@ public class Person {
 
 	public double getWaist() {
 		return waist;
+	}
+
+	public double getGoalCalories() {
+		return goalCalories;
+	}
+	
+	public void setGoalCalories(double value) {
+		this.goalCalories = value;
 	}
 }

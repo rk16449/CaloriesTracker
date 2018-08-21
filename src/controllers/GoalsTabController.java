@@ -33,10 +33,8 @@ public class GoalsTabController implements Initializable {
 	ChoiceBox<Activity> cbActivityLevel;
 
 	private Double BMR, TDEE;
-	public static double GoalCalories;
 	private Goal currentGoal;
 	private Activity currentActivity;
-
 	private ArrayList<Activity> activities = new ArrayList<Activity>();
 	private ArrayList<Goal> goals = new ArrayList<Goal>();
 
@@ -144,8 +142,10 @@ public class GoalsTabController implements Initializable {
 		calculateTDEE();
 		tfTDEE.setText(Double.toString(Helper.round(TDEE, 2)));
 		
-		GoalCalories = TDEE * currentGoal.getMultiplier();
-		tfCaloricReqs.setText(Double.toString(Helper.round(GoalCalories, 2)));
+		// This should be done internally inside Person
+		Person.getInstance().setGoalCalories(TDEE * currentGoal.getMultiplier());
+		
+		tfCaloricReqs.setText(Double.toString(Helper.round(Person.getInstance().getGoalCalories(), 2)));
 	}
 
 	@FXML

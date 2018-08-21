@@ -22,6 +22,7 @@ import javafx.scene.control.ProgressBar;
 import main.Helper;
 import model.Day;
 import model.Food;
+import model.Person;
 
 public class SummaryTabController implements Initializable {
 	@FXML
@@ -72,7 +73,7 @@ public class SummaryTabController implements Initializable {
 	
 	private void updateProgressBar() {
 		// Finds out the current goal of calories is
-		totalCalories = GoalsTabController.GoalCalories;
+		totalCalories = Person.getInstance().getGoalCalories();
 		// Changes the max values to the calorie goal
 		
 		
