@@ -151,6 +151,7 @@ public class ProfileTabController implements Initializable {
 			disableTF(false);
 		}else {
 			// Save changes to Profile
+			Person.getInstance().setUnits(units);
 			Person.getInstance().setFirstName(tfFirstName.getText());
 			Person.getInstance().setLastName(tfLastName.getText());
 			Person.getInstance().setAge(Integer.parseInt(tfAge.getText()));
