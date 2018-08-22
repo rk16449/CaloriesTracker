@@ -34,7 +34,7 @@ public class GoalsTabController implements Initializable {
 	// References to the 'current' selected Goal and Activity of this page
 	private Goal currentGoal;
 	private Activity currentActivity;
-	
+
 	// Holds all the different types of Activities and Goals we can 'change' to
 	private ArrayList<Activity> activities = new ArrayList<Activity>();
 	private ArrayList<Goal> goals = new ArrayList<Goal>();
@@ -43,7 +43,7 @@ public class GoalsTabController implements Initializable {
 	 * Runs when this controller is created, sets up the FXML objects and ArrayLists
 	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
 		// Setup FXML Components
 		setupActivityLevels();
 		setupGoals();
@@ -51,10 +51,13 @@ public class GoalsTabController implements Initializable {
 		// Calculate the TDEE, BMR of the person
 		calculateValues();
 	}
-	
+
 	/**
 	 * DEBATE - is this method doing more than one thing?
-	 * Sets up the goals ArrayList with various different types of Goals we can choose from
+	 * 
+	 * Sets up the goals ArrayList with various different types of Goals we can
+	 * choose from
+	 * 
 	 * Also sets the currentGoal textfield with what the Person has already
 	 */
 	private void setupGoals() {
@@ -70,7 +73,6 @@ public class GoalsTabController implements Initializable {
 
 		tfCurrentGoal.setText(currentGoal.getName());
 	}
-
 
 	/**
 	 * Create the activity objects and fill them into the cbActivityLevel ChoiceBox
@@ -93,7 +95,7 @@ public class GoalsTabController implements Initializable {
 
 		// Fill ChoiceBox with Activities
 		cbActivityLevel.setItems(FXCollections.observableArrayList(activities));
-		
+
 		// Set the loaded value of the ChoiceBox to what the Person has set
 		cbActivityLevel.setValue(getActivityLevel(Person.getInstance().getActivityLevel()));
 
@@ -103,7 +105,7 @@ public class GoalsTabController implements Initializable {
 			public void changed(ObservableValue<? extends Activity> observable, //
 					Activity oldValue, Activity newValue) {
 				if (newValue != null) {
-					
+
 					// Set the currentActivity of this page
 					currentActivity = newValue;
 
@@ -118,16 +120,17 @@ public class GoalsTabController implements Initializable {
 		// Selected Item Changed.
 		cbActivityLevel.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
-	
 
 	/**
-	 * Retrieves an identical activity (same activity level) 
-	 * from the activities ArrayList to the persons activity
-	 * @param ac The Activity object we want to check exists
+	 * Retrieves an identical activity (same activity level) from the activities
+	 * ArrayList to the persons activity
+	 * 
+	 * @param ac
+	 *            The Activity object we want to check exists
 	 * @return Activity object
 	 * @throws NullPointerException
 	 */
-	private Activity getActivityLevel(Activity ac) throws NullPointerException{
+	private Activity getActivityLevel(Activity ac) throws NullPointerException {
 		for (int i = 0; i < activities.size(); i++) {
 			if (activities.get(i).getActivityLevel() == ac.getActivityLevel()) {
 				return activities.get(i);
@@ -135,10 +138,12 @@ public class GoalsTabController implements Initializable {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Retrieves an identical goal object with same names
-	 * @param name of the goal
+	 * 
+	 * @param name
+	 *            of the goal
 	 * @return Goal object with same name from goals ArrayList
 	 */
 	private Goal getGoal(String name) {
@@ -149,19 +154,27 @@ public class GoalsTabController implements Initializable {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * DEBATE - this could be moved into Person class
-	 * Calculates the 'Basal Metabolic Rate' of a person based off his gender, weight and height
-	 * Also converts back into Metric for the calculation if we are in Imperial units
+	 * DEBATE - this could be moved into Person class.
+	 * 
+	 * Calculates the 'Basal Metabolic Rate' of a person based off his gender,
+	 * weight and height
+	 * 
+	 * Also converts back into Metric for the calculation if we are in Imperial
+	 * units
+	 * 
+	 * Formula for Males BMR = 66 + (13.75 x weight in kg) + (5 x height in cm) –
+	 * (6.8 x age in yrs)
+	 * 
+	 * Formula for Females BMR = 655 + (9.6 x weight in kg) + (1.8 x height in cm) –
+	 * (4.7 x age in Yrs)
+	 * 
 	 */
 	private void calculateBMR() {
 		Person p = Person.getInstance();
 
 		if (p.getGender().equals("Male")) {
-			// Formula - BMR = 66 + (13.75 x weight in kg) + (5 x height in cm) – (6.8 x age
-			// in yrs)
-
 			// Check what units we are in and convert to Metric
 			if (p.getUnits().equals("Imperial")) {
 				// Use the converted BMR
@@ -172,9 +185,6 @@ public class GoalsTabController implements Initializable {
 			}
 
 		} else if (p.getGender().equals("Female")) {
-			// Formula - BMR = 655 + (9.6 x weight in kg) + (1.8 x height in cm) – (4.7 x
-			// age in Yrs)
-
 			if (p.getUnits().equals("Imperial")) {
 				// Use converted BMR to metric
 				p.setBMR(665
@@ -187,33 +197,22 @@ public class GoalsTabController implements Initializable {
 	}
 
 	/**
-	 * DEBATE - this could be done inside Person class
-	 * Calculates a Person's Total Daily Energy Expenditure based off his BMR and activity level
+	 * DEBATE - this could be done inside Person class.
+	 * 
+	 * Calculates a Person's Total Daily Energy Expenditure based off his BMR and
+	 * activity level
 	 */
 	private void calculateTDEE() {
 		Person.getInstance().setTDEE(Person.getInstance().getBMR() * currentActivity.getActivityLevel());
 	}
 
-
 	/**
-	 * Updates the TextField 'tfCurrentGoal' with the newly selected Goal, also changes the currentGoal object
-	 * and recalculates BMR and TDEE based off new goal
-	 * @param name
-	 */
-	private void updateGoal(String name) {
-		currentGoal = getGoal(name);
-		tfCurrentGoal.setText(currentGoal.getName());
-
-		calculateValues();
-	}
-
-	/**
-	 * Calls separate methods to calculate the values of BMR and TDEE as well as setting the 
-	 * Total Calories required for a Person to reach his Goal, also updates the TextField with
-	 * calories goal amount
+	 * Calls separate methods to calculate the values of BMR and TDEE as well as
+	 * setting the Total Calories required for a Person to reach his Goal, also
+	 * updates the TextField with calories goal amount
 	 */
 	private void calculateValues() {
-		
+
 		// Recalculate and set textfields
 		calculateBMR();
 		tfBMR.setText(Double.toString(Helper.round(Person.getInstance().getBMR(), 2)));
@@ -227,7 +226,37 @@ public class GoalsTabController implements Initializable {
 		tfCaloricReqs.setText(Double.toString(Helper.round(Person.getInstance().getGoalCalories(), 2)));
 	}
 
-	// FXML buttons which will call 'updateGoal' and change the Goal Type
+	/**
+	 * Update method which will update everything inside this controller, this is
+	 * used in MainProgramController and called whenever we switch back to this tab
+	 */
+	public void update() {
+		calculateValues();
+	}
+
+	/**
+	 * Updates the TextField 'tfCurrentGoal' with the newly selected Goal, also
+	 * changes the currentGoal object and recalculates BMR and TDEE based off new
+	 * goal
+	 * 
+	 * @param name
+	 */
+	private void updateGoal(String name) {
+		// set the 'current' Goal object of this controller
+		currentGoal = getGoal(name);
+
+		// set the TextField value of this current Goal
+		tfCurrentGoal.setText(currentGoal.getName());
+
+		// update the values of BMR and TDEE based of changes
+		calculateValues();
+	}
+
+	/***********************************************************************
+	 * FXML button handlers
+	 * 
+	 * FXML buttons which will call 'updateGoal' and change the Goal Type
+	 *********************************************************************/
 	@FXML
 	protected void handleLoseWeight(ActionEvent event) throws IOException {
 		updateGoal("Lose Weight");
@@ -241,14 +270,5 @@ public class GoalsTabController implements Initializable {
 	@FXML
 	protected void handleMaintainWeight(ActionEvent event) throws IOException {
 		updateGoal("Maintain Weight");
-	}
-
-	/**
-	 * Update method which will update everything inside this controller, this is 
-	 * used in MainProgramController and called whenever we switch back to this tab
-	 */
-	public void update() {
-		// Updates everything on this tab page
-		calculateValues();
 	}
 }
