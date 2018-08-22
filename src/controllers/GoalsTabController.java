@@ -23,17 +23,19 @@ import model.Person;
 
 public class GoalsTabController implements Initializable {
 
+	// References to FXML components
 	@FXML
-	TextField tfCurrentGoal, tfTDEE, tfBMR, tfCaloricReqs;
-
+	private TextField tfCurrentGoal, tfTDEE, tfBMR, tfCaloricReqs;
 	@FXML
-	Button btnMaintainWeight, btnGainWeight, btnLoseWeight;
-
+	private Button btnMaintainWeight, btnGainWeight, btnLoseWeight;
 	@FXML
-	ChoiceBox<Activity> cbActivityLevel;
+	private ChoiceBox<Activity> cbActivityLevel;
 
+	// References to the 'current' selected Goal and Activity of this page
 	private Goal currentGoal;
 	private Activity currentActivity;
+	
+	// Holds all the different types of Activities and Goals we can 'change' to
 	private ArrayList<Activity> activities = new ArrayList<Activity>();
 	private ArrayList<Goal> goals = new ArrayList<Goal>();
 
@@ -49,22 +51,26 @@ public class GoalsTabController implements Initializable {
 		// Calculate the TDEE, BMR of the person
 		calculateValues();
 	}
-
+	
 	/**
-	 * Retrieves an identical activity (same activity level) 
-	 * from the activities ArrayList to the persons activity
-	 * @param ac The Activity object we want to check exists
-	 * @return Activity object
-	 * @throws NullPointerException
+	 * DEBATE - is this method doing more than one thing?
+	 * Sets up the goals ArrayList with various different types of Goals we can choose from
+	 * Also sets the currentGoal textfield with what the Person has already
 	 */
-	private Activity getActivityLevel(Activity ac) throws NullPointerException{
-		for (int i = 0; i < activities.size(); i++) {
-			if (activities.get(i).getActivityLevel() == ac.getActivityLevel()) {
-				return activities.get(i);
-			}
-		}
-		return null;
+	private void setupGoals() {
+		// Setup currentGoal from Person
+		currentGoal = Person.getInstance().getCurrentGoal();
+
+		// Create the types of goals
+		Goal loseWeight = new Goal("Lose Weight", 0.8);
+		Goal maintainWeight = new Goal("Maintain Weight", 1.0);
+		Goal gainWeight = new Goal("Gain Weight", 1.2);
+
+		goals.addAll(Arrays.asList(loseWeight, maintainWeight, gainWeight));
+
+		tfCurrentGoal.setText(currentGoal.getName());
 	}
+
 
 	/**
 	 * Create the activity objects and fill them into the cbActivityLevel ChoiceBox
@@ -114,55 +120,27 @@ public class GoalsTabController implements Initializable {
 	}
 	
 
-	private void calculateBMR() {
-		Person p = Person.getInstance();
-
-		if (p.getGender().equals("Male")) {
-			// Formula - BMR = 66 + (13.75 x weight in kg) + (5 x height in cm) – (6.8 x age
-			// in yrs)
-
-			// Check what units we are in and convert to Metric
-			if (Person.getInstance().getUnits().equals("Imperial")) {
-				// Use the converted BMR
-				Person.getInstance().setBMR(66
-						+ (13.75 * (p.getWeight() / 2.20462) + (5 * (p.getHeight() / 0.0328084)) - (6.8 * p.getAge())));
-			} else {
-				Person.getInstance().setBMR(66 + (13.75 * p.getWeight()) + (5 * p.getHeight()) - (6.8 * p.getAge()));
+	/**
+	 * Retrieves an identical activity (same activity level) 
+	 * from the activities ArrayList to the persons activity
+	 * @param ac The Activity object we want to check exists
+	 * @return Activity object
+	 * @throws NullPointerException
+	 */
+	private Activity getActivityLevel(Activity ac) throws NullPointerException{
+		for (int i = 0; i < activities.size(); i++) {
+			if (activities.get(i).getActivityLevel() == ac.getActivityLevel()) {
+				return activities.get(i);
 			}
-
-		} else if (p.getGender().equals("Female")) {
-			// Formula - BMR = 655 + (9.6 x weight in kg) + (1.8 x height in cm) – (4.7 x
-			// age in Yrs)
-
-			if (Person.getInstance().getUnits().equals("Imperial")) {
-				// Use converted BMR to metric
-				Person.getInstance().setBMR(665
-						+ (9.6 * (p.getWeight() / 2.20462) + (1.8 * (p.getHeight() / 0.0328084)) - (4.7 * p.getAge())));
-			} else {
-				Person.getInstance().setBMR(655 + (9.6 * p.getWeight()) + (1.8 * p.getHeight()) - (4.7 * p.getAge()));
-			}
-
 		}
+		return null;
 	}
-
-	private void calculateTDEE() {
-		Person.getInstance().setTDEE(Person.getInstance().getBMR() * currentActivity.getActivityLevel());
-	}
-
-	private void setupGoals() {
-		// Setup currentGoal from Person
-		currentGoal = Person.getInstance().getCurrentGoal();
-
-		// Create the types of goals
-		Goal loseWeight = new Goal("Lose Weight", 0.8);
-		Goal maintainWeight = new Goal("Maintain Weight", 1.0);
-		Goal gainWeight = new Goal("Gain Weight", 1.2);
-
-		goals.addAll(Arrays.asList(loseWeight, maintainWeight, gainWeight));
-
-		tfCurrentGoal.setText(currentGoal.getName());
-	}
-
+	
+	/**
+	 * Retrieves an identical goal object with same names
+	 * @param name of the goal
+	 * @return Goal object with same name from goals ArrayList
+	 */
 	private Goal getGoal(String name) {
 		for (int i = 0; i < goals.size(); i++) {
 			if (goals.get(i).getName().equals(name)) {
@@ -171,7 +149,57 @@ public class GoalsTabController implements Initializable {
 		}
 		return null;
 	}
+	
+	/**
+	 * DEBATE - this could be moved into Person class
+	 * Calculates the 'Basal Metabolic Rate' of a person based off his gender, weight and height
+	 * Also converts back into Metric for the calculation if we are in Imperial units
+	 */
+	private void calculateBMR() {
+		Person p = Person.getInstance();
 
+		if (p.getGender().equals("Male")) {
+			// Formula - BMR = 66 + (13.75 x weight in kg) + (5 x height in cm) – (6.8 x age
+			// in yrs)
+
+			// Check what units we are in and convert to Metric
+			if (p.getUnits().equals("Imperial")) {
+				// Use the converted BMR
+				p.setBMR(66
+						+ (13.75 * (p.getWeight() / 2.20462) + (5 * (p.getHeight() / 0.0328084)) - (6.8 * p.getAge())));
+			} else {
+				p.setBMR(66 + (13.75 * p.getWeight()) + (5 * p.getHeight()) - (6.8 * p.getAge()));
+			}
+
+		} else if (p.getGender().equals("Female")) {
+			// Formula - BMR = 655 + (9.6 x weight in kg) + (1.8 x height in cm) – (4.7 x
+			// age in Yrs)
+
+			if (p.getUnits().equals("Imperial")) {
+				// Use converted BMR to metric
+				p.setBMR(665
+						+ (9.6 * (p.getWeight() / 2.20462) + (1.8 * (p.getHeight() / 0.0328084)) - (4.7 * p.getAge())));
+			} else {
+				p.setBMR(655 + (9.6 * p.getWeight()) + (1.8 * p.getHeight()) - (4.7 * p.getAge()));
+			}
+
+		}
+	}
+
+	/**
+	 * DEBATE - this could be done inside Person class
+	 * Calculates a Person's Total Daily Energy Expenditure based off his BMR and activity level
+	 */
+	private void calculateTDEE() {
+		Person.getInstance().setTDEE(Person.getInstance().getBMR() * currentActivity.getActivityLevel());
+	}
+
+
+	/**
+	 * Updates the TextField 'tfCurrentGoal' with the newly selected Goal, also changes the currentGoal object
+	 * and recalculates BMR and TDEE based off new goal
+	 * @param name
+	 */
 	private void updateGoal(String name) {
 		currentGoal = getGoal(name);
 		tfCurrentGoal.setText(currentGoal.getName());
@@ -179,19 +207,27 @@ public class GoalsTabController implements Initializable {
 		calculateValues();
 	}
 
+	/**
+	 * Calls separate methods to calculate the values of BMR and TDEE as well as setting the 
+	 * Total Calories required for a Person to reach his Goal, also updates the TextField with
+	 * calories goal amount
+	 */
 	private void calculateValues() {
+		
+		// Recalculate and set textfields
 		calculateBMR();
 		tfBMR.setText(Double.toString(Helper.round(Person.getInstance().getBMR(), 2)));
 
 		calculateTDEE();
 		tfTDEE.setText(Double.toString(Helper.round(Person.getInstance().getTDEE(), 2)));
 
-		// This should be done internally inside Person
+		// Set the new calorie goal for the Person
 		Person.getInstance().setGoalCalories(Person.getInstance().getTDEE() * currentGoal.getMultiplier());
 
 		tfCaloricReqs.setText(Double.toString(Helper.round(Person.getInstance().getGoalCalories(), 2)));
 	}
 
+	// FXML buttons which will call 'updateGoal' and change the Goal Type
 	@FXML
 	protected void handleLoseWeight(ActionEvent event) throws IOException {
 		updateGoal("Lose Weight");
@@ -207,6 +243,10 @@ public class GoalsTabController implements Initializable {
 		updateGoal("Maintain Weight");
 	}
 
+	/**
+	 * Update method which will update everything inside this controller, this is 
+	 * used in MainProgramController and called whenever we switch back to this tab
+	 */
 	public void update() {
 		// Updates everything on this tab page
 		calculateValues();
