@@ -8,25 +8,34 @@ public class Person {
 	 * Keep track of users: age, height, weight
 	 */
 	private Goal currentGoal = new Goal("Maintain Weight", 1.0);
-	private  double goalCalories;
 	private Activity activityLevel = new Activity("Sedentary", 1.2);
+	
+	private String firstName = "Hello";
+	private String lastName = "World";
+	private String units = "Metric";
+	private String gender = "Male";
 	private int age = 20;
 	private double weight = 70;
 	private double height = 183;
 	private double bodyfat = 19.0;
 	private double waist = 85;
-	private String gender = "Male";
-	private String firstName = "Hello";
-	private String lastName = "World";
 	private double BMI = 0;
 	private double BMR = 0;
 	private double TDEE = 0;
-	private String units = "Metric";
+	private  double goalCalories;
 	
-
 	/* Singleton class */
 	private Person() {
 
+	}
+	
+	// static block initialization for exception handling
+	static {
+		try {
+			instance = new Person();
+		} catch (Exception e) {
+			throw new RuntimeException("Exception occured in creating singleton user instance");
+		}
 	}
 	
 	public Activity getActivityLevel() {
@@ -71,15 +80,6 @@ public class Person {
 
 	public String getGender() {
 		return gender;
-	}
-
-	// static block initialization for exception handling
-	static {
-		try {
-			instance = new Person();
-		} catch (Exception e) {
-			throw new RuntimeException("Exception occured in creating singleton user instance");
-		}
 	}
 
 	public static Person getInstance() {
