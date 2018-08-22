@@ -37,89 +37,68 @@ public class GoalsTabController implements Initializable {
 	private ArrayList<Activity> activities = new ArrayList<Activity>();
 	private ArrayList<Goal> goals = new ArrayList<Goal>();
 
-	private void calculateBMR() {
-		Person p = Person.getInstance();
-
-		if (p.getGender().equals("Male")) {
-			// Formula - BMR = 66 + (13.75 x weight in kg) + (5 x height in cm) – (6.8 x age
-			// in yrs)
-
-			// Check what units we are in and convert to Metric
-			if (Person.getInstance().getUnits().equals("Imperial")) {
-				// Use the converted BMR
-				Person.getInstance().setBMR(66 + (13.75 * (p.getWeight() / 2.20462) + (5 * (p.getHeight() / 0.0328084)) - (6.8 * p.getAge())));
-			} else {
-				Person.getInstance().setBMR(66 + (13.75 * p.getWeight()) + (5 * p.getHeight()) - (6.8 * p.getAge()));
-			}
-
-		} else if (p.getGender().equals("Female")) {
-			// Formula - BMR = 655 + (9.6 x weight in kg) + (1.8 x height in cm) – (4.7 x
-			// age in Yrs)
-
-			if (Person.getInstance().getUnits().equals("Imperial")) {
-				// Use converted BMR to metric
-				Person.getInstance().setBMR(665 + (9.6 * (p.getWeight() / 2.20462) + (1.8 * (p.getHeight() / 0.0328084)) - (4.7 * p.getAge())));
-			} else {
-				Person.getInstance().setBMR(655 + (9.6 * p.getWeight()) + (1.8 * p.getHeight()) - (4.7 * p.getAge()));
-			}
-
-		}
-	}
-
-	private void calculateTDEE() {
-		Person.getInstance().setTDEE(Person.getInstance().getBMR() * currentActivity.getActivityLevel());
-	}
-
+	/**
+	 * Runs when this controller is created, sets up the FXML objects and ArrayLists
+	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		// Setup FXML Components
 		setupActivityLevels();
 		setupGoals();
 
+		// Calculate the TDEE, BMR of the person
 		calculateValues();
 	}
 
-	private Activity getActivityLevel(Activity ac) {
-
+	/**
+	 * Retrieves an identical activity (same activity level) 
+	 * from the activities ArrayList to the persons activity
+	 * @param ac The Activity object we want to check exists
+	 * @return Activity object
+	 * @throws NullPointerException
+	 */
+	private Activity getActivityLevel(Activity ac) throws NullPointerException{
 		for (int i = 0; i < activities.size(); i++) {
-
-			System.out.println(activities.get(i).getName());
-			// Basically checks the activity stored on person with all the activities
-			// and returns the one exactly the same as the person one in here
-
 			if (activities.get(i).getActivityLevel() == ac.getActivityLevel()) {
-				System.out.println("ACTIVITY FOUND!!");
 				return activities.get(i);
 			}
 		}
-
 		return null;
 	}
 
+	/**
+	 * Create the activity objects and fill them into the cbActivityLevel ChoiceBox
+	 * also code what happens whenever we change an activity
+	 */
 	private void setupActivityLevels() {
 
 		// Set value of the currentActivity
 		currentActivity = Person.getInstance().getActivityLevel();
 
+		// Create 5 different activities and set the multiplier level
 		Activity sedentary = new Activity("Sedentary", 1.2);
 		Activity lightlyActive = new Activity("Lightly Active", 1.375);
 		Activity moderateActive = new Activity("Moderately Active", 1.55);
 		Activity veryActive = new Activity("Very Active", 1.725);
 		Activity extremelyActive = new Activity("Extremely Active", 1.9);
 
+		// Add them to an ArrayList
 		activities.addAll(Arrays.asList(sedentary, lightlyActive, moderateActive, veryActive, extremelyActive));
 
-		// Fill choicebox with Activities
+		// Fill ChoiceBox with Activities
 		cbActivityLevel.setItems(FXCollections.observableArrayList(activities));
-
-		System.out.println("Setting activity level here -----");
+		
+		// Set the loaded value of the ChoiceBox to what the Person has set
 		cbActivityLevel.setValue(getActivityLevel(Person.getInstance().getActivityLevel()));
 
-		// Add event listener
+		// Add event listener for when we change the ChoiceBox
 		ChangeListener<Activity> changeListener = new ChangeListener<Activity>() {
 			@Override
 			public void changed(ObservableValue<? extends Activity> observable, //
 					Activity oldValue, Activity newValue) {
 				if (newValue != null) {
-					System.out.println("Activity: " + newValue);
+					
+					// Set the currentActivity of this page
 					currentActivity = newValue;
 
 					// Save it into person
@@ -132,6 +111,42 @@ public class GoalsTabController implements Initializable {
 		};
 		// Selected Item Changed.
 		cbActivityLevel.getSelectionModel().selectedItemProperty().addListener(changeListener);
+	}
+	
+
+	private void calculateBMR() {
+		Person p = Person.getInstance();
+
+		if (p.getGender().equals("Male")) {
+			// Formula - BMR = 66 + (13.75 x weight in kg) + (5 x height in cm) – (6.8 x age
+			// in yrs)
+
+			// Check what units we are in and convert to Metric
+			if (Person.getInstance().getUnits().equals("Imperial")) {
+				// Use the converted BMR
+				Person.getInstance().setBMR(66
+						+ (13.75 * (p.getWeight() / 2.20462) + (5 * (p.getHeight() / 0.0328084)) - (6.8 * p.getAge())));
+			} else {
+				Person.getInstance().setBMR(66 + (13.75 * p.getWeight()) + (5 * p.getHeight()) - (6.8 * p.getAge()));
+			}
+
+		} else if (p.getGender().equals("Female")) {
+			// Formula - BMR = 655 + (9.6 x weight in kg) + (1.8 x height in cm) – (4.7 x
+			// age in Yrs)
+
+			if (Person.getInstance().getUnits().equals("Imperial")) {
+				// Use converted BMR to metric
+				Person.getInstance().setBMR(665
+						+ (9.6 * (p.getWeight() / 2.20462) + (1.8 * (p.getHeight() / 0.0328084)) - (4.7 * p.getAge())));
+			} else {
+				Person.getInstance().setBMR(655 + (9.6 * p.getWeight()) + (1.8 * p.getHeight()) - (4.7 * p.getAge()));
+			}
+
+		}
+	}
+
+	private void calculateTDEE() {
+		Person.getInstance().setTDEE(Person.getInstance().getBMR() * currentActivity.getActivityLevel());
 	}
 
 	private void setupGoals() {
