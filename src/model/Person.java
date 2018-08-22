@@ -44,9 +44,12 @@ public class Person {
 	public void setWaist(double waist) {
 		this.waist = waist;
 	}
+	
+	public void setTDEE(double value) {
+		this.TDEE = value;
+	}
 
-	private double getTDEE() {
-		// Calculates TDEE and returns it
+	public double getTDEE() {
 		return TDEE;
 	}
 
@@ -141,5 +144,21 @@ public class Person {
 
 	public void setUnits(String units) {
 		this.units = units;
+	}
+
+	public double getBMR() {
+		return BMR;
+	}
+
+	public void setBMR(double bMR) {
+		BMR = bMR;
+	}
+
+	public double getBMI() {
+		return BMI;
+	}
+
+	public void setBMI(double bMI) {
+		BMI = bMI;
 	}
 }
