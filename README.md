@@ -38,6 +38,10 @@ Minimum Requirements:
 
 ![Main](../master/screenshots/loginpage.JPG)
 
+## Summary Page
+
+![Main](../master/screenshots/summaryPage.JPG)
+
 
 ## Diet Page
 

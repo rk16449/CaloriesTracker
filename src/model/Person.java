@@ -7,7 +7,7 @@ public class Person {
 	/*
 	 * Keep track of users: age, height, weight
 	 */
-	private Goal currentGoal = new Goal("Maintain Weight", 1.0);;
+	private Goal currentGoal = new Goal("Maintain Weight", 1.0);
 	private  double goalCalories;
 	private Activity activityLevel = new Activity("Sedentary", 1.2);
 	private int age = 20;
