@@ -20,6 +20,22 @@ public class Exercise extends Item {
 		return new SimpleStringProperty(this.getName());
 	}
 	
+	public StringProperty getStrSets() {
+		return new SimpleStringProperty(Integer.toString(sets));
+	}
+	
+	public StringProperty getStrReps() {
+		return new SimpleStringProperty(Integer.toString(reps));
+	}
+	
+	public StringProperty getStrWeight() {
+		return new SimpleStringProperty(Double.toString(weight));
+	}
+	
+	public StringProperty getStrCaloriesBurned() {
+		return new SimpleStringProperty(Double.toString(caloriesBurned));
+	}
+	
 	// Getters & Setters
 	
 	public int getReps() {
@@ -53,4 +69,5 @@ public class Exercise extends Item {
 	public void setCaloriesBurned(double caloriesBurned) {
 		this.caloriesBurned = caloriesBurned;
 	}
+
 }

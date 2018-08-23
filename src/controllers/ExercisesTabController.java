@@ -51,6 +51,10 @@ public class ExercisesTabController implements Initializable {
 	private void setupTable() {
 		
 		tcExercise.setCellValueFactory(e -> e.getValue().getStrExercise());
+		tcSets.setCellValueFactory(e -> e.getValue().getStrSets());
+		tcReps.setCellValueFactory(e -> e.getValue().getStrReps());
+		tcWeight.setCellValueFactory(e -> e.getValue().getStrWeight());
+		tcCaloriesBurned.setCellValueFactory(e -> e.getValue().getStrCaloriesBurned());
 	}
 	
 	@FXML
