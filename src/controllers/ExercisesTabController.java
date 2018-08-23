@@ -24,10 +24,12 @@ import model.Exercise;
 import model.Food;
 
 public class ExercisesTabController implements Initializable {
-
+	
+	// FXML Table
 	@FXML
 	TableView<Exercise> tvExercises;
 	
+	// FXML Columns
 	@FXML
 	TableColumn<Exercise, String> tcExercise, tcSets, tcReps, tcWeight, tcCaloriesBurned;
 	
@@ -37,6 +39,8 @@ public class ExercisesTabController implements Initializable {
 	@FXML
 	Button btnAddExercise, btnCustom, btnEdit, btnDelete;
 	
+	
+	// Start of ExercisesTabController runs on creation
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		setupDatePicker();
