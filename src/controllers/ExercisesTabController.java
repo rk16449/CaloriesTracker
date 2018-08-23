@@ -16,8 +16,10 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import model.Exercise;
+import model.Food;
 
 public class ExercisesTabController implements Initializable {
 
@@ -25,10 +27,20 @@ public class ExercisesTabController implements Initializable {
 	TableView<Exercise> tvExercises;
 	
 	@FXML
+	private TableColumn<Exercise, String> tcExercise, tcSets, tcReps, tcWeight, tcCaloriesBurned;
+	
+	@FXML
 	Button btnAddExercise, btnCustom, btnEdit, btnDelete;
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		setupTable();
+		
+	}
+	
+	private void setupTable() {
+		
+		tcExercise.setCellValueFactory(e -> e.getValue().getStrExercise());
 	}
 	
 	@FXML

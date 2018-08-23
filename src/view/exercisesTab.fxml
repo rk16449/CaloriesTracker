@@ -20,11 +20,11 @@
    <children>
       <TableView fx:id="tvExercises" layoutX="37.0" layoutY="133.0" prefHeight="307.0" prefWidth="429.0">
         <columns>
-          <TableColumn prefWidth="87.0" text="Exercise" />
-            <TableColumn prefWidth="64.0" text="Sets" />
-          <TableColumn prefWidth="73.0" text="Reps" />
-            <TableColumn prefWidth="85.0" text="Weight" />
-            <TableColumn prefWidth="131.0" text="Calories Burned" />
+          <TableColumn fx:id="tcExercise" prefWidth="87.0" text="Exercise" />
+            <TableColumn fx:id="tcSets" prefWidth="64.0" text="Sets" />
+          <TableColumn fx:id="tcReps" prefWidth="73.0" text="Reps" />
+            <TableColumn fx:id="tcWeight" prefWidth="85.0" text="Weight" />
+            <TableColumn fx:id="tcCaloriesBurned" prefWidth="131.0" text="Calories Burned" />
         </columns>
       </TableView>
       <DatePicker fx:id="dpExercises" layoutX="37.0" layoutY="45.0" prefHeight="29.0" prefWidth="217.0" />
