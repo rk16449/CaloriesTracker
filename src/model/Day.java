@@ -26,10 +26,6 @@ public class Day implements Comparable<Day> {
 		return foods;
 	}
 
-	public void setFoods(ArrayList<Food> foods) {
-		this.foods = foods;
-	}
-
 	public LocalDate getDate() {
 		return date;
 	}
@@ -53,15 +49,24 @@ public class Day implements Comparable<Day> {
 		return false;
 	}
 
-	public double getTotalCalories() {
+	public double getTotalFoodCalories() {
 		// Loop through all foods and calculate the total calories
-
 		double sum = 0;
 
 		for (int i = 0; i < foods.size(); i++) {
 			sum += foods.get(i).getCalories();
 		}
 
+		return sum;
+	}
+	
+	public double getTotalExerciseCalories() {
+		double sum = 0;
+		
+		for(int i=0; i <exercises.size(); i++) {
+			sum += exercises.get(i).getCaloriesBurned();
+		}
+		
 		return sum;
 	}
 
