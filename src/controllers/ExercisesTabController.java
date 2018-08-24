@@ -192,7 +192,19 @@ public class ExercisesTabController implements Initializable {
 	
 	@FXML
 	protected void handleDelete(ActionEvent event) throws IOException {
-		
+		// Make sure we selected an entry on the table
+		try {
+			// Get the current Exercise
+			Exercise selectedExercise = tvExercises.getSelectionModel().getSelectedItem();
+
+			addedExercises.remove(selectedExercise);
+			exerciseData.remove(selectedExercise);
+			currentDay.deleteExercise(selectedExercise);
+
+			update();
+		} catch (NullPointerException e) {
+			System.out.println("Couldn't delete item, probably haven't selected anything");
+		}
 	}
 	
 	@FXML
