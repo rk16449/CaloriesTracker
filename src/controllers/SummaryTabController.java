@@ -157,7 +157,7 @@ public class SummaryTabController implements Initializable {
 			// Create a new chart
 			XYChart.Series<String, Number> series1 = new XYChart.Series<>();
 			series1.setName(day.getDate().toString());
-			series1.getData().add(new XYChart.Data<>(day.getDate().toString(), day.getTotalCalories()));
+			series1.getData().add(new XYChart.Data<>(day.getDate().toString(), day.getTotalFoodCalories()));
 
 			charts.add(series1);
 			
