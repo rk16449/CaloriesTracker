@@ -65,7 +65,7 @@ public class ExercisesTabController implements Initializable {
 	protected void handleAddExercise(ActionEvent event) throws IOException {
 		// Open add exercises window which will load stored exercises from database
 		
-		
+		System.out.println("Open add Exercise window");
 		
 	}
 	
