@@ -81,6 +81,6 @@ public class Exercise extends Item {
 	}
 
 	public String toString() {
-		return "Name: " + this.getName() + " { sets: " + this.getSets() + ", reps: " + this.getReps() + ", weight: " + this.getWeight() + " };";
+		return "Name: " + this.getName() + " { sets: " + this.getSets() + ", reps: " + this.getReps() + ", weight: " + this.getWeight() + ", caloried burned: " + this.getCaloriesBurned() + " };";
 	}
 }

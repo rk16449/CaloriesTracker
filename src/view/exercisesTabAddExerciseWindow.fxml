@@ -31,6 +31,8 @@
             <TextField fx:id="tfReps" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label prefHeight="17.0" prefWidth="230.0" text="Weight:" textAlignment="CENTER" GridPane.rowIndex="2" />
             <TextField fx:id="tfWeight" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Calories Burned:" GridPane.rowIndex="3" />
+            <TextField fx:id="tfCaloriesBurned" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <TextField fx:id="tfSearch" layoutX="60.0" layoutY="60.0" prefHeight="25.0" prefWidth="149.0" promptText="Search here!" />

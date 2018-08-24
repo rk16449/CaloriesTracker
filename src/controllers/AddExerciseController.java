@@ -32,7 +32,7 @@ public class AddExerciseController implements Initializable {
 	Button btnAddExercise, btnSearch;
 	
 	@FXML
-	TextField tfSearch, tfSets, tfReps, tfWeight;
+	TextField tfSearch, tfSets, tfReps, tfWeight, tfCaloriesBurned;
 
 	// The current selected Exercise we need to pass back to the DietTabController
 	private Exercise returnExerciseData;
@@ -93,6 +93,7 @@ public class AddExerciseController implements Initializable {
 			newEx.setReps(Integer.parseInt(tfReps.getText()));
 			newEx.setSets(Integer.parseInt(tfSets.getText()));
 			newEx.setWeight(Double.parseDouble(tfWeight.getText()));
+			newEx.setCaloriesBurned(Double.parseDouble(tfCaloriesBurned.getText()));
 			
 			
 			// Update the reference of the returnable object
@@ -101,6 +102,8 @@ public class AddExerciseController implements Initializable {
 			btnAddExercise.getScene().getWindow().hide();
 		} catch (NullPointerException e) {
 			System.out.println("A table row wasn't selected");
+		} catch(NumberFormatException e) {
+			System.out.println("Errors in converting textfields to numbers");
 		}
 	}
 
