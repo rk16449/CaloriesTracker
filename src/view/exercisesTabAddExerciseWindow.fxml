@@ -4,15 +4,14 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddExerciseController">
    <children>
-      <TableView layoutX="36.0" layoutY="95.0" prefHeight="243.0" prefWidth="264.0">
+      <TableView fx:id="tvExercises" layoutX="36.0" layoutY="95.0" prefHeight="243.0" prefWidth="264.0">
         <columns>
-          <TableColumn prefWidth="266.0" text="Exercise" />
+          <TableColumn fx:id="tcExercise" prefWidth="266.0" text="Exercise" />
         </columns>
       </TableView>
-      <Button layoutX="502.0" layoutY="361.0" mnemonicParsing="false" text="Add Exercise" />
+      <Button fx:id="btnAddExercise" layoutX="502.0" layoutY="361.0" mnemonicParsing="false" text="Add Exercise" />
       <GridPane layoutX="317.0" layoutY="95.0" prefHeight="243.0" prefWidth="244.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="105.0" />
@@ -27,15 +26,15 @@
         </rowConstraints>
          <children>
             <Label prefHeight="17.0" prefWidth="192.0" text="Total Sets:" />
-            <TextField GridPane.columnIndex="1" />
+            <TextField fx:id="tfSets" GridPane.columnIndex="1" />
             <Label text="Reps:" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="tfReps" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label prefHeight="17.0" prefWidth="230.0" text="Weight:" textAlignment="CENTER" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="tfWeight" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <TextField layoutX="60.0" layoutY="60.0" prefHeight="25.0" prefWidth="149.0" promptText="Search here!" />
+      <TextField fx:id="tfSearch" layoutX="60.0" layoutY="60.0" prefHeight="25.0" prefWidth="149.0" promptText="Search here!" />
       <Label layoutX="256.0" layoutY="25.0" text="Adding Exercises" />
-      <Button layoutX="222.0" layoutY="60.0" mnemonicParsing="false" text="Search" />
+      <Button fx:id="btnSearch" layoutX="222.0" layoutY="60.0" mnemonicParsing="false" text="Search" />
    </children>
 </AnchorPane>
