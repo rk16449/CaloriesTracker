@@ -67,8 +67,7 @@ public class DietTabController implements Initializable {
 	private static LocalDate currentDate;
 	private static Day currentDay;
 
-	// (Global) static array of days
-	public static ArrayList<Day> days = new ArrayList<Day>();
+
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -91,7 +90,7 @@ public class DietTabController implements Initializable {
 	private void setupDay() {
 		datePickerDiet.setValue(LocalDate.now());
 		currentDate = datePickerDiet.getValue();
-		currentDay = getDay(currentDate);
+		currentDay = MainProgramController.getDay(currentDate);
 	}
 
 	private void setupTable() {
@@ -130,7 +129,7 @@ public class DietTabController implements Initializable {
 				LocalDate date = datePickerDiet.getValue();
 
 				// Update the currentDay
-				currentDay = getDay(date);
+				currentDay = MainProgramController.getDay(date);
 
 				// Clear the table
 				addedFoods.clear();
@@ -153,23 +152,6 @@ public class DietTabController implements Initializable {
 		}
 	}
 
-	// Finds the current Day in the days ArrayList (used to set currentDay)
-	public static Day getDay(LocalDate date) {
-		for (int i = 0; i < days.size(); i++) {
-			Day d = days.get(i);
-
-			if (d.getDate().isEqual(date)) {
-				return d;
-			}
-		}
-
-		// Save to static arrayList if we didn't find it above
-		Day newDay = new Day(date);
-		days.add(newDay);
-
-		// Else return a new date
-		return newDay;
-	}
 
 	/**
 	 * loads the local memory arraylist into the GUI table arraylist

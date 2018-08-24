@@ -12,6 +12,15 @@ public class Day implements Comparable<Day>{
 	}
 	
 	private ArrayList<Food> foods = new ArrayList<Food>();
+	private ArrayList<Exercise> exercises = new ArrayList<Exercise>();
+	
+	public ArrayList<Exercise> getExercises(){
+		return exercises;
+	}
+	
+	public boolean addExercise(Exercise ex) {
+		return this.exercises.add(ex);
+	}
 
 	public ArrayList<Food> getFoods() {
 		return foods;

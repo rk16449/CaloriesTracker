@@ -113,8 +113,8 @@ public class SummaryTabController implements Initializable {
 		fats = (double) 0;
 
 		// Add up the total from the foods on the table
-		for (int i = 0; i < DietTabController.getDay(LocalDate.now()).getFoods().size(); i++) {
-			Food f = DietTabController.getDay(LocalDate.now()).getFoods().get(i);
+		for (int i = 0; i < MainProgramController.getDay(LocalDate.now()).getFoods().size(); i++) {
+			Food f = MainProgramController.getDay(LocalDate.now()).getFoods().get(i);
 			protein += f.getProteins();
 			carbs += f.getCarbohydrates();
 			fats += f.getFats();
@@ -140,18 +140,18 @@ public class SummaryTabController implements Initializable {
 	private void updateBarChart() {
 		
 		// Sort the days in order
-		Collections.sort(DietTabController.days);
+		Collections.sort(MainProgramController.days);
 		
 		
 		// First clear the barchart
 		charts.clear();
 		dailyProgress.getData().clear();
 		
-		for (int i = 0; i < DietTabController.days.size(); i++) {
+		for (int i = 0; i < MainProgramController.days.size(); i++) {
 
 			System.out.println("Checking days.......................");
 			
-			Day day = DietTabController.days.get(i);
+			Day day = MainProgramController.days.get(i);
 			
 
 			// Create a new chart

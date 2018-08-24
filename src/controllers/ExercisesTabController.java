@@ -63,6 +63,9 @@ public class ExercisesTabController implements Initializable {
 	
 	@FXML
 	protected void handleAddExercise(ActionEvent event) throws IOException {
+		// Open add exercises window which will load stored exercises from database
+		
+		
 		
 	}
 	

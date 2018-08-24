@@ -3,6 +3,8 @@ package controllers;
 /* Import java, javafx */
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -19,6 +21,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import model.Day;
 
 
 
@@ -38,6 +41,28 @@ public class MainProgramController implements Initializable {
 	private Tab tabGoals;
 	@FXML
 	private GoalsTabController GoalsTabController;
+	
+	// (Global) static array of days
+	public static ArrayList<Day> days = new ArrayList<Day>();
+	
+
+	// Finds the current Day in the days ArrayList (used to set currentDay)
+	public static Day getDay(LocalDate date) {
+		for (int i = 0; i < days.size(); i++) {
+			Day d = days.get(i);
+
+			if (d.getDate().isEqual(date)) {
+				return d;
+			}
+		}
+
+		// Save to static arrayList if we didn't find it above
+		Day newDay = new Day(date);
+		days.add(newDay);
+
+		// Else return a new date
+		return newDay;
+	}
 	
 	
     @FXML
