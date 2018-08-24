@@ -4,7 +4,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="196.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditExerciseController">
    <children>
       <Label layoutX="257.0" layoutY="31.0" text="Edit Exercise" />
@@ -23,15 +22,15 @@
         </rowConstraints>
          <children>
             <Label text="Sets:" />
-            <TextField GridPane.columnIndex="1" />
+            <TextField fx:id="tfSets" GridPane.columnIndex="1" />
             <Label text="Reps:" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="4" />
+            <TextField fx:id="tfReps" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="tfWeight" GridPane.columnIndex="4" />
             <Label text="Weight:" GridPane.columnIndex="3" />
             <Label text="Calories Burned:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <TextField fx:id="tfCaloriesBurned" GridPane.columnIndex="4" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Button layoutX="492.0" layoutY="148.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" text="Save" />
+      <Button fx:id="btnSave" layoutX="492.0" layoutY="148.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="48.0" text="Save" />
    </children>
 </AnchorPane>
