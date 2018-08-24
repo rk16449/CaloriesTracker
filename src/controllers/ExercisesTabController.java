@@ -11,6 +11,8 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Day;
 import model.Exercise;
 import model.Food;
 
@@ -44,19 +47,22 @@ public class ExercisesTabController implements Initializable {
 	@FXML
 	Button btnAddExercise, btnCustom, btnEdit, btnDelete;
 	
-
+	
+	// Hold the food data on the table in text form
+	private ObservableList<Exercise> exerciseData = FXCollections.observableArrayList();
+	// Hold the objects of foods local memory
+	private ArrayList<Exercise> addedExercises = new ArrayList<Exercise>();
+	// Used to check the current loaded date and day
+	private static LocalDate currentDate;
+	private static Day currentDay;
 	
 	
 	// Start of ExercisesTabController runs on creation
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		setupDay();
 		setupDatePicker();
 		setupTable();
 		
-	}
-	
-	private void setupDatePicker() {
-		dpExercises.setValue(LocalDate.now());
 	}
 	
 	private void setupTable() {
@@ -66,7 +72,62 @@ public class ExercisesTabController implements Initializable {
 		tcReps.setCellValueFactory(e -> e.getValue().getStrReps());
 		tcWeight.setCellValueFactory(e -> e.getValue().getStrWeight());
 		tcCaloriesBurned.setCellValueFactory(e -> e.getValue().getStrCaloriesBurned());
+		
+		// Add observable list data to the table
+		tvExercises.setItems(exerciseData);
 	}
+	
+	private void setupDay() {
+		dpExercises.setValue(LocalDate.now());
+		currentDate = dpExercises.getValue();
+		currentDay = MainProgramController.getDay(currentDate);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void setupDatePicker() {
+		dpExercises.setOnAction(new EventHandler() {
+			public void handle(Event t) {
+				LocalDate date = dpExercises.getValue();
+
+				// Update the currentDay
+				currentDay = MainProgramController.getDay(date);
+
+				// Clear the table
+				addedExercises.clear();
+				exerciseData.clear();
+
+				// Load the exercise into the table 
+				loadAddedExercises();
+				loadTableExercises();
+				update();
+			}
+		});
+	}
+	
+	private void loadAddedExercises() {
+		// loop through the currentDay food
+		for (int i = 0; i < currentDay.getExercises().size(); i++) {
+			Exercise f = currentDay.getExercises().get(i);
+			addedExercises.add(f);
+		}
+	}
+	
+	/**
+	 * loads the local memory arraylist into the GUI table arraylist
+	 */
+	private void loadTableExercises() {
+		// Calculate total data
+		for (int i = 0; i < addedExercises.size(); i++) {
+			Exercise f = addedExercises.get(i);
+			exerciseData.add(f);
+		}
+	}
+	
+	private void update() {
+		tvExercises.refresh();
+	}
+	
+
 	
 	@FXML
 	protected void handleAddExercise(ActionEvent event) throws IOException {
@@ -105,42 +166,23 @@ public class ExercisesTabController implements Initializable {
 	
 	private void addEntry(AddExerciseController controller) {
 		try {
-			System.out.println("ExercieTabController: " + controller.getExercise().getName());
+			System.out.println("ExercieTabController: " + controller.getExercise());
 			boolean found = false;
-			// Check if this food already exists in the table, if it does increase its
-			// quantity instead
 			
-			/*
-			for (int i = 0; i < currentDay.getFoods().size(); i++) {
-				// Assumes we don't have foods with exactly the same name.. (try adding id in
-				// later)
-				if (currentDay.getFoods().get(i).getName().equals(controller.getFood().getName())) {
-					found = true;
-					
-					System.out.println("Updating quantity on addEntry");
-					
-					currentDay.getFoods().get(i).setQuantity(currentDay.getFoods().get(i).getQuantity() + controller.getQuantity());
-					break;
-				}
-			}
-
-			// Add a new row entry if same food isn't already added
+			// Add a new row entry
 			if (!found) {
-				System.out.println("No Food was found, creating a new entry here!");
 				
 				// Copy the object
-				Food newFood = new Food(controller.getFood().getName(), controller.getFood());
-				newFood.setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
+				Exercise newExercise = new Exercise(controller.getExercise().getName(), controller.getExercise());
 
 				// Add values to the table!
-				addedFoods.add(newFood);
-				foodData.add(newFood);
-				currentDay.addFood(newFood);
+				addedExercises.add(newExercise);
+				exerciseData.add(newExercise);
+				currentDay.addExercise(newExercise);
 			}
 
 			// Update GUI
 			update();
-			*/
 		} catch (NullPointerException e) {
 			System.out.println("Nullpointerexception, probably because we hit the X/ no exercise selected");
 		}

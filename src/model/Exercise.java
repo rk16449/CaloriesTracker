@@ -16,6 +16,16 @@ public class Exercise extends Item {
 	
 	// TableView Getters
 
+	// Copy constructor
+	public Exercise(String name, Exercise exercise) {
+		super(name);
+		
+		this.reps = exercise.getReps();
+		this.sets = exercise.getSets();
+		this.weight = exercise.getWeight();
+		this.caloriesBurned = exercise.getCaloriesBurned();
+	}
+
 	public StringProperty getStrExercise() {
 		return new SimpleStringProperty(this.getName());
 	}
@@ -70,4 +80,7 @@ public class Exercise extends Item {
 		this.caloriesBurned = caloriesBurned;
 	}
 
+	public String toString() {
+		return "Name: " + this.getName() + " { sets: " + this.getSets() + ", reps: " + this.getReps() + ", weight: " + this.getWeight() + " };";
+	}
 }

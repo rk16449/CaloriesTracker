@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.Exercise;
+import model.Food;
 import model.Item;
 
 public class AddExerciseController implements Initializable {
@@ -72,8 +75,33 @@ public class AddExerciseController implements Initializable {
 		});
 	}
 
-	public Item getExercise() {
+	public Exercise getExercise() {
 		return returnExerciseData;
+	}
+	
+	@FXML
+	protected void handleAddExercise(ActionEvent event) throws IOException {
+		System.out.println("Add the food to the table behind us!");
+		try {
+			Exercise selectedExercise = tvExercises.getSelectionModel().getSelectedItem();
+			
+			System.out.println("We want to add: " + selectedExercise.getName());
+			
+			
+			// Create a new Exercise object based off the selection and textfields
+			Exercise newEx = new Exercise(selectedExercise.getName());
+			newEx.setReps(Integer.parseInt(tfReps.getText()));
+			newEx.setSets(Integer.parseInt(tfSets.getText()));
+			newEx.setWeight(Double.parseDouble(tfWeight.getText()));
+			
+			
+			// Update the reference of the returnable object
+			returnExerciseData = newEx;
+			
+			btnAddExercise.getScene().getWindow().hide();
+		} catch (NullPointerException e) {
+			System.out.println("A table row wasn't selected");
+		}
 	}
 
 }
