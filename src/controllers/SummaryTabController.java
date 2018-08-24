@@ -54,14 +54,9 @@ public class SummaryTabController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		// Setup pie chart
-		//ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(new PieChart.Data("Protein", 40),
-		//		new PieChart.Data("Fats", 20), new PieChart.Data("Carbohydrates", 40));
-
-		//dailyMacros.setData(pieChartData);
-		//dailyMacros.setTitle("Daily Macros");
 		setupPieChart();
 		
-		
+		// Setup bar chart
 		dailyProgress.setBarGap(-30);
 		dailyProgress.setLegendVisible(false);
 
