@@ -14,8 +14,6 @@ public class Exercise extends Item {
 	public Exercise(String name) {
 		super(name);
 	}
-	
-	// TableView Getters
 
 	// Copy constructor
 	public Exercise(String name, Exercise exercise) {
@@ -25,8 +23,11 @@ public class Exercise extends Item {
 		this.sets = exercise.getSets();
 		this.weight = exercise.getWeight();
 		this.caloriesBurned = exercise.getCaloriesBurned();
+		this.custom = exercise.getCustom();
 	}
-
+	
+	// TableView Getters
+	
 	public StringProperty getStrExercise() {
 		return new SimpleStringProperty(this.getName());
 	}
@@ -48,6 +49,10 @@ public class Exercise extends Item {
 	}
 	
 	// Getters & Setters
+	
+	public boolean getCustom() {
+		return this.custom;
+	}
 	
 	public int getReps() {
 		return reps;

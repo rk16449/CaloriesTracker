@@ -33,12 +33,28 @@ public class CustomExerciseController implements Initializable{
 	}
 
 	public boolean addToTable() {
-		return false;
+		return cbAddToToday.isSelected();
 	}
 	
 	@FXML
 	protected void handleCreate(ActionEvent event) throws IOException {
-		
+		// Create an Exercise object if we have at least a name typed in..
+		if(!tfName.getText().isEmpty()) {
+			// Then create an Exercise object of that name
+			customExercise = new Exercise(tfName.getText());
+			
+			// Check if we have the CheckBox 'add to today' selected
+			if(cbAddToToday.isSelected()) {
+				// Get values from textfields and pass them into exercise
+				customExercise.setSets(Integer.parseInt(tfSets.getText()));
+				customExercise.setReps(Integer.parseInt(tfReps.getText()));
+				customExercise.setWeight(Double.parseDouble(tfWeight.getText()));
+				customExercise.setCaloriesBurned(Double.parseDouble(tfCaloriesBurned.getText()));
+			}
+			
+			// Close the window - return back to ExercisesTabController
+			btnCreate.getScene().getWindow().hide();
+		}
 	}
 
 }
