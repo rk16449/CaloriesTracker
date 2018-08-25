@@ -26,6 +26,16 @@ public class CustomExerciseController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		
+	}
+	
+	// Setup Listener for choicebox to enable or disable textfields
+	@FXML
+	protected void handleAddToToday(ActionEvent event) throws IOException {
+		tfSets.setDisable(!cbAddToToday.isSelected());
+		tfReps.setDisable(!cbAddToToday.isSelected());
+		tfWeight.setDisable(!cbAddToToday.isSelected());
+		tfCaloriesBurned.setDisable(!cbAddToToday.isSelected());
 	}
 
 	public Exercise getExercise() {
@@ -38,22 +48,37 @@ public class CustomExerciseController implements Initializable{
 	
 	@FXML
 	protected void handleCreate(ActionEvent event) throws IOException {
-		// Create an Exercise object if we have at least a name typed in..
-		if(!tfName.getText().isEmpty()) {
-			// Then create an Exercise object of that name
+		// Create an Exercise object if we have at least a name typed in.. and return back to controller
+		if(!tfName.getText().isEmpty() && !cbAddToToday.isSelected()) {
+			customExercise = new Exercise(tfName.getText());
+			btnCreate.getScene().getWindow().hide();	
+		}
+		// We need no empty name and we have add selected
+		else if(!tfName.getText().isEmpty() && cbAddToToday.isSelected()) {
+			
+			
 			customExercise = new Exercise(tfName.getText());
 			
-			// Check if we have the CheckBox 'add to today' selected
-			if(cbAddToToday.isSelected()) {
+			// Make sure there are number values inserted
+			try {
 				// Get values from textfields and pass them into exercise
 				customExercise.setSets(Integer.parseInt(tfSets.getText()));
 				customExercise.setReps(Integer.parseInt(tfReps.getText()));
 				customExercise.setWeight(Double.parseDouble(tfWeight.getText()));
 				customExercise.setCaloriesBurned(Double.parseDouble(tfCaloriesBurned.getText()));
+			}catch(NumberFormatException e) {
+				System.out.println("Cannot convert textfield text to numbers");
+				
+				// Do not close the window/continue
+				customExercise = null;
+				return;
 			}
 			
 			// Close the window - return back to ExercisesTabController
-			btnCreate.getScene().getWindow().hide();
+			btnCreate.getScene().getWindow().hide();	
+		}else {
+			// Set as null so we don't return any exercise object
+			customExercise = null;
 		}
 	}
 

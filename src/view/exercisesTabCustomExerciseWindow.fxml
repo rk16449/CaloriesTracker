@@ -4,7 +4,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="429.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomExerciseController">
    <children>
       <Label layoutX="42.0" layoutY="26.0" text="Create a custom Exercise" underline="true" />
@@ -33,7 +32,7 @@
             <Label text="Calories Burned:" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <CheckBox fx:id="cbAddToToday" layoutX="62.0" layoutY="252.0" mnemonicParsing="false" text="Add to today" />
+      <CheckBox fx:id="cbAddToToday" layoutX="62.0" layoutY="252.0" mnemonicParsing="false" onAction="#handleAddToToday" text="Add to today" />
       <Button fx:id="btnCreate" layoutX="356.0" layoutY="269.0" mnemonicParsing="false" onAction="#handleCreate" text="Create" />
    </children>
 </AnchorPane>
