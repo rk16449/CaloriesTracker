@@ -24,7 +24,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Food;
 
-public class AddFoodController implements Initializable {
+public class AddFoodController extends BaseFoodController implements Initializable {
 	
 	/**********************************************************
 	 * TABLE GUI

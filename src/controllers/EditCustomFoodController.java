@@ -16,36 +16,34 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.Helper;
 
-public class EditCustomFoodController extends BaseController implements Initializable {
+public class EditCustomFoodController extends BaseFoodController implements Initializable {
 
-	
-
+	// FXML Components
 	@FXML
 	private Spinner<Double> spinnerQuantity;
-
-	@FXML
-	private TextField tfName, tfAmount, tfCarbohydrates, tfFats, tfProteins;
-
 	@FXML
 	private Button buttonSave;
 	
+	// Controller Variables
 	private SpinnerValueFactory<Double> defaultFactory;
-	
 	private double quantity = 1;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
 		defaultFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 100);
 		spinnerQuantity.setValueFactory(defaultFactory);
 	}
 
 	
-
 	@FXML
 	protected void handleSave(ActionEvent event) throws IOException {
 
 		// Make sure we have valid data to create
 		if (this.valid()) {
+			
+			if (!(spinnerQuantity.getValue() >= 1 && spinnerQuantity.getValue() <= 100)) {
+				return;
+			}
+			
 			// Make sure to save everything
 			System.out.println("We have valid data to work with");
 			quantity = spinnerQuantity.getValue();
@@ -57,51 +55,7 @@ public class EditCustomFoodController extends BaseController implements Initiali
 			System.out.println("We don't have valid data to create food");
 		}
 	}
-
-
-	public boolean valid() {
-
-		// Assume everything is valid
-		boolean valid = true;
-
-		// Make sure we have valid data
-		if (tfName.getText().isEmpty() || tfName.getText().equals("")) {
-			valid = false;
-		}
-
-		// Save textfields to an arraylist so we can loop and call same methods
-		ArrayList<TextField> tfs = new ArrayList<TextField>();
-		tfs.add(tfAmount);
-		tfs.add(tfCarbohydrates);
-		tfs.add(tfFats);
-		tfs.add(tfProteins);
-
-		// Loop through textfields, make sure they are not empty and they are doubles
-		for (int i = 0; i < tfs.size(); i++) {
-			if (isObjEmpty(tfs.get(i))) {
-				valid = false;
-				break;
-			} else {
-				System.out.println("Textfield wasn't empty so now check if its a number!");
-				valid = Helper.isDouble(tfs.get(i).getText());
-				if (!valid)
-					break;
-			}
-		}
-
-		// Check if we ticked add today and retrieve the quantity
-		if (!(spinnerQuantity.getValue() >= 1 && spinnerQuantity.getValue() <= 100)) {
-			valid = false;
-		}
-
-		return valid;
-	}
-
-	private boolean isObjEmpty(TextField tf) {
-		return tf.getText().isEmpty() || tf.getText().equals("");
-	}
-
-
+	
 	public String[] getValues() {
 		// pre validation (make sure values are correct)
 		return new String[] { tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(),
@@ -109,15 +63,12 @@ public class EditCustomFoodController extends BaseController implements Initiali
 	}
 	
 	public void setTextFieldValues(String[] values) {
-		
 		tfName.setText(values[0]);
 		tfAmount.setText(values[1]);
 		tfCarbohydrates.setText(values[2]);
 		tfFats.setText(values[3]);
 		tfProteins.setText(values[4]);
-		
 		// tfName, tfAmount, tfCarbohydrates, tfFats, tfProteins;
-		
 	}
 
 	public void setSpinnerValue(String value) {
