@@ -22,18 +22,18 @@
         </rowConstraints>
          <children>
             <Label text="Name:" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField disable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField disable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField disable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="tfName" GridPane.columnIndex="1" />
+            <TextField fx:id="tfSets" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="tfReps" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="tfWeight" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="tfCaloriesBurned" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Sets:" GridPane.rowIndex="1" />
             <Label text="Reps:" GridPane.rowIndex="2" />
             <Label text="Weight:" GridPane.rowIndex="3" />
             <Label text="Calories Burned:" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <CheckBox layoutX="62.0" layoutY="252.0" mnemonicParsing="false" text="Add to today" />
-      <Button layoutX="356.0" layoutY="269.0" mnemonicParsing="false" text="Create" />
+      <CheckBox fx:id="cbAddToToday" layoutX="62.0" layoutY="252.0" mnemonicParsing="false" text="Add to today" />
+      <Button fx:id="btnCreate" layoutX="356.0" layoutY="269.0" mnemonicParsing="false" onAction="#handleCreate" text="Create" />
    </children>
 </AnchorPane>

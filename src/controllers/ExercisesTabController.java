@@ -209,7 +209,58 @@ public class ExercisesTabController implements Initializable {
 	
 	@FXML
 	protected void handleCustom(ActionEvent event) throws IOException {
+		try {
+			// Create window
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource("/view/exercisesTabCustomExerciseWindow.fxml"));
+			Scene scene = new Scene(fxmlLoader.load(), 430, 320);
+			Stage stage = new Stage();
+			Stage parent = (Stage) btnCustom.getScene().getWindow();
+			stage.initOwner(parent);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("Create Custom Exercise");
+			stage.setScene(scene);
+
+			// Controller access
+			CustomExerciseController controller = fxmlLoader.<CustomExerciseController>getController();
+
+			// showAndWait will block execution until the window closes...
+			stage.showAndWait();
+
+			// continue with the controller
+			addCustom(controller);
+		} catch (Exception e) {
+			System.out.println("Couldn't make create food window..?");
+		}
+	}
+	
+	private void addCustom(CustomExerciseController controller) {
+		// Get controller values and create a custom exercise in the database
 		
+		
+		try {
+			// Get exercise object from controller
+			Exercise retrievedEx = controller.getExercise();
+			
+			// Copy it
+			Exercise newEx = new Exercise(retrievedEx.getName(), retrievedEx);
+			// Make sure we apply it as a custom
+			newEx.setCustom(true);
+
+			// Add it to daily the table (if we selected to)
+			if (controller.addToTable()) {
+				addedExercises.add(newEx);
+				exerciseData.add(newEx);
+			}
+
+			// Add to the local memory arraylist, the table gui and the currentDay arraylist
+			AddExerciseController.addedExercises.add(newEx);
+			AddExerciseController.exerciseData.add(newEx);
+			currentDay.addExercise(newEx);
+			update();
+		}catch(NullPointerException e) {
+			System.out.println("Null exercise set");
+		}
 	}
 	
 	@FXML

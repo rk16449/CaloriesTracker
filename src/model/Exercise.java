@@ -9,6 +9,7 @@ public class Exercise extends Item {
 	private int sets;
 	private double weight;
 	private double caloriesBurned;
+	private boolean custom;
 	
 	public Exercise(String name) {
 		super(name);
@@ -82,5 +83,9 @@ public class Exercise extends Item {
 
 	public String toString() {
 		return "Name: " + this.getName() + " { sets: " + this.getSets() + ", reps: " + this.getReps() + ", weight: " + this.getWeight() + ", caloried burned: " + this.getCaloriesBurned() + " };";
+	}
+
+	public void setCustom(boolean b) {
+		this.custom = b;
 	}
 }
