@@ -293,7 +293,7 @@ public class DietTabController implements Initializable {
 		try {
 			// Create window
 			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("/view/dietTabCreateFoodWindow.fxml"));
+			fxmlLoader.setLocation(getClass().getResource("/view/dietTabCustomFoodWindow.fxml"));
 			Scene scene = new Scene(fxmlLoader.load(), 355, 275);
 			Stage stage = new Stage();
 			Stage parent = (Stage) buttonCustom.getScene().getWindow();
@@ -303,7 +303,7 @@ public class DietTabController implements Initializable {
 			stage.setScene(scene);
 
 			// Controller access
-			CreateFoodController controller = fxmlLoader.<CreateFoodController>getController();
+			CustomFoodController controller = fxmlLoader.<CustomFoodController>getController();
 			controller.setStageAndSetupListeners(stage);
 
 			// showAndWait will block execution until the window closes...
@@ -316,7 +316,7 @@ public class DietTabController implements Initializable {
 		}
 	}
 
-	private void addCustom(CreateFoodController controller) {
+	private void addCustom(CustomFoodController controller) {
 		// Add values to the local database/memory table
 		if (controller.valid()) {
 			String[] rgFoodData = controller.getValues();
