@@ -1,4 +1,4 @@
-package controllers;
+package controllers.food;
 
 import java.io.IOException;
 /* Import java, javafx, mainPackage */

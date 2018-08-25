@@ -1,9 +1,11 @@
-package controllers;
+package controllers.food;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import controllers.BaseController;
+import controllers.MainProgramController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

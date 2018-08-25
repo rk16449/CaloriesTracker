@@ -1,4 +1,4 @@
-package controllers;
+package controllers.exercises;
 
 import java.io.IOException;
 import java.net.URL;

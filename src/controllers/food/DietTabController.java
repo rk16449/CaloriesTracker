@@ -1,4 +1,4 @@
-package controllers;
+package controllers.food;
 
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import controllers.MainProgramController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -190,7 +191,6 @@ public class DietTabController extends BaseFoodController implements Initializab
 				Double.toString(selectedFood.getProteins()) };
 
 		controller.setTextFieldValues(values);
-		controller.setStageAndSetupListeners(stage);
 		// showAndWait will block execution until the window closes...
 		stage.showAndWait();
 
@@ -246,7 +246,6 @@ public class DietTabController extends BaseFoodController implements Initializab
 
 			// Controller access
 			CustomFoodController controller = fxmlLoader.<CustomFoodController>getController();
-			controller.setStageAndSetupListeners(stage);
 
 			// showAndWait will block execution until the window closes...
 			stage.showAndWait();
