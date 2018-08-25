@@ -31,7 +31,9 @@ public class GoalsTabController implements Initializable {
 	@FXML
 	private ChoiceBox<Activity> cbActivityLevel;
 
+	
 	// References to the 'current' selected Goal and Activity of this page
+	private Person currentPerson;
 	private Goal currentGoal;
 	private Activity currentActivity;
 
@@ -43,6 +45,8 @@ public class GoalsTabController implements Initializable {
 	 * Runs when this controller is created, sets up the FXML objects and ArrayLists
 	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		currentPerson = Person.getInstance();
 
 		// Setup FXML Components
 		setupActivityLevels();
@@ -62,7 +66,7 @@ public class GoalsTabController implements Initializable {
 	 */
 	private void setupGoals() {
 		// Setup currentGoal from Person
-		currentGoal = Person.getInstance().getCurrentGoal();
+		currentGoal = currentPerson.getCurrentGoal();
 
 		// Create the types of goals
 		Goal loseWeight = new Goal("Lose Weight", 0.8);
@@ -81,7 +85,7 @@ public class GoalsTabController implements Initializable {
 	private void setupActivityLevels() {
 
 		// Set value of the currentActivity
-		currentActivity = Person.getInstance().getActivityLevel();
+		currentActivity = currentPerson.getActivityLevel();
 
 		// Create 5 different activities and set the multiplier level
 		Activity sedentary = new Activity("Sedentary", 1.2);
@@ -97,7 +101,7 @@ public class GoalsTabController implements Initializable {
 		cbActivityLevel.setItems(FXCollections.observableArrayList(activities));
 
 		// Set the loaded value of the ChoiceBox to what the Person has set
-		cbActivityLevel.setValue(getActivityLevel(Person.getInstance().getActivityLevel()));
+		cbActivityLevel.setValue(getActivityLevel(currentPerson.getActivityLevel()));
 
 		// Add event listener for when we change the ChoiceBox
 		ChangeListener<Activity> changeListener = new ChangeListener<Activity>() {
@@ -110,7 +114,7 @@ public class GoalsTabController implements Initializable {
 					currentActivity = newValue;
 
 					// Save it into person
-					Person.getInstance().setActivityLevel(currentActivity);
+					currentPerson.setActivityLevel(currentActivity);
 
 					// Update values
 					calculateValues();
@@ -172,7 +176,7 @@ public class GoalsTabController implements Initializable {
 	 * 
 	 */
 	private void calculateBMR() {
-		Person p = Person.getInstance();
+		Person p = currentPerson;
 
 		if (p.getGender().equals("Male")) {
 			// Check what units we are in and convert to Metric
@@ -203,7 +207,7 @@ public class GoalsTabController implements Initializable {
 	 * activity level
 	 */
 	private void calculateTDEE() {
-		Person.getInstance().setTDEE(Person.getInstance().getBMR() * currentActivity.getActivityLevel());
+		currentPerson.setTDEE(currentPerson.getBMR() * currentActivity.getActivityLevel());
 	}
 
 	/**
@@ -215,15 +219,15 @@ public class GoalsTabController implements Initializable {
 
 		// Recalculate and set textfields
 		calculateBMR();
-		tfBMR.setText(Double.toString(Helper.round(Person.getInstance().getBMR(), 2)));
+		tfBMR.setText(Double.toString(Helper.round(currentPerson.getBMR(), 2)));
 
 		calculateTDEE();
-		tfTDEE.setText(Double.toString(Helper.round(Person.getInstance().getTDEE(), 2)));
+		tfTDEE.setText(Double.toString(Helper.round(currentPerson.getTDEE(), 2)));
 
 		// Set the new calorie goal for the Person
-		Person.getInstance().setGoalCalories(Person.getInstance().getTDEE() * currentGoal.getMultiplier());
+		currentPerson.setGoalCalories(currentPerson.getTDEE() * currentGoal.getMultiplier());
 
-		tfCaloricReqs.setText(Double.toString(Helper.round(Person.getInstance().getGoalCalories(), 2)));
+		tfCaloricReqs.setText(Double.toString(Helper.round(currentPerson.getGoalCalories(), 2)));
 	}
 
 	/**
