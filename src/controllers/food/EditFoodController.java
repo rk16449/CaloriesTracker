@@ -28,15 +28,14 @@ import model.Food;
 
 public class EditFoodController implements Initializable {
 	
-	private Stage stage;
-	private double quantity = 1;
-	
+	// FXML Components
 	@FXML 
 	private Button buttonSave;
-	
 	@FXML
 	private TextField textfieldQuantity;
-
+	
+	private double quantity = 1;
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		textfieldQuantity.setText("1");
 	}
@@ -57,12 +56,7 @@ public class EditFoodController implements Initializable {
 	}
 	
 	public double getQuantity() {
-		// Get quantity from textfield
 		quantity = Double.parseDouble(textfieldQuantity.getText());
 		return quantity;
-	}
-	
-	public void setStageAndSetupListeners(Stage stage) {
-		this.stage = stage;
 	}
 }

@@ -222,7 +222,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 		// Controller access
 		EditFoodController controller = fxmlLoader.<EditFoodController>getController();
 		controller.setTextFieldValue(Double.toString(selectedFood.getQuantity()));
-		controller.setStageAndSetupListeners(stage);
+		
 		// showAndWait will block execution until the window closes...
 		stage.showAndWait();
 
