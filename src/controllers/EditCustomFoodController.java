@@ -16,10 +16,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.Helper;
 
-public class EditCustomFoodController implements Initializable {
+public class EditCustomFoodController extends BaseController implements Initializable {
 
-	private Stage stage;
-	private boolean isValid = false;
+	
 
 	@FXML
 	private Spinner<Double> spinnerQuantity;
@@ -40,9 +39,7 @@ public class EditCustomFoodController implements Initializable {
 		spinnerQuantity.setValueFactory(defaultFactory);
 	}
 
-	public void setStageAndSetupListeners(Stage stage) {
-		this.stage = stage;
-	}
+	
 
 	@FXML
 	protected void handleSave(ActionEvent event) throws IOException {

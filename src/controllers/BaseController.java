@@ -10,4 +10,8 @@ public class BaseController {
 	public BaseController(){
 		person = Person.getInstance();
 	}
+	
+	protected void setStageAndSetupListeners(Stage stage) {
+		this.stage = stage;
+	}
 }
