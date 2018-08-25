@@ -8,7 +8,7 @@ public class Person {
 	 * Keep track of users: age, height, weight
 	 */
 	private Goal currentGoal = new Goal("Maintain Weight", 1.0);
-	private Activity activityLevel = new Activity("Sedentary", 1.2);
+	private Activity activity = new Activity("Sedentary", 1.2);
 	
 	private String firstName = "Hello";
 	private String lastName = "World";
@@ -29,6 +29,57 @@ public class Person {
 
 	}
 	
+	
+	/**
+	 * 
+	 * Calculates the 'Basal Metabolic Rate' of a person based off his gender,
+	 * weight and height
+	 * 
+	 * Also converts back into Metric for the calculation if we are in Imperial
+	 * units
+	 * 
+	 * Formula for Males BMR = 66 + (13.75 x weight in kg) + (5 x height in cm) –
+	 * (6.8 x age in yrs)
+	 * 
+	 * Formula for Females BMR = 655 + (9.6 x weight in kg) + (1.8 x height in cm) –
+	 * (4.7 x age in Yrs)
+	 * 
+	 */
+	public void calculateBMR() {
+		//Person p = currentPerson;
+
+		if (getGender().equals("Male")) {
+			// Check what units we are in and convert to Metric
+			if (getUnits().equals("Imperial")) {
+				// Use the converted BMR
+				setBMR(66
+						+ (13.75 * (getWeight() / 2.20462) + (5 * (getHeight() / 0.0328084)) - (6.8 * getAge())));
+			} else {
+				setBMR(66 + (13.75 * getWeight()) + (5 * getHeight()) - (6.8 * getAge()));
+			}
+
+		} else if (getGender().equals("Female")) {
+			if (getUnits().equals("Imperial")) {
+				// Use converted BMR to metric
+				setBMR(665
+						+ (9.6 * (getWeight() / 2.20462) + (1.8 * (getHeight() / 0.0328084)) - (4.7 * getAge())));
+			} else {
+				setBMR(655 + (9.6 * getWeight()) + (1.8 * getHeight()) - (4.7 * getAge()));
+			}
+
+		}
+	}
+
+	/**
+	 * 
+	 * Calculates a Person's Total Daily Energy Expenditure based off his BMR and
+	 * activity level
+	 */
+	public void calculateTDEE() {
+		this.setTDEE(getBMR() * getActivity().getActivityLevel());
+	}
+	
+	
 	// static block initialization for exception handling
 	static {
 		try {
@@ -38,12 +89,12 @@ public class Person {
 		}
 	}
 	
-	public Activity getActivityLevel() {
-		return activityLevel;
+	public Activity getActivity() {
+		return activity;
 	}
 
-	public void setActivityLevel(Activity activityLevel) {
-		this.activityLevel = activityLevel;
+	public void setActivity(Activity activity) {
+		this.activity= activity;
 	}
 
 	public void setBodyfat(double bodyfat) {
