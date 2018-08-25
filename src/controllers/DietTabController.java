@@ -28,46 +28,27 @@ import main.Helper;
 import model.Day;
 import model.Food;
 
-public class DietTabController extends BaseController implements Initializable {
+public class DietTabController extends BaseFoodController implements Initializable {
 
 	@FXML
-	private TableView<Food> tableviewEntries;
+	private TableView<Food> tvEntries;
 
 	@FXML
-	private TableColumn<Food, String> foodsColumn, amountColumn, caloriesColumn, carbsColumn, fatsColumn, protsColumn,
-			quantityColumn;
+	private TableColumn<Food, String> tcFoods, tcAmount, tcCalories, tcCarbs, tcFats, tcProts,
+			tcQuantity;
 
 	@FXML
-	private PieChart pieChartMacros;
-
-	@FXML
-	private Button buttonAddEntry, buttonEdit, buttonDelete, buttonCustom;
+	private Button btnAddEntry, btnEdit, btnDelete, btnCustom;
 
 	@FXML
 	private TextField tfCalories, tfCarbs, tfFats, tfProtein;
 
 	@FXML
-	private DatePicker datePickerDiet;
+	private DatePicker dpDate;
 
-	
-	// Object holding values of doubles
-	private Double calories = (double) 0, protein = (double) 0, fats = (double) 0, carbs = (double) 0;
-
-	// Pie chart data
-	private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-	private ArrayList<PieChart.Data> addedSlices = new ArrayList<PieChart.Data>();
-
-	// Hold the food data on the table in text form
-	private ObservableList<Food> foodData = FXCollections.observableArrayList();
-	// Hold the objects of foods local memory
-	private ArrayList<Food> addedFoods = new ArrayList<Food>();
-
-	
 	// Used to check the current loaded date and day
 	private static LocalDate currentDate;
 	private static Day currentDay;
-
-
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -88,45 +69,30 @@ public class DietTabController extends BaseController implements Initializable {
 	}
 
 	private void setupDay() {
-		datePickerDiet.setValue(LocalDate.now());
-		currentDate = datePickerDiet.getValue();
+		dpDate.setValue(LocalDate.now());
+		currentDate = dpDate.getValue();
 		currentDay = MainProgramController.getDay(currentDate);
 	}
 
 	private void setupTable() {
 		// Initialize the person table with the two columns.
-		foodsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrFood());
-		amountColumn.setCellValueFactory(cellData -> cellData.getValue().getStrAmount());
-		caloriesColumn.setCellValueFactory(cellData -> cellData.getValue().getStrCalories());
-		carbsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrCarbs());
-		fatsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrFats());
-		protsColumn.setCellValueFactory(cellData -> cellData.getValue().getStrProts());
-		quantityColumn.setCellValueFactory(cellData -> cellData.getValue().getStrQuantity());
+		tcFoods.setCellValueFactory(cellData -> cellData.getValue().getStrFood());
+		tcAmount.setCellValueFactory(cellData -> cellData.getValue().getStrAmount());
+		tcCalories.setCellValueFactory(cellData -> cellData.getValue().getStrCalories());
+		tcCarbs.setCellValueFactory(cellData -> cellData.getValue().getStrCarbs());
+		tcFats.setCellValueFactory(cellData -> cellData.getValue().getStrFats());
+		tcProts.setCellValueFactory(cellData -> cellData.getValue().getStrProts());
+		tcQuantity.setCellValueFactory(cellData -> cellData.getValue().getStrQuantity());
 
 		// Add observable list data to the table
-		tableviewEntries.setItems(foodData);
-	}
-
-	private void setupPieChart() {
-		// Setup pie chart
-		PieChart.Data sliceProteins = new PieChart.Data("Protein", protein);
-		PieChart.Data sliceFats = new PieChart.Data("Fats", fats);
-		PieChart.Data sliceCarbs = new PieChart.Data("Carbohydrates", carbs);
-		addedSlices.add(sliceProteins);
-		addedSlices.add(sliceFats);
-		addedSlices.add(sliceCarbs);
-		pieChartData.add(sliceProteins);
-		pieChartData.add(sliceFats);
-		pieChartData.add(sliceCarbs);
-		pieChartMacros.setData(pieChartData);
-		pieChartMacros.setTitle("Daily Macros");
+		tvEntries.setItems(foodData);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setupDatePicker() {
-		datePickerDiet.setOnAction(new EventHandler() {
+		dpDate.setOnAction(new EventHandler() {
 			public void handle(Event t) {
-				LocalDate date = datePickerDiet.getValue();
+				LocalDate date = dpDate.getValue();
 
 				// Update the currentDay
 				currentDay = MainProgramController.getDay(date);
@@ -165,35 +131,11 @@ public class DietTabController extends BaseController implements Initializable {
 	}
 
 	private void update() {
-		updateTotalValues();
-		updateGUIPieChart();
+		updatePieChart();
 		updateGUIMacrosInfo();
-		tableviewEntries.refresh();
+		tvEntries.refresh();
 	}
 
-	private void updateTotalValues() {
-		protein = (double) 0;
-		carbs = (double) 0;
-		fats = (double) 0;
-
-		// Add up the total from the foods on the table
-		for (int i = 0; i < foodData.size(); i++) {
-			Food f = foodData.get(i);
-			protein += f.getProteins();
-			carbs += f.getCarbohydrates();
-			fats += f.getFats();
-		}
-
-		// Calculate calories
-		calories = (protein * 4) + (carbs * 4) + (fats * 9);
-	}
-
-	private void updateGUIPieChart() {
-		// now update the slices manually (good enough for such small amount of slices)
-		addedSlices.get(0).setPieValue(protein);
-		addedSlices.get(1).setPieValue(fats);
-		addedSlices.get(2).setPieValue(carbs);
-	}
 
 	private void updateGUIMacrosInfo() {
 		tfCalories.setText(Double.toString(Helper.round(calories, 2)));
@@ -208,7 +150,7 @@ public class DietTabController extends BaseController implements Initializable {
 
 		try {
 			// Get the current selected food
-			Food selectedFood = tableviewEntries.getSelectionModel().getSelectedItem();
+			Food selectedFood = tvEntries.getSelectionModel().getSelectedItem();
 
 			// Check if this is a custom food
 			if (selectedFood.getCustom()) {
@@ -231,7 +173,7 @@ public class DietTabController extends BaseController implements Initializable {
 		fxmlLoader.setLocation(getClass().getResource("/view/dietTabEditCustomFoodWindow.fxml"));
 		Scene scene = new Scene(fxmlLoader.load(), 355, 270);
 		Stage stage = new Stage();
-		Stage parent = (Stage) buttonEdit.getScene().getWindow();
+		Stage parent = (Stage) btnEdit.getScene().getWindow();
 		stage.initOwner(parent);
 		stage.initModality(Modality.WINDOW_MODAL);
 		stage.setTitle("Edit Food");
@@ -272,7 +214,7 @@ public class DietTabController extends BaseController implements Initializable {
 		fxmlLoader.setLocation(getClass().getResource("/view/dietTabEditFoodWindow.fxml"));
 		Scene scene = new Scene(fxmlLoader.load(), 352, 156);
 		Stage stage = new Stage();
-		Stage parent = (Stage) buttonEdit.getScene().getWindow();
+		Stage parent = (Stage) btnEdit.getScene().getWindow();
 		stage.initOwner(parent);
 		stage.initModality(Modality.WINDOW_MODAL);
 		stage.setTitle("Edit Food");
@@ -296,7 +238,7 @@ public class DietTabController extends BaseController implements Initializable {
 			fxmlLoader.setLocation(getClass().getResource("/view/dietTabCustomFoodWindow.fxml"));
 			Scene scene = new Scene(fxmlLoader.load(), 355, 275);
 			Stage stage = new Stage();
-			Stage parent = (Stage) buttonCustom.getScene().getWindow();
+			Stage parent = (Stage) btnCustom.getScene().getWindow();
 			stage.initOwner(parent);
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.setTitle("Create Custom Food");
@@ -364,7 +306,7 @@ public class DietTabController extends BaseController implements Initializable {
 			fxmlLoader.setLocation(getClass().getResource("/view/dietTabAddFoodWindow.fxml"));
 			Scene scene = new Scene(fxmlLoader.load(), 600, 400);
 			Stage stage = new Stage();
-			Stage parent = (Stage) buttonAddEntry.getScene().getWindow();
+			Stage parent = (Stage) btnAddEntry.getScene().getWindow();
 			stage.initOwner(parent);
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.setTitle("Add Entry");
@@ -432,7 +374,7 @@ public class DietTabController extends BaseController implements Initializable {
 		try {
 			// Get the current selected food before we edit it so we can update its quantity
 			// later
-			Food selectedFood = tableviewEntries.getSelectionModel().getSelectedItem();
+			Food selectedFood = tvEntries.getSelectionModel().getSelectedItem();
 
 			addedFoods.remove(selectedFood);
 			foodData.remove(selectedFood);

@@ -24,14 +24,12 @@ import model.Day;
 import model.Food;
 import model.Person;
 
-public class SummaryTabController extends BaseController implements Initializable {
+public class SummaryTabController extends BaseFoodController implements Initializable {
 	@FXML
 	private Label labelCalories;
 	@FXML
 	private ProgressBar progressBarCalories;
 
-	@FXML
-	private PieChart dailyMacros;
 
 	@FXML
 	private BarChart<String, Number> dailyProgress;
@@ -43,13 +41,7 @@ public class SummaryTabController extends BaseController implements Initializabl
 	private ArrayList<XYChart.Series> charts = new ArrayList<XYChart.Series>();
 	
 	// Object holding values of doubles
-	private Double calories = (double) 0, protein = (double) 0, fats = (double) 0, carbs = (double) 0;
 	private double totalCalories = (double) 3200;
-	
-	
-	// Pie chart data
-	private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-	private ArrayList<PieChart.Data> addedSlices = new ArrayList<PieChart.Data>();
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -57,6 +49,7 @@ public class SummaryTabController extends BaseController implements Initializabl
 
 		// Setup pie chart
 		setupPieChart();
+		updateGUIPieChart();
 		
 		// Setup bar chart
 		dailyProgress.setBarGap(-30);
@@ -82,21 +75,6 @@ public class SummaryTabController extends BaseController implements Initializabl
 		labelCalories.setText("Calories remaining: " + Double.toString(Helper.round(calories, 2)) + " / " + Double.toString(Helper.round(totalCalories, 2)));
 	}
 	
-	private void setupPieChart() {
-		// Setup pie chart
-		PieChart.Data sliceProteins = new PieChart.Data("Protein", protein);
-		PieChart.Data sliceFats = new PieChart.Data("Fats", fats);
-		PieChart.Data sliceCarbs = new PieChart.Data("Carbohydrates", carbs);
-		addedSlices.add(sliceProteins);
-		addedSlices.add(sliceFats);
-		addedSlices.add(sliceCarbs);
-		pieChartData.add(sliceProteins);
-		pieChartData.add(sliceFats);
-		pieChartData.add(sliceCarbs);
-		dailyMacros.setData(pieChartData);
-		dailyMacros.setTitle("Daily Macros");
-	}
-	
 	public void update() {
 		updateTotalValues();
 		updatePieChart();
@@ -104,35 +82,7 @@ public class SummaryTabController extends BaseController implements Initializabl
 		updateProgressBar();
 	}
 	
-	private void updateTotalValues() {
-		protein = (double) 0;
-		carbs = (double) 0;
-		fats = (double) 0;
 
-		// Add up the total from the foods on the table
-		for (int i = 0; i < MainProgramController.getDay(LocalDate.now()).getFoods().size(); i++) {
-			Food f = MainProgramController.getDay(LocalDate.now()).getFoods().get(i);
-			protein += f.getProteins();
-			carbs += f.getCarbohydrates();
-			fats += f.getFats();
-		}
-
-		// Calculate calories
-		calories = (protein * 4) + (carbs * 4) + (fats * 9);
-	}
-
-	private void updateGUIPieChart() {
-		// now update the slices manually (good enough for such small amount of slices)
-		addedSlices.get(0).setPieValue(protein);
-		addedSlices.get(1).setPieValue(fats);
-		addedSlices.get(2).setPieValue(carbs);
-	}
-	
-	private void updatePieChart() {
-		// Update the pie chart with the current day values
-		updateTotalValues();
-		updateGUIPieChart();
-	}
 
 	private void updateBarChart() {
 		
