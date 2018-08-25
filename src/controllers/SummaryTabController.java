@@ -15,8 +15,8 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import main.Helper;
 import model.Day;
+import model.Helper;
 import model.Person;
 
 public class SummaryTabController extends BaseFoodController implements Initializable {

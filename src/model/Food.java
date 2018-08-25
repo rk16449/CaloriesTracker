@@ -2,7 +2,6 @@ package model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import main.Helper;
 
 public class Food extends Item {
 

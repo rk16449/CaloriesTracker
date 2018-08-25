@@ -25,9 +25,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.Helper;
 import model.Day;
 import model.Food;
+import model.Helper;
 
 public class DietTabController extends BaseFoodController implements Initializable {
 

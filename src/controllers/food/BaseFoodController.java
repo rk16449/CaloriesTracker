@@ -11,8 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.TextField;
-import main.Helper;
 import model.Food;
+import model.Helper;
 
 public class BaseFoodController extends BaseController {
 	
