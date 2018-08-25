@@ -26,10 +26,9 @@ public class CustomExerciseController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		
 	}
 	
-	// Setup Listener for choicebox to enable or disable textfields
+	// Setup Listener for ChoiceBox to enable or disable TextFields
 	@FXML
 	protected void handleAddToToday(ActionEvent event) throws IOException {
 		tfSets.setDisable(!cbAddToToday.isSelected());
@@ -77,7 +76,7 @@ public class CustomExerciseController implements Initializable{
 			// Close the window - return back to ExercisesTabController
 			btnCreate.getScene().getWindow().hide();	
 		}else {
-			// Set as null so we don't return any exercise object
+			// Set as null so we don't return any exercise object from this controller
 			customExercise = null;
 		}
 	}
