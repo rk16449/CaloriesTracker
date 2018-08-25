@@ -24,7 +24,7 @@ import model.Day;
 import model.Food;
 import model.Person;
 
-public class SummaryTabController implements Initializable {
+public class SummaryTabController extends BaseController implements Initializable {
 	@FXML
 	private Label labelCalories;
 	@FXML
@@ -52,6 +52,8 @@ public class SummaryTabController implements Initializable {
 	private ArrayList<PieChart.Data> addedSlices = new ArrayList<PieChart.Data>();
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		person = Person.getInstance();
 
 		// Setup pie chart
 		setupPieChart();
@@ -68,7 +70,7 @@ public class SummaryTabController implements Initializable {
 	
 	private void updateProgressBar() {
 		// Finds out the current goal of calories is
-		totalCalories = Person.getInstance().getGoalCalories();
+		totalCalories = person.getGoalCalories();
 		// Changes the max values to the calorie goal
 		
 		

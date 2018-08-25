@@ -30,7 +30,7 @@ public class EditCustomFoodController implements Initializable {
 	@FXML
 	private Button buttonSave;
 	
-	private SpinnerValueFactory defaultFactory;
+	private SpinnerValueFactory<Double> defaultFactory;
 	
 	private double quantity = 1;
 

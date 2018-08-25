@@ -28,7 +28,7 @@ import main.Helper;
 import model.Day;
 import model.Food;
 
-public class DietTabController implements Initializable {
+public class DietTabController extends BaseController implements Initializable {
 
 	@FXML
 	private TableView<Food> tableviewEntries;

@@ -26,7 +26,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import model.Person;
 
-public class ProfileTabController implements Initializable {
+public class ProfileTabController extends BaseController implements Initializable {
 	
 	@FXML
 	TextField tfFirstName, tfLastName, tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist;
@@ -39,7 +39,6 @@ public class ProfileTabController implements Initializable {
 
 	@FXML 
 	Button btnEditProfile, btnMetric, btnImperial;
-	
 
 	// PROFILE TAB
 	
@@ -68,16 +67,18 @@ public class ProfileTabController implements Initializable {
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		// Setup values
-		tfFirstName.setText(Person.getInstance().getFirstName());
-		tfLastName.setText(Person.getInstance().getLastName());
-		tfAge.setText(Integer.toString(Person.getInstance().getAge()));
-		tfWeight.setText(Double.toString(Person.getInstance().getWeight()));
-		tfHeight.setText(Double.toString(Person.getInstance().getHeight()));
-		tfBodyfat.setText(Double.toString(Person.getInstance().getBodyfat()));
-		tfWaist.setText(Double.toString(Person.getInstance().getWaist()));
+		person = Person.getInstance();
 		
-		cbGender.setValue(Person.getInstance().getGender());
+		// Setup values
+		tfFirstName.setText(person.getFirstName());
+		tfLastName.setText(person.getLastName());
+		tfAge.setText(Integer.toString(person.getAge()));
+		tfWeight.setText(Double.toString(person.getWeight()));
+		tfHeight.setText(Double.toString(person.getHeight()));
+		tfBodyfat.setText(Double.toString(person.getBodyfat()));
+		tfWaist.setText(Double.toString(person.getWaist()));
+		
+		cbGender.setValue(person.getGender());
 
 		
 		// Add textfields into a reference arraylist (so we can loop better)
@@ -107,7 +108,7 @@ public class ProfileTabController implements Initializable {
             		String oldValue, String newValue) {
                 if (newValue != null) {
                     //greetingLabel.setText(newValue.getGreeting());
-                	Person.getInstance().setGender(newValue);
+                	person.setGender(newValue);
                 }
             }
         };
@@ -151,15 +152,15 @@ public class ProfileTabController implements Initializable {
 			disableTF(false);
 		}else {
 			// Save changes to Profile
-			Person.getInstance().setUnits(units);
-			Person.getInstance().setFirstName(tfFirstName.getText());
-			Person.getInstance().setLastName(tfLastName.getText());
-			Person.getInstance().setAge(Integer.parseInt(tfAge.getText()));
-			Person.getInstance().setWeight(Double.parseDouble(tfWeight.getText()));
-			Person.getInstance().setHeight(Double.parseDouble(tfHeight.getText()));
-			Person.getInstance().setGender(cbGender.getValue());
-			Person.getInstance().setWaist(Double.parseDouble(tfWaist.getText()));
-			Person.getInstance().setBodyfat(Double.parseDouble(tfBodyfat.getText()));
+			person.setUnits(units);
+			person.setFirstName(tfFirstName.getText());
+			person.setLastName(tfLastName.getText());
+			person.setAge(Integer.parseInt(tfAge.getText()));
+			person.setWeight(Double.parseDouble(tfWeight.getText()));
+			person.setHeight(Double.parseDouble(tfHeight.getText()));
+			person.setGender(cbGender.getValue());
+			person.setWaist(Double.parseDouble(tfWaist.getText()));
+			person.setBodyfat(Double.parseDouble(tfBodyfat.getText()));
 
 			
 			btnEditProfile.setText("Edit Profile");
