@@ -214,6 +214,34 @@ public class ExercisesTabController implements Initializable {
 	
 	@FXML
 	protected void handleEdit(ActionEvent event) throws IOException {
-		
+		// Create window
+		try {
+			Exercise selectedExercise = tvExercises.getSelectionModel().getSelectedItem();
+			
+			
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource("/view/exercisesTabEditExerciseWindow.fxml"));
+			Scene scene = new Scene(fxmlLoader.load(), 580, 200);
+			Stage stage = new Stage();
+			Stage parent = (Stage) btnEdit.getScene().getWindow();
+			stage.initOwner(parent);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("Edit Exercise");
+			stage.setScene(scene);
+			
+			// Controller access
+			EditExerciseController controller = fxmlLoader.<EditExerciseController>getController();
+			controller.setEditExercise(selectedExercise);
+			// showAndWait will block execution until the window closes...
+			stage.showAndWait();
+			
+			// Refresh reference
+			selectedExercise = controller.getEditExercise();
+			
+			update();
+		}catch(NullPointerException e) {
+			System.out.println("Null exception");
+		}
+
 	}
 }
