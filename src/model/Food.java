@@ -26,11 +26,13 @@ public class Food extends Item {
 	private final double ogAmount;
 	private final double ogCalories, ogProteins, ogCarbohydrates, ogFats;
 
-	public Food(String name, double[] values) {
+	public Food(String name, double[] values, boolean temp) {
 		super(name);
 
 		// Needs validation
-
+		this.template = temp;
+		
+		
 		this.carbohydrates = values[0];
 		this.fats = values[1];
 		this.proteins = values[2];
@@ -41,6 +43,7 @@ public class Food extends Item {
 		// Validate quantity values
 		if (this.template) {
 			this.quantity = 1;
+			this.setQuantity(1);
 		} else {
 			this.quantity = values[4];
 		}

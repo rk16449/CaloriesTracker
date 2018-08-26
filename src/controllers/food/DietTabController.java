@@ -340,6 +340,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 				// Copy the object
 				Food newFood = new Food(controller.getFood().getName(), controller.getFood());
 				
+				
 				// Add values to the table!
 				addedFoods.add(newFood);
 				foodData.add(newFood);

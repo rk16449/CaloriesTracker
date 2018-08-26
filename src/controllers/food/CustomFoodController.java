@@ -44,6 +44,10 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 				if (!(spinnerQuantity.getValue() >= 1 && spinnerQuantity.getValue() <= 100)) {
 					return;
 				}
+				
+				// Create a Food on the Table
+				
+				
 			}
 			
 			// Parse variables to save into new Food
@@ -56,12 +60,12 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 					spinnerQuantity.getValue()
 			};
 			
-			
-			returnFoodData = new Food(name, amt);
+			// One Food to be stored once
+			returnFoodData = new Food(name, amt, true);
 			returnFoodData.setCustom(true);
 
 			// Make sure to save everything
-			System.out.println("We have valid data to work with");
+			System.out.println("handleCreate:CustomFoodController");
 
 			// Close this window and continue (DietTabController)
 			buttonCreate.getScene().getWindow().hide();
