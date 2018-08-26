@@ -260,25 +260,12 @@ public class DietTabController extends BaseFoodController implements Initializab
 	private void addCustom(CustomFoodController controller) {
 		// Add values to the local database/memory table
 		if (controller.valid()) {
-			String[] rgFoodData = controller.getValues();
+			
+			// Get Food from controller
+			Food retFood = controller.getFood();
 
-			// Debug values
-			for (int i = 0; i < rgFoodData.length; i++) {
-				System.out.println("----> " + rgFoodData[i]);
-			}
-
-			// Create the food
-			String name = rgFoodData[0];
-			double amount = Double.parseDouble(rgFoodData[1]);
-			double[] values = { Double.parseDouble(rgFoodData[2]), Double.parseDouble(rgFoodData[3]),
-					Double.parseDouble(rgFoodData[4]) };
-			double quant = Double.parseDouble(rgFoodData[5]);
-
-			// Create it in object form
-			Food newFood = new Food(name, amount, values);
-			newFood.setQuantity(quant);
-			// Make sure we apply it as a custom food
-			newFood.setCustom(true);
+			// Copy it
+			Food newFood = new Food(retFood.getName(), retFood);
 
 			// Add it to daily the table (if we selected to)
 			if (controller.addToTable()) {
@@ -352,6 +339,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 				
 				// Copy the object
 				Food newFood = new Food(controller.getFood().getName(), controller.getFood());
+				
 				
 				// Add values to the table!
 				addedFoods.add(newFood);
