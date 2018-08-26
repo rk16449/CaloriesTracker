@@ -43,7 +43,6 @@ public class Food extends Item {
 		// Validate quantity values
 		if (this.template) {
 			this.quantity = 1;
-			this.setQuantity(1);
 		} else {
 			this.quantity = values[4];
 		}
