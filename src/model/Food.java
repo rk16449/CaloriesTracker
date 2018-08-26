@@ -22,16 +22,18 @@ public class Food extends Item {
 	private final double ogAmount;
 	private final double ogCalories, ogProteins, ogCarbohydrates, ogFats;
 
-	public Food(String name, double amount, double[] values) {
+	public Food(String name, double[] values) {
 		super(name);
 
 		// Needs validation
-		this.amount = amount;
+		
 		this.carbohydrates = values[0];
 		this.fats = values[1];
 		this.proteins = values[2];
 		this.calories = (this.proteins * 4) + (this.carbohydrates * 4) + (this.fats * 9);
 
+		this.amount = values[3];
+		
 		// Store static values (that will never change)
 		ogAmount = amount;
 		ogCarbohydrates = values[0];

@@ -14,6 +14,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import model.Food;
 import model.Helper;
 
 public class CustomFoodController extends BaseFoodController implements Initializable {
@@ -24,6 +25,9 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 	private CheckBox checkboxToday;
 	@FXML
 	private Button buttonCreate;
+	
+	// The food we will return back to DietTabController
+	private Food returnFoodData;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Setup Spinner min/max values
@@ -32,15 +36,24 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 
 	@FXML
 	protected void handleCreate(ActionEvent event) throws IOException {
-		// Make sure we have valid textfields
-		if (this.valid()) {
+		// Make sure we have valid TextFields
+		if (super.valid()) {
 			
-			// Check if we ticked add today and retrieve the quantity
+			// Validate checkbox values
 			if (checkboxToday.isSelected()) {
 				if (!(spinnerQuantity.getValue() >= 1 && spinnerQuantity.getValue() <= 100)) {
 					return;
 				}
 			}
+			
+			// Parse variables to save into new Food
+			String name = tfName.getText();
+			double[] amt = {Double.parseDouble(tfCarbohydrates.getText()), Double.parseDouble(tfFats.getText()),
+					Double.parseDouble(tfProteins.getText()), Double.parseDouble(tfAmount.getText()) };
+			
+			
+			returnFoodData = new Food(name, amt);
+			
 
 			// Make sure to save everything
 			System.out.println("We have valid data to work with");

@@ -269,13 +269,12 @@ public class DietTabController extends BaseFoodController implements Initializab
 
 			// Create the food
 			String name = rgFoodData[0];
-			double amount = Double.parseDouble(rgFoodData[1]);
 			double[] values = { Double.parseDouble(rgFoodData[2]), Double.parseDouble(rgFoodData[3]),
-					Double.parseDouble(rgFoodData[4]) };
+					Double.parseDouble(rgFoodData[4]), Double.parseDouble(rgFoodData[1]) };
 			double quant = Double.parseDouble(rgFoodData[5]);
 
 			// Create it in object form
-			Food newFood = new Food(name, amount, values);
+			Food newFood = new Food(name, values);
 			newFood.setQuantity(quant);
 			// Make sure we apply it as a custom food
 			newFood.setCustom(true);

@@ -57,10 +57,10 @@ public class AddFoodController extends BaseFoodController implements Initializab
 		if(addedFoods.size() == 0) {
 			System.out.println("ADDING WHOLE MILK...");
 			// Fill tableview with dummy data (later from database)
-			Food food1 = new Food("Whole Milk", 100, new double[] { 4.70, 3.70, 3.50 });
-			Food food2 = new Food("Protein Powder", 30, new double[] { 3.77, 0.2, 23.71 });
-			Food food3 = new Food("White Rice", 100, new double[] { 78.90, 0.70, 6.70 });
-			Food food4 = new Food("Semi Skimmed Milk", 100, new double[] { 4.80, 1.80, 3.60 });
+			Food food1 = new Food("Whole Milk", new double[] { 4.70, 3.70, 3.50, 100});
+			Food food2 = new Food("Protein Powder", new double[] { 3.77, 0.2, 23.71, 30 });
+			Food food3 = new Food("White Rice", new double[] { 78.90, 0.70, 6.70, 100});
+			Food food4 = new Food("Semi Skimmed Milk", new double[] { 4.80, 1.80, 3.60, 100 });
 	
 			// add to arraylist
 			addedFoods.add(food1);
