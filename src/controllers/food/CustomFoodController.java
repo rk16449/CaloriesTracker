@@ -48,8 +48,13 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 			
 			// Parse variables to save into new Food
 			String name = tfName.getText();
-			double[] amt = {Double.parseDouble(tfCarbohydrates.getText()), Double.parseDouble(tfFats.getText()),
-					Double.parseDouble(tfProteins.getText()), Double.parseDouble(tfAmount.getText()) };
+			double[] amt = {
+					Double.parseDouble(tfCarbohydrates.getText()), 
+					Double.parseDouble(tfFats.getText()),
+					Double.parseDouble(tfProteins.getText()), 
+					Double.parseDouble(tfAmount.getText()),
+					spinnerQuantity.getValue()
+			};
 			
 			
 			returnFoodData = new Food(name, amt);
@@ -65,16 +70,9 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 			System.out.println("We don't have valid data to create food");
 		}
 	}
-
-	public String[] getValues() {
-		// pre validation (make sure values are correct)
-		if (!checkboxToday.isSelected()) {
-			return new String[] { tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(),
-					tfProteins.getText(), "1" };
-		} else {
-			return new String[] { tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(),
-					tfProteins.getText(), Double.toString(spinnerQuantity.getValue()) };
-		}
+	
+	public Food getFood() {
+		return this.returnFoodData;
 	}
 
 	@FXML

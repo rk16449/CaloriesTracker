@@ -33,6 +33,7 @@ public class Food extends Item {
 		this.calories = (this.proteins * 4) + (this.carbohydrates * 4) + (this.fats * 9);
 
 		this.amount = values[3];
+		this.quantity = values[4];
 		
 		// Store static values (that will never change)
 		ogAmount = amount;
@@ -46,12 +47,16 @@ public class Food extends Item {
 	public Food(String name, Food food) {
 		super(name);
 		
-		this.quantity = food.getQuantity();
+		
 		this.calories = food.getCalories();
-		this.amount = food.getAmount();
+		
 		this.carbohydrates = food.getCarbohydrates();
 		this.fats = food.getFats();
 		this.proteins = food.getProteins();
+		this.amount = food.getAmount();
+		
+		this.custom = food.getCustom();
+		this.quantity = food.getQuantity();
 		
 		this.ogAmount = food.getOgAmount();
 		this.ogCarbohydrates = food.getOgCarbohydrates();
