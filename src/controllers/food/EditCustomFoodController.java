@@ -1,4 +1,4 @@
-package controllers;
+package controllers.food;
 
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
@@ -14,7 +14,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import main.Helper;
+import model.Helper;
 
 public class EditCustomFoodController extends BaseFoodController implements Initializable {
 

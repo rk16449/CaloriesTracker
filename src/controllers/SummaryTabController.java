@@ -2,26 +2,21 @@ package controllers;
 
 /* Import java, javafx, mainPackage */
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import controllers.food.BaseFoodController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import main.Helper;
 import model.Day;
-import model.Food;
+import model.Helper;
 import model.Person;
 
 public class SummaryTabController extends BaseFoodController implements Initializable {
@@ -29,8 +24,6 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	private Label labelCalories;
 	@FXML
 	private ProgressBar progressBarCalories;
-
-
 	@FXML
 	private BarChart<String, Number> dailyProgress;
 	@FXML
@@ -40,8 +33,8 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	
 	private ArrayList<XYChart.Series> charts = new ArrayList<XYChart.Series>();
 	
-	// Object holding values of doubles
-	private double totalCalories = (double) 3200;
+	// value for max total calories needed on progress bar
+	private double totalCalories = 3200;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -64,10 +57,10 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	private void updateProgressBar() {
 		// Finds out the current goal of calories is
 		totalCalories = person.getGoalCalories();
+		
 		// Changes the max values to the calorie goal
-		
-		
 		double percentage = calories / totalCalories;
+		
 		// Adjusts the current total food calories to the value of the progress bar
 		progressBarCalories.setProgress(percentage);
 		
@@ -81,25 +74,18 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		updateBarChart();
 		updateProgressBar();
 	}
-	
-
 
 	private void updateBarChart() {
-		
 		// Sort the days in order
 		Collections.sort(MainProgramController.days);
-		
-		
+
 		// First clear the barchart
 		charts.clear();
 		dailyProgress.getData().clear();
 		
 		for (int i = 0; i < MainProgramController.days.size(); i++) {
-
-			System.out.println("Checking days.......................");
-			
+			// Get this day
 			Day day = MainProgramController.days.get(i);
-			
 
 			// Create a new chart
 			XYChart.Series<String, Number> series1 = new XYChart.Series<>();

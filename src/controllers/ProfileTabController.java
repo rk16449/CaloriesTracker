@@ -5,70 +5,41 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import model.Person;
 
 public class ProfileTabController extends BaseController implements Initializable {
-	
+
+	// FXML Components
 	@FXML
-	TextField tfFirstName, tfLastName, tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist;
-	
-	// Reference to textfields above
+	private TextField tfFirstName, tfLastName, tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist;
+	@FXML
+	private ChoiceBox<String> cbGender;
+	@FXML
+	private Button btnEditProfile, btnMetric, btnImperial;
+
+	// Reference to TextFields above
 	private ArrayList<Node> refTF = new ArrayList<Node>();
-	
-	@FXML
-	ChoiceBox<String> cbGender;
-
-	@FXML 
-	Button btnEditProfile, btnMetric, btnImperial;
-
-	// PROFILE TAB
-	
-	// TODO
-	
-	// Be able to select gender
-	
-	// Be able to set age of person
-	
-	// Be able to set weight of person
-	
-	// Be able to set height
-	
-	// Be able to set bodyfat %
-	
-	// Be able to set body measurements (waist, chest, neck, legs, biceps)
-	
-	// All this data will then be updated on the database and reflect on the calculators
-	
-	
-	
 	// Used to tell what units we are using
 	private String units = "Metric";
-	// Used to tell if we need to unlock textfields or not
+	// Used to tell if we need to unlock TextFields or not
 	private boolean editMode = false;
-	
+
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
 		person = Person.getInstance();
-		
+
 		// Setup values
 		tfFirstName.setText(person.getFirstName());
 		tfLastName.setText(person.getLastName());
@@ -77,80 +48,74 @@ public class ProfileTabController extends BaseController implements Initializabl
 		tfHeight.setText(Double.toString(person.getHeight()));
 		tfBodyfat.setText(Double.toString(person.getBodyfat()));
 		tfWaist.setText(Double.toString(person.getWaist()));
-		
+
 		cbGender.setValue(person.getGender());
 
-		
 		// Add textfields into a reference arraylist (so we can loop better)
-		refTF.addAll(Arrays.asList(tfAge, tfFirstName, tfLastName, 
-				tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist,
-				btnMetric, btnImperial, cbGender
-				));
-		
+		refTF.addAll(Arrays.asList(tfAge, tfFirstName, tfLastName, tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist,
+				btnMetric, btnImperial, cbGender));
+
 		// Set all components disabled
 		disableTF(true);
-		
+
 		// Setup button underlines for units
 		updateButtonUnderline();
-		
+
 		// Setup choicebox
 		setupChoiceBox();
 	}
-	
+
 	private void setupChoiceBox() {
-		cbGender.setItems(FXCollections.observableArrayList(
-			    "Male", "Female", "Other"));
-		
+		cbGender.setItems(FXCollections.observableArrayList("Male", "Female", "Other"));
+
 		// Add event listener
 		ChangeListener<String> changeListener = new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, //
-            		String oldValue, String newValue) {
-                if (newValue != null) {
-                    //greetingLabel.setText(newValue.getGreeting());
-                	person.setGender(newValue);
-                }
-            }
-        };
-        // Selected Item Changed.
-        cbGender.getSelectionModel().selectedItemProperty().addListener(changeListener);
+			@Override
+			public void changed(ObservableValue<? extends String> observable, //
+					String oldValue, String newValue) {
+				if (newValue != null) {
+					person.setGender(newValue);
+				}
+			}
+		};
+		// Selected Item Changed.
+		cbGender.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
-	
+
 	private void updateButtonUnderline() {
 		// Setup buttons
-		if(units.equals("Metric")) {
+		if (units.equals("Metric")) {
 			btnMetric.setUnderline(true);
 			btnImperial.setUnderline(false);
-		}else {
+		} else {
 			btnMetric.setUnderline(false);
 			btnImperial.setUnderline(true);
 		}
 	}
-	
+
 	private void disableTF(boolean value) {
 		// Activate the textfields based on value
-		for(int i=0; i<refTF.size(); i++) {
+		for (int i = 0; i < refTF.size(); i++) {
 			refTF.get(i).setDisable(value);
 		}
 	}
-	
-	
+
 	@FXML
 	protected void handleEditProfile(ActionEvent event) throws IOException {
-		
+
 		// Flip
 		editMode = !editMode;
-		
+
 		// If we are in editmode
-		if(editMode) {
-			
+		if (editMode) {
+
 			System.out.println("Edit mode activated");
-			
+
 			btnEditProfile.setText("Save Changes");
-			
+
 			// Activate textfields
 			disableTF(false);
-		}else {
+		} else {
 			// Save changes to Profile
 			person.setUnits(units);
 			person.setFirstName(tfFirstName.getText());
@@ -162,56 +127,48 @@ public class ProfileTabController extends BaseController implements Initializabl
 			person.setWaist(Double.parseDouble(tfWaist.getText()));
 			person.setBodyfat(Double.parseDouble(tfBodyfat.getText()));
 
-			
 			btnEditProfile.setText("Edit Profile");
-			
+
 			// Disable the textfields
 			disableTF(true);
 		}
 	}
-	
+
 	@FXML
 	protected void handleMetric(ActionEvent event) throws IOException {
-		
+
 		// Change values to metric if we was on Imperial before
-		if(units.equals("Imperial")) {
-			// TODO
-			
+		if (units.equals("Imperial")) {
 			double metricWeight = Double.parseDouble(tfWeight.getText()) / 2.20462;
 			tfWeight.setText(Double.toString(metricWeight));
-			
+
 			double metricHeight = Double.parseDouble(tfHeight.getText()) / 0.0328084;
 			tfHeight.setText(Double.toString(metricHeight));
-			
+
 			double metricWaist = Double.parseDouble(tfWaist.getText()) / 0.393701;
 			tfWaist.setText(Double.toString(metricWaist));
 		}
-		
-		
+
 		units = "Metric";
 		updateButtonUnderline();
-		
-		
-		
+
 	}
-	
+
 	@FXML
 	protected void handleImperial(ActionEvent event) throws IOException {
-		
+
 		// Change values to Imperial if we was on Metric before
-		if(units.equals("Metric")) {
-			// TODO
-			
+		if (units.equals("Metric")) {
 			double imperialWeight = Double.parseDouble(tfWeight.getText()) * 2.20462;
 			tfWeight.setText(Double.toString(imperialWeight));
-			
+
 			double imperialHeight = Double.parseDouble(tfHeight.getText()) * 0.0328084;
 			tfHeight.setText(Double.toString(imperialHeight));
-			
+
 			double imperialWaist = Double.parseDouble(tfWaist.getText()) * 0.393701;
 			tfWaist.setText(Double.toString(imperialWaist));
 		}
-		
+
 		units = "Imperial";
 		updateButtonUnderline();
 	}

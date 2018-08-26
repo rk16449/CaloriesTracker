@@ -1,4 +1,4 @@
-package controllers;
+package controllers.food;
 
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
@@ -14,7 +14,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
-import main.Helper;
+import model.Helper;
 
 public class CustomFoodController extends BaseFoodController implements Initializable {
 

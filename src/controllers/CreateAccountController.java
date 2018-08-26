@@ -7,23 +7,10 @@ import java.util.ResourceBundle;
 /* Import javafx, java, mainPackage */
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-public class CreateAccountController implements Initializable {
-	@FXML
-	private Text actiontarget;
-	@FXML
-	private PasswordField passwordField;
-	@FXML
-	private TextField userField;
+public class CreateAccountController extends BaseLoginController implements Initializable {
+
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -35,15 +22,7 @@ public class CreateAccountController implements Initializable {
 		System.out.println("Back btn pressed");
 		
 		// Send us back to main screen
-		Parent parent = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
-		Scene scene = new Scene(parent);
-		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		appStage.setScene(scene);
-		appStage.setTitle("Calories Tracker");
-		appStage.setWidth(944);
-		appStage.setHeight(600);
-		appStage.show();
-		
+		loadFXML(event, "/view/login.fxml");
 	}
 	
 	@FXML

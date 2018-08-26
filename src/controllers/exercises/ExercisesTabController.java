@@ -1,4 +1,4 @@
-package controllers;
+package controllers.exercises;
 
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import controllers.MainProgramController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

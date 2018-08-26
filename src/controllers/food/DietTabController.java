@@ -1,4 +1,4 @@
-package controllers;
+package controllers.food;
 
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import controllers.MainProgramController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,9 +25,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.Helper;
 import model.Day;
 import model.Food;
+import model.Helper;
 
 public class DietTabController extends BaseFoodController implements Initializable {
 
@@ -190,7 +191,6 @@ public class DietTabController extends BaseFoodController implements Initializab
 				Double.toString(selectedFood.getProteins()) };
 
 		controller.setTextFieldValues(values);
-		controller.setStageAndSetupListeners(stage);
 		// showAndWait will block execution until the window closes...
 		stage.showAndWait();
 
@@ -222,7 +222,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 		// Controller access
 		EditFoodController controller = fxmlLoader.<EditFoodController>getController();
 		controller.setTextFieldValue(Double.toString(selectedFood.getQuantity()));
-		controller.setStageAndSetupListeners(stage);
+		
 		// showAndWait will block execution until the window closes...
 		stage.showAndWait();
 
@@ -246,7 +246,6 @@ public class DietTabController extends BaseFoodController implements Initializab
 
 			// Controller access
 			CustomFoodController controller = fxmlLoader.<CustomFoodController>getController();
-			controller.setStageAndSetupListeners(stage);
 
 			// showAndWait will block execution until the window closes...
 			stage.showAndWait();
@@ -342,7 +341,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 					
 					System.out.println("Updating quantity on addEntry");
 					
-					currentDay.getFoods().get(i).setQuantity(currentDay.getFoods().get(i).getQuantity() + controller.getQuantity());
+					currentDay.getFoods().get(i).setQuantity(currentDay.getFoods().get(i).getQuantity() + controller.getFood().getQuantity());
 					break;
 				}
 			}
@@ -353,8 +352,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 				
 				// Copy the object
 				Food newFood = new Food(controller.getFood().getName(), controller.getFood());
-				newFood.setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
-
+				
 				// Add values to the table!
 				addedFoods.add(newFood);
 				foodData.add(newFood);

@@ -17,13 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class LoginController implements Initializable {
-	@FXML
-	private Text actiontarget;
-	@FXML
-	private PasswordField passwordField;
-	@FXML
-	private TextField userField;
+public class LoginController extends BaseLoginController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -36,16 +30,8 @@ public class LoginController implements Initializable {
 		// Authenticate here
 		
 		
-		
-		// Go to main program dashboard
-		Parent parent = FXMLLoader.load(getClass().getResource("/view/dashboard.fxml"));
-		Scene scene = new Scene(parent);
-		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		appStage.setScene(scene);
-		appStage.setTitle("Calories Tracker");
-		appStage.setWidth(944);
-		appStage.setHeight(600);
-		appStage.show();
+		// Load next page
+		loadFXML(event, "/view/dashboard.fxml");
 	}
 	
 	@FXML

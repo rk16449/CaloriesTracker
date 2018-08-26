@@ -1,4 +1,4 @@
-package main;
+package model;
 
 public class Helper {
 	// Taken from https://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places

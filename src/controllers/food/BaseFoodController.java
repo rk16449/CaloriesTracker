@@ -1,16 +1,18 @@
-package controllers;
+package controllers.food;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import controllers.BaseController;
+import controllers.MainProgramController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.TextField;
-import main.Helper;
 import model.Food;
+import model.Helper;
 
 public class BaseFoodController extends BaseController {
 	
