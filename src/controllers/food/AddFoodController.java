@@ -164,20 +164,16 @@ public class AddFoodController extends BaseFoodController implements Initializab
 			Food selectedFood = tableviewFoods.getSelectionModel().getSelectedItem();
 			System.out.println("We want to add: " + selectedFood.getName());
 			System.out.println("The quantity to add is: " + spinnerQuantity.getValue());
+			
+			selectedFood.setQuantity(spinnerQuantity.getValue()); // maybe do this automatically on getFood()
+
+			
 			returnFoodData = selectedFood;
 			
 			buttonAddFood.getScene().getWindow().hide();
 		} catch (NullPointerException e) {
 			System.out.println("A table row wasn't selected");
 		}
-	}
-
-	public String getData() {
-		return returnFoodData.getName();
-	}
-
-	public double getQuantity() {
-		return spinnerQuantity.getValue();
 	}
 
 	public Food getFood() {

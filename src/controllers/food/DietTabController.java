@@ -341,7 +341,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 					
 					System.out.println("Updating quantity on addEntry");
 					
-					currentDay.getFoods().get(i).setQuantity(currentDay.getFoods().get(i).getQuantity() + controller.getQuantity());
+					currentDay.getFoods().get(i).setQuantity(currentDay.getFoods().get(i).getQuantity() + controller.getFood().getQuantity());
 					break;
 				}
 			}
@@ -352,8 +352,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 				
 				// Copy the object
 				Food newFood = new Food(controller.getFood().getName(), controller.getFood());
-				newFood.setQuantity(controller.getQuantity()); // maybe do this automatically on getFood()
-
+				
 				// Add values to the table!
 				addedFoods.add(newFood);
 				foodData.add(newFood);
