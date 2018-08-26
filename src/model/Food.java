@@ -123,10 +123,9 @@ public class Food extends Item {
 		this.fats = ogFats * quantity;
 		this.proteins = ogProteins * quantity;
 	}
-
-	// Replaces all the values of this food with another food
-	public void setFood(Food food) {
-		// this = food;
+	
+	public double getQuantity() {
+		return this.quantity;
 	}
 
 	public void setCustom(boolean custom) {
@@ -171,6 +170,7 @@ public class Food extends Item {
 		this.fats = fats;
 	}
 
+
 	/*
 	 * 
 	 * String methods (for viewing on the table, but not their direct values)
@@ -202,9 +202,5 @@ public class Food extends Item {
 
 	public StringProperty getStrQuantity() {
 		return new SimpleStringProperty(Double.toString(quantity));
-	}
-
-	public double getQuantity() {
-		return this.quantity;
 	}
 }

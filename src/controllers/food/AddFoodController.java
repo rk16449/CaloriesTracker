@@ -165,7 +165,7 @@ public class AddFoodController extends BaseFoodController implements Initializab
 			System.out.println("We want to add: " + selectedFood.getName());
 			System.out.println("The quantity to add is: " + spinnerQuantity.getValue());
 			
-			
+			// Make a copy food to return back
 			returnFoodData = new Food(selectedFood.getName(), selectedFood);
 			returnFoodData.setQuantity(spinnerQuantity.getValue()); // maybe do this automatically on getFood()
 			
