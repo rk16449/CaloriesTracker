@@ -58,7 +58,7 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 			
 			
 			returnFoodData = new Food(name, amt);
-			
+			returnFoodData.setCustom(true);
 
 			// Make sure to save everything
 			System.out.println("We have valid data to work with");
