@@ -28,6 +28,13 @@ public class Food extends Item {
 
 	public Food(String name, double[] values, boolean temp) {
 		super(name);
+		
+		// Make sure there is enough values, if there isn't then throw an exception
+		if(values.length < 5) throw new IllegalArgumentException("Invalid array size");
+		
+		
+		
+		
 
 		// Needs validation
 		this.template = temp;
