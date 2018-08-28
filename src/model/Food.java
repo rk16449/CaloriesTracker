@@ -15,7 +15,7 @@ public class Food extends Item {
 	private double fats;
 	// Calculated from proteins, carbohydrates and fats
 	private double calories;
-	private double quantity;
+	private double quantity = 1;
 	
 	// Used to tell if this food was imported from the database or if we added it
 	// ourselves
