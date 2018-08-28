@@ -8,11 +8,10 @@ public class Food extends Item {
 	// Used to tell if this is the cutter (i.e the one that we select on the table)
 	private boolean template = false;
 
-	
 	// Nutrition values
 	private double amount;
-	private double proteins;
 	private double carbohydrates;
+	private double proteins;
 	private double fats;
 	// Calculated from proteins, carbohydrates and fats
 	private double calories;
@@ -24,43 +23,49 @@ public class Food extends Item {
 
 	// static values
 	private final double ogAmount;
-	private final double ogCalories, ogProteins, ogCarbohydrates, ogFats;
+	private final double ogCalories, ogCarbohydrates, ogProteins, ogFats;
 
+	/**
+	 * 
+	 * @param name
+	 * @param values {amount, carbs, protein, fats}
+	 * @param temp {tells us if this is a template}
+	 */
 	public Food(String name, double[] values, boolean temp) {
 		super(name);
 		
-		// Make sure there is enough values, if there isn't then throw an exception
-		if(values.length < 5) throw new IllegalArgumentException("Invalid array size");
+		// Validates array values and throws certain exceptions
+		validateArray(values);
 		
-		
-		
-		
-
-		// Needs validation
+		// Sets if we are template
 		this.template = temp;
-		
-		
-		this.carbohydrates = values[0];
-		this.fats = values[1];
-		this.proteins = values[2];
-		this.calories = (this.proteins * 4) + (this.carbohydrates * 4) + (this.fats * 9);
 
-		this.amount = values[3];
-
-		// Validate quantity values
-		if (this.template) {
-			this.quantity = 1;
-		} else {
-			this.quantity = values[4];
-		}
+		// Calculate calories based off values
+		this.calories = (this.carbohydrates * 4) + (this.proteins * 4) + (this.fats * 9);
 
 		// Store static values (that will never change)
-		
-		ogCarbohydrates = values[0];
-		ogFats = values[1];
+		ogAmount = values[0];
+		ogCarbohydrates = values[1];
 		ogProteins = values[2];
-		ogAmount = values[3];
-		ogCalories = (proteins * 4) + (carbohydrates * 4) + (fats * 9);
+		ogFats = values[3];
+		ogCalories = (ogCarbohydrates * 4) + (ogProteins * 4) + (ogFats * 9);
+	}
+
+	private void validateArray(double[] values) {
+		
+		// Make sure there is enough values, if there isn't then throw an exception
+		if(values.length != 4) throw new IllegalArgumentException("Invalid array size");
+				
+		// We have enough values so now check if they are positive
+		for(int i=0; i<values.length; i++) {
+			if(values[i] < 0) throw new IllegalArgumentException("Negative array values");
+		}
+		
+		// Else accept the values given
+		this.amount = values[0];
+		this.carbohydrates = values[1];
+		this.proteins = values[2];
+		this.fats = values[3];
 	}
 
 	// Copy constructor
