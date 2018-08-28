@@ -61,7 +61,8 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 			};
 			
 			// One Food to be stored once
-			returnFoodData = new Food(name, amt, true);
+			returnFoodData = new Food(name, amt);
+			returnFoodData.setTemplate(true);
 			returnFoodData.setCustom(true);
 
 			// Make sure to save everything

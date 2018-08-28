@@ -31,14 +31,11 @@ public class Food extends Item {
 	 * @param values {amount, carbs, protein, fats}
 	 * @param temp {tells us if this is a template}
 	 */
-	public Food(String name, double[] values, boolean temp) {
+	public Food(String name, double[] values) {
 		super(name);
 		
 		// Validates array values and throws certain exceptions
 		validateArray(values);
-		
-		// Sets if we are template
-		this.template = temp;
 
 		// Calculate calories based off values
 		this.calories = (this.carbohydrates * 4) + (this.proteins * 4) + (this.fats * 9);
@@ -103,7 +100,7 @@ public class Food extends Item {
 		return this.template;
 	}
 
-	private void setTemplate(boolean val) {
+	public void setTemplate(boolean val) {
 		this.template = val;
 	}
 
@@ -132,14 +129,18 @@ public class Food extends Item {
 	}
 
 	public void setQuantity(double quantity) {
-		this.quantity = quantity;
-
-		// Multiply everything else by quantity automatically
-		this.amount = ogAmount * quantity;
-		this.calories = ogCalories * quantity;
-		this.carbohydrates = ogCarbohydrates * quantity;
-		this.fats = ogFats * quantity;
-		this.proteins = ogProteins * quantity;
+		// We cannot set the quantity if we are a cutter Food
+		if(!this.template) {
+			this.quantity = quantity;
+			// Multiply everything else by quantity automatically
+			this.amount = ogAmount * quantity;
+			this.calories = ogCalories * quantity;
+			this.carbohydrates = ogCarbohydrates * quantity;
+			this.fats = ogFats * quantity;
+			this.proteins = ogProteins * quantity;
+		}else {
+			System.out.println("You tried to edit a template food!");
+		}
 	}
 	
 	public double getQuantity() {
