@@ -163,16 +163,20 @@ public class AddFoodController extends BaseFoodController implements Initializab
 			System.out.println("We want to add: " + selectedFood.getName());
 			System.out.println("The quantity to add is: " + spinnerQuantity.getValue());
 			
-			// Make a copy food to return back
+			// Make a copy food to return back to DietTabController
 			returnFoodData = new Food(selectedFood.getName(), selectedFood);
 			
-			returnFoodData.setQuantity(spinnerQuantity.getValue()); // maybe do this automatically on getFood()
+			//returnFoodData.setQuantity(spinnerQuantity.getValue()); // maybe do this automatically on getFood()
 			
 			
 			buttonAddFood.getScene().getWindow().hide();
 		} catch (NullPointerException e) {
 			System.out.println("A table row wasn't selected");
 		}
+	}
+	
+	public Double getQuantity() {
+		return spinnerQuantity.getValue();
 	}
 
 	public Food getFood() {
