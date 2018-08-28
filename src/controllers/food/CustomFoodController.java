@@ -39,6 +39,20 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 		// Make sure we have valid TextFields
 		if (super.valid()) {
 			
+			
+			// Parse variables to save into new Food
+			String name = tfName.getText();
+			
+			// {amount, carbs, protein, fats}
+			double[] amt = {
+					Double.parseDouble(tfAmount.getText()),
+					Double.parseDouble(tfCarbohydrates.getText()),
+					Double.parseDouble(tfProteins.getText()),
+					Double.parseDouble(tfFats.getText())
+			};
+			
+			
+			
 			// Validate checkbox values
 			if (checkboxToday.isSelected()) {
 				if (!(spinnerQuantity.getValue() >= 1 && spinnerQuantity.getValue() <= 100)) {
@@ -46,28 +60,21 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 				}
 				
 				// Create a Food on the Table
+				returnFoodData = new Food(name, amt);
 				
 				
+			}else {
+				
+				// One Food to be stored once
+				returnFoodData = new Food(name, amt);
+				returnFoodData.setTemplate(true);
+				returnFoodData.setCustom(true);
+	
+				// Make sure to save everything
+				System.out.println("handleCreate:CustomFoodController");
 			}
 			
-			// Parse variables to save into new Food
-			String name = tfName.getText();
-			double[] amt = {
-					Double.parseDouble(tfCarbohydrates.getText()), 
-					Double.parseDouble(tfFats.getText()),
-					Double.parseDouble(tfProteins.getText()), 
-					Double.parseDouble(tfAmount.getText()),
-					spinnerQuantity.getValue()
-			};
 			
-			// One Food to be stored once
-			returnFoodData = new Food(name, amt);
-			returnFoodData.setTemplate(true);
-			returnFoodData.setCustom(true);
-
-			// Make sure to save everything
-			System.out.println("handleCreate:CustomFoodController");
-
 			// Close this window and continue (DietTabController)
 			buttonCreate.getScene().getWindow().hide();
 

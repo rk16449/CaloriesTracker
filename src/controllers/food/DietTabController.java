@@ -260,24 +260,27 @@ public class DietTabController extends BaseFoodController implements Initializab
 	private void addCustom(CustomFoodController controller) {
 		// Add values to the local database/memory table
 		if (controller.valid()) {
-			
 			// Get Food from controller
 			Food retFood = controller.getFood();
 			
-
 			// Copy it
 			Food newFood = new Food(retFood.getName(), retFood);
+			
+			// Get rid of the other one
+			retFood = null;
 
-			// Add it to daily the table (if we selected to)
+			// Add it to DietTabController table (if we selected to)
 			if (controller.addToTable()) {
 				addedFoods.add(newFood);
 				foodData.add(newFood);
+				currentDay.addFood(newFood);
+			}else {
+				// Add to the AddFoodController instead make sure its set as a template
+				newFood.setTemplate(true);
 			}
-
-			// Add to the local memory arraylist, the table gui and the currentDay arraylist
+			
 			AddFoodController.addedFoods.add(newFood);
 			AddFoodController.foodData.add(newFood);
-			currentDay.addFood(newFood);
 			update();
 		}
 	}
