@@ -61,6 +61,10 @@ public class Food extends Item {
 			if(values[i] < 0) throw new IllegalArgumentException("Negative array values");
 		}
 		
+		// Check if the amount if 0
+		if(values[0] == 0) throw new IllegalArgumentException("Amount cannot be 0");
+		
+		
 		// Else accept the values given
 		this.amount = values[0];
 		this.carbohydrates = values[1];

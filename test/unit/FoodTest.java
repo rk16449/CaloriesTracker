@@ -33,5 +33,12 @@ public class FoodTest {
 		exception.expectMessage("Negative array values");
 		Food f1 = new Food("Cake", new double[] {-1, -2, -3, 5}, false);
 	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfAmountZero() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Amount cannot be 0");
+		Food f1 = new Food("Cake", new double[] {0, 100, 50, 50}, false);
+	}
 
 }
