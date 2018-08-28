@@ -22,8 +22,8 @@ public class Food extends Item {
 	private boolean custom;
 
 	// static values
-	private final double ogAmount;
-	private final double ogCalories, ogCarbohydrates, ogProteins, ogFats;
+	private double ogAmount;
+	private double ogCalories, ogCarbohydrates, ogProteins, ogFats;
 
 	/**
 	 * 
@@ -34,12 +34,12 @@ public class Food extends Item {
 	public Food(String name, double[] values) {
 		super(name);
 		
-		// Validates array values and throws certain exceptions
 		validateArray(values);
-
-		// Calculate calories based off values
-		this.calories = (this.carbohydrates * 4) + (this.proteins * 4) + (this.fats * 9);
-
+		storeOg(values);
+		calories();
+	}
+	
+	private final void storeOg(double[] values) {
 		// Store static values (that will never change)
 		ogAmount = values[0];
 		ogCarbohydrates = values[1];
@@ -47,7 +47,35 @@ public class Food extends Item {
 		ogFats = values[3];
 		ogCalories = (ogCarbohydrates * 4) + (ogProteins * 4) + (ogFats * 9);
 	}
+	
+	/**
+	 * Constructor which accepts the template boolean value
+	 * @param name
+	 * @param values
+	 * @param template
+	 */
+	public Food(String name, double[] values, boolean template) {
+		super(name);
+		
+		validateArray(values);
+		storeOg(values);
+		calories();
+		
+		this.template = template;
+	}
 
+	/**
+	 * Calculate calories based off values
+	 */
+	private void calories() {
+		
+		this.calories = (this.carbohydrates * 4) + (this.proteins * 4) + (this.fats * 9);
+	}
+
+	/**
+	 * Validates array size == 4, negatives, amount > 0
+	 * @param values
+	 */
 	private void validateArray(double[] values) {
 		
 		// Make sure there is enough values, if there isn't then throw an exception
@@ -72,28 +100,31 @@ public class Food extends Item {
 	// Copy constructor
 	public Food(String name, Food food) {
 		super(name);
+		
+		validateFood(food);
 
-		this.calories = food.getCalories();
-		this.template = food.getTemplate();
-
-		if (this.template) {
-			this.quantity = 1;
-		} else {
-			this.quantity = food.getQuantity();
-		}
-
-		this.carbohydrates = food.getCarbohydrates();
-		this.fats = food.getFats();
-		this.proteins = food.getProteins();
 		this.amount = food.getAmount();
-
-		this.custom = food.getCustom();
-
+		this.carbohydrates = food.getCarbohydrates();
+		this.proteins = food.getProteins();
+		this.fats = food.getFats();
+		
+		this.calories = food.getCalories();
+		
 		this.ogAmount = food.getOgAmount();
 		this.ogCarbohydrates = food.getOgCarbohydrates();
-		this.ogFats = food.getOgFats();
 		this.ogProteins = food.getOgProteins();
+		this.ogFats = food.getOgFats();
 		this.ogCalories = (ogProteins * 4) + (ogCarbohydrates * 4) + (ogFats * 9);
+	}
+
+	private void validateFood(Food food) {
+		// Validates the food object that was passed in
+		
+		// Make sure values cannot be negative
+	
+		// Make sure amount is not 0
+		
+		// Make sure calories are correctly calculated
 	}
 
 	public boolean getTemplate() {
