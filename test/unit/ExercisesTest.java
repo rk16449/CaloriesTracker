@@ -59,6 +59,9 @@ public class ExercisesTest {
 		assertEquals(5, e1.getReps(), 1.0);
 	}
 	
-	
-
+	@Test
+	public void testConstructorSets() {
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200});
+		assertEquals(10, e1.getSets(), 1.0);
+	}
 }
