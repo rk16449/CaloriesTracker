@@ -68,12 +68,11 @@ public class Food extends Item {
 	 * Calculate calories based off values
 	 */
 	private void calories() {
-		
 		this.calories = (this.carbohydrates * 4) + (this.proteins * 4) + (this.fats * 9);
 	}
 
 	/**
-	 * Validates array size == 4, negatives, amount > 0
+	 * Validates array checks:{ size == 4, negatives, amount > 0}
 	 * @param values
 	 */
 	private void validateArray(double[] values) {
@@ -114,7 +113,7 @@ public class Food extends Item {
 		this.ogCarbohydrates = food.getOgCarbohydrates();
 		this.ogProteins = food.getOgProteins();
 		this.ogFats = food.getOgFats();
-		this.ogCalories = (ogProteins * 4) + (ogCarbohydrates * 4) + (ogFats * 9);
+		this.ogCalories = food.getOgCalories();
 	}
 
 	private void validateFood(Food food) {
