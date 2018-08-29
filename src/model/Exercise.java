@@ -61,7 +61,7 @@ public class Exercise extends Item {
 	private void validateArray(Number[] nums) {
 		
 		// Not enough array values
-		if(nums.length != 4) throw new IllegalArgumentException("Invalid array count!");
+		if(nums.length != 4) throw new IllegalArgumentException("Invalid array size");
 		
 		// Reps/Sets cannot be 0
 		if(nums[0].intValue() == 0) throw new IllegalArgumentException("No reps set!");
