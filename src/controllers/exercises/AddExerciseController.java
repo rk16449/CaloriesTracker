@@ -42,17 +42,7 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		// Create Dummy Data for table
-		if(addedExercises.size() == 0) {
-			Exercise e1 = new Exercise("Bench Press");
-			Exercise e2 = new Exercise("Squat");
-			Exercise e3 = new Exercise("Deadlift");
-			Exercise e4 = new Exercise("Overhead Press");
-			Exercise e5 = new Exercise("Barbell Row");
-			
-			addedExercises.addAll(Arrays.asList(e1, e2, e3, e4, e5));
-			exerciseData.addAll(Arrays.asList(e1, e2, e3, e4, e5));
-		}
+
 		
 		FilteredList<Exercise> flExercises = new FilteredList<Exercise>(exerciseData, p -> true);
 
