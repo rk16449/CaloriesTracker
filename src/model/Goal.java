@@ -6,6 +6,10 @@ public class Goal extends Item {
 	
 	public Goal(String name, double multiplier) {
 		super(name);
+		
+		// Validate
+		if(multiplier <= 0) throw new IllegalArgumentException("Negative multiplier set!");
+		
 		this.multiplier = multiplier;
 	}
 	
