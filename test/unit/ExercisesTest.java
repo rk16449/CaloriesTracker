@@ -1,6 +1,7 @@
 package unit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -81,5 +82,11 @@ public class ExercisesTest {
 	public void testConstructorName() {
 		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200});
 		assertEquals("Bench Press", e1.getName());
+	}
+	
+	@Test
+	public void testConstructorCustom() {
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200}, true);
+		assertTrue(e1.getCustom());
 	}
 }
