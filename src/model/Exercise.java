@@ -11,11 +11,41 @@ public class Exercise extends Item {
 	private double caloriesBurned;
 	private boolean custom;
 	
+	/**
+	 * Constructor
+	 * @param name
+	 */
 	public Exercise(String name) {
 		super(name);
 	}
+	
+	/**
+	 * Constructor which takes array of numbers 
+	 * @param name
+	 */
+	public Exercise(String name, Number[] nums) {
+		super(name);
+		
+		validateArray(nums);
+	}
+	
+	/**
+	 * Constructor which takes array of numbers & custom value
+	 * @param name
+	 */
+	public Exercise(String name, Number[] nums, boolean custom) {
+		super(name);
+		
+		validateArray(nums);
+		
+		this.custom = custom;
+	}
 
-	// Copy constructor
+	/**
+	 *  Copy constructor
+	 * @param name
+	 * @param exercise
+	 */
 	public Exercise(String name, Exercise exercise) {
 		super(name);
 		
@@ -24,6 +54,31 @@ public class Exercise extends Item {
 		this.weight = exercise.getWeight();
 		this.caloriesBurned = exercise.getCaloriesBurned();
 		this.custom = exercise.getCustom();
+	}
+	
+	// Validation methods
+	
+	private void validateArray(Number[] nums) {
+		
+		// Not enough array values
+		if(nums.length != 4) throw new IllegalArgumentException("Invalid array count!");
+		
+		// Reps/Sets cannot be 0
+		if(nums[0].intValue() == 0) throw new IllegalArgumentException("No reps set!");
+		
+		if(nums[1].intValue() == 0) throw new IllegalArgumentException("No sets set!");
+		
+		
+		// Negative array values
+		for(int i=0; i<nums.length; i++) {
+			if(nums[i].doubleValue() <= 0) throw new IllegalArgumentException("Negative array values!");
+		}
+		
+		// Calories burned can't be > 0 if we didn't do any reps or sets
+		if(nums[3].doubleValue() > 0 && (nums[0].intValue() <= 0 || nums[1].intValue() <= 0)) {
+			throw new IllegalArgumentException("No reps or sets set for calorie burn");
+		}
+		
 	}
 	
 	// TableView Getters
@@ -52,6 +107,10 @@ public class Exercise extends Item {
 	
 	public boolean getCustom() {
 		return this.custom;
+	}
+	
+	public void setCustom(boolean b) {
+		this.custom = b;
 	}
 	
 	public int getReps() {
@@ -85,12 +144,10 @@ public class Exercise extends Item {
 	public void setCaloriesBurned(double caloriesBurned) {
 		this.caloriesBurned = caloriesBurned;
 	}
+	
+	// toString
 
 	public String toString() {
 		return "Name: " + this.getName() + " { sets: " + this.getSets() + ", reps: " + this.getReps() + ", weight: " + this.getWeight() + ", caloried burned: " + this.getCaloriesBurned() + " };";
-	}
-
-	public void setCustom(boolean b) {
-		this.custom = b;
 	}
 }
