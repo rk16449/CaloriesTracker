@@ -50,5 +50,20 @@ public class FoodTest {
 		double sum = (f1.getCarbohydrates() * 4) + (f1.getProteins() * 4) + (f1.getFats() * 9);
 		assertEquals(f1.getCalories(), sum, 0.1);
 	}
+	
+	@Test
+	public void givenTemplateWhenCreatedChangeQuantity() {
+		// If we set a food as a template, we should not be able to change its quantity/cal/macros
+		Food f1 = new Food("Brown Bread", new double[] {100, 10, 6, 2}, true);
+		f1.setQuantity(5);
+		
+		// Check that its quantity never changed
+		assertEquals(f1.getQuantity(), 1, 0.0);
+		
+		// Verify its Macros too
+		assertEquals(f1.getCarbohydrates(), 10, 0.0);
+		assertEquals(f1.getProteins(), 6, 0.0);
+		assertEquals(f1.getFats(), 2, 0.0);
+	}
 
 }
