@@ -199,11 +199,11 @@ public class DietTabController extends BaseFoodController implements Initializab
 
 		// Get values back from controller and update them into the food object
 		double doubleVals[] = {Double.parseDouble(retVals[1]), Double.parseDouble(retVals[2]), Double.parseDouble(retVals[3]), Double.parseDouble(retVals[4])};
-		Food changedFood = new Food(retVals[0], doubleVals);
+		
+		Food changedFood = new Food(retVals[0], doubleVals, controller.getQuantity());
+		
+		// Update reference of selectedFood
 		selectedFood = changedFood;
-
-		// Quantity last value that gets updated because we need new values above
-		selectedFood.setQuantity(controller.getQuantity());
 	}
 
 	private void handleNormalEdit(Food selectedFood) throws IOException {
@@ -258,33 +258,18 @@ public class DietTabController extends BaseFoodController implements Initializab
 	private void addCustom(CustomFoodController controller) throws Exception {
 		// Add values to the local database/memory table
 		if (controller.valid()) {
-			// Get Food from controller
-			Food retFood = controller.getFood();
-			
-			
-			// Copy it
-			Food newFood = new Food(retFood.getName(), retFood);
-			
-			
-			// Get rid of the other one
-			retFood = null;
+			// Copy a Food from controller
+			Food newFood = new Food(controller.getFood().getName(), controller.getFood());
 
 			// Add it to DietTabController table (if we selected to)
 			if (controller.addToTable()) {
 				// Create a copy of newFood to put into the table
-				Food tableFood = new Food(newFood.getName(), newFood);
-				
-				// Set its quantity
-				double quantity = controller.getQuantity();
-				tableFood.setQuantity(quantity);
-				
+				Food tableFood = new Food(newFood.getName(), newFood, controller.getQuantity());
+
 				// Add to the entries table
 				addedFoods.add(tableFood);
 				foodData.add(tableFood);
 				currentDay.addFood(tableFood);
-			}else {
-				// Add to the AddFoodController instead make sure its set as a template
-				newFood.setTemplate(true);
 			}
 			
 			// Add to the AddFoodController table
@@ -351,10 +336,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 				System.out.println("No Food was found, creating a new entry here!");
 				
 				// Copy the object
-				Food newFood = new Food(controller.getFood().getName(), controller.getFood());
-				double quantity = controller.getQuantity();
-				newFood.setQuantity(quantity);
-				
+				Food newFood = new Food(controller.getFood().getName(), controller.getFood(), controller.getQuantity());
 				
 				// Add values to the table!
 				addedFoods.add(newFood);

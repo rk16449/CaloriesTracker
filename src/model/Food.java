@@ -40,6 +40,22 @@ public class Food extends Item {
 		storeArray(values);
 		calculateCalories();
 	}
+	
+	/**
+	 * Constructor which takes quantity value
+	 * @param name
+	 * @param values {amount, carbs, protein, fats}
+	 */
+	public Food(String name, double[] values, double quantity) {
+		super(name);
+
+		validateArray(values);
+		storeArray(values);
+		calculateCalories();
+		
+		// Set the quantity (after calculating and storing everything else above)
+		this.setQuantity(quantity);
+	}
 
 	/**
 	 * Constructor which accepts the template/custom boolean value
@@ -100,6 +116,33 @@ public class Food extends Item {
 		this.ogProteins = food.getOgProteins();
 		this.ogFats = food.getOgFats();
 		this.ogCalories = food.getOgCalories();
+	}
+	
+	/** 
+	 * Copy constructor & its quantity
+	 * 
+	 * @param name
+	 * @param food
+	 */
+	public Food(String name, Food food, double quantity) {
+		super(name);
+
+		validateFood(food);
+
+		this.amount = food.getAmount();
+		this.carbohydrates = food.getCarbohydrates();
+		this.proteins = food.getProteins();
+		this.fats = food.getFats();
+
+		this.calories = food.getCalories();
+
+		this.ogAmount = food.getOgAmount();
+		this.ogCarbohydrates = food.getOgCarbohydrates();
+		this.ogProteins = food.getOgProteins();
+		this.ogFats = food.getOgFats();
+		this.ogCalories = food.getOgCalories();
+		
+		this.setQuantity(quantity);
 	}
 	
 	private final void storeArray(double[] values) {
