@@ -74,8 +74,9 @@ public class FoodTest {
 		Food f1 = new Food("Chicken", new double[] {100, 0, 22, 0.1});
 		f1.setCustom(true);
 		
+		String customTag = " (custom) ";
 		// Verify its name changed
-		assertEquals(f1.getName(), "Chicken" + f1.getCustomTag());
+		assertEquals(f1.getName(), "Chicken" + customTag);
 	}
 
 }

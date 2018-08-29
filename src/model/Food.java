@@ -8,7 +8,6 @@ import javafx.beans.property.StringProperty;
 
 public class Food extends Item {
 
-	private String customTag = " (custom) ";
 	// Used to tell if this is the cutter (i.e the one that we select on the table)
 	private boolean template = false;
 
@@ -147,10 +146,6 @@ public class Food extends Item {
 		if(sum != food.getCalories()) throw new IllegalArgumentException("Invalid calories given for macros");
 	}
 
-	public String getCustomTag() {
-		return this.customTag;
-	}
-
 	public boolean getTemplate() {
 		return this.template;
 	}
@@ -201,15 +196,15 @@ public class Food extends Item {
 	public double getQuantity() {
 		return this.quantity;
 	}
+	
+	public boolean getCustom() {
+		return this.custom;
+	}
 
 	public void setCustom(boolean custom) {
 		this.custom = custom;
 		// This also means we should change the name to have (custom) in brackets
-		this.setName(this.getName() + this.customTag);
-	}
-
-	public boolean getCustom() {
-		return this.custom;
+		this.setName(this.getName() + " (custom) ");
 	}
 
 	public double getAmount() {
