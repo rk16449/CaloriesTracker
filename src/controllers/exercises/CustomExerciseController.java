@@ -12,12 +12,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import model.Exercise;
 
-public class CustomExerciseController implements Initializable{
+public class CustomExerciseController extends BaseExerciseController implements Initializable{
 	
 	@FXML 
 	Button btnCreate;
-	@FXML
-	TextField tfName, tfSets, tfReps, tfWeight, tfCaloriesBurned;
 	@FXML
 	CheckBox cbAddToToday;
 	
@@ -61,10 +59,8 @@ public class CustomExerciseController implements Initializable{
 			// Make sure there are number values inserted
 			try {
 				// Get values from textfields and pass them into exercise
-				customExercise.setSets(Integer.parseInt(tfSets.getText()));
-				customExercise.setReps(Integer.parseInt(tfReps.getText()));
-				customExercise.setWeight(Double.parseDouble(tfWeight.getText()));
-				customExercise.setCaloriesBurned(Double.parseDouble(tfCaloriesBurned.getText()));
+				customExercise = createExercise(customExercise);
+				
 			}catch(NumberFormatException e) {
 				System.out.println("Cannot convert textfield text to numbers");
 				

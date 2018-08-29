@@ -20,7 +20,7 @@ import model.Exercise;
 import model.Food;
 import model.Item;
 
-public class AddExerciseController implements Initializable {
+public class AddExerciseController extends BaseExerciseController implements Initializable {
 	
 	@FXML
 	TableView<Exercise> tvExercises;
@@ -32,7 +32,7 @@ public class AddExerciseController implements Initializable {
 	Button btnAddExercise, btnSearch;
 	
 	@FXML
-	TextField tfSearch, tfSets, tfReps, tfWeight, tfCaloriesBurned;
+	TextField tfSearch;
 
 	// The current selected Exercise we need to pass back to the DietTabController
 	private Exercise returnExerciseData;
@@ -87,18 +87,8 @@ public class AddExerciseController implements Initializable {
 			
 			System.out.println("We want to add: " + selectedExercise.getName());
 			
-			
-			// Create a new Exercise object based off the selection and textfields
-			Number[] nums = new Number[] {
-					Integer.parseInt(tfReps.getText()),
-					Integer.parseInt(tfSets.getText()),
-					Double.parseDouble(tfWeight.getText()),
-					Double.parseDouble(tfCaloriesBurned.getText())		
-					};
-			
-			Exercise newEx = new Exercise(selectedExercise.getName(), nums);
-			
-			
+			Exercise newEx = createExercise(selectedExercise);
+
 			// Update the reference of the returnable object
 			returnExerciseData = newEx;
 			
