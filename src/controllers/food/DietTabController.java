@@ -59,7 +59,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 		setupPieChart();
 		setupDatePicker();
 
-		// Load the foods into an arraylist
+		// Load the foods into an ArrayList
 		loadAddedFoods();
 		// Loads the foods into the GUI table
 		loadTableFoods();
@@ -114,8 +114,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 	private void loadAddedFoods() {
 		// loop through the currentDay food
 		for (int i = 0; i < currentDay.getFoods().size(); i++) {
-			Food f = currentDay.getFoods().get(i);
-			addedFoods.add(f);
+			addedFoods.add(currentDay.getFoods().get(i));
 		}
 	}
 
@@ -126,8 +125,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 	private void loadTableFoods() {
 		// Calculate total data
 		for (int i = 0; i < addedFoods.size(); i++) {
-			Food f = addedFoods.get(i);
-			foodData.add(f);
+			foodData.add(addedFoods.get(i));
 		}
 	}
 
@@ -263,7 +261,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 
 			// Add it to DietTabController table (if we selected to)
 			if (controller.addToTable()) {
-				// Create a copy of newFood to put into the table
+				// Create a copy of newFood and also change its quantity
 				Food tableFood = new Food(newFood.getName(), newFood, controller.getQuantity());
 
 				// Add to the entries table
