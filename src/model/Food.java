@@ -9,7 +9,7 @@ import javafx.beans.property.StringProperty;
 public class Food extends Item {
 
 	// Used to tell if this is the cutter (i.e the one that we select on the table)
-	private boolean template = false;
+	private boolean template;
 
 	// Nutrition values
 	private double amount;
@@ -18,11 +18,11 @@ public class Food extends Item {
 	private double fats;
 	// Calculated from proteins, carbohydrates and fats
 	private double calories;
-	private double quantity = 1;
+	private double quantity;
 
 	// Used to tell if this food was imported from the database or if we added it
 	// ourselves
-	private boolean custom = false;
+	private boolean custom;
 
 	// static values
 	private double ogAmount;
@@ -31,26 +31,14 @@ public class Food extends Item {
 	/**
 	 * 
 	 * @param name
-	 * @param values
-	 *            {amount, carbs, protein, fats}
-	 * @param temp
-	 *            {tells us if this is a template}
+	 * @param values {amount, carbs, protein, fats}
 	 */
 	public Food(String name, double[] values) {
 		super(name);
 
 		validateArray(values);
-		storeOg(values);
-		calories();
-	}
-
-	private final void storeOg(double[] values) {
-		// Store static values (that will never change)
-		ogAmount = values[0];
-		ogCarbohydrates = values[1];
-		ogProteins = values[2];
-		ogFats = values[3];
-		ogCalories = (ogCarbohydrates * 4) + (ogProteins * 4) + (ogFats * 9);
+		storeArray(values);
+		calculateCalories();
 	}
 
 	/**
@@ -64,16 +52,50 @@ public class Food extends Item {
 		super(name);
 
 		validateArray(values);
-		storeOg(values);
-		calories();
+		storeArray(values);
+		calculateCalories();
 
 		this.template = template;
+	}
+	
+	/** 
+	 * Copy constructor
+	 * 
+	 * @param name
+	 * @param food
+	 */
+	public Food(String name, Food food) {
+		super(name);
+
+		validateFood(food);
+
+		this.amount = food.getAmount();
+		this.carbohydrates = food.getCarbohydrates();
+		this.proteins = food.getProteins();
+		this.fats = food.getFats();
+
+		this.calories = food.getCalories();
+
+		this.ogAmount = food.getOgAmount();
+		this.ogCarbohydrates = food.getOgCarbohydrates();
+		this.ogProteins = food.getOgProteins();
+		this.ogFats = food.getOgFats();
+		this.ogCalories = food.getOgCalories();
+	}
+	
+	private final void storeArray(double[] values) {
+		// Store static values (that will never change)
+		ogAmount = values[0];
+		ogCarbohydrates = values[1];
+		ogProteins = values[2];
+		ogFats = values[3];
+		ogCalories = (ogCarbohydrates * 4) + (ogProteins * 4) + (ogFats * 9);
 	}
 
 	/**
 	 * Calculate calories based off values
 	 */
-	private void calories() {
+	private void calculateCalories() {
 		this.calories = (this.carbohydrates * 4) + (this.proteins * 4) + (this.fats * 9);
 	}
 
@@ -103,26 +125,6 @@ public class Food extends Item {
 		this.carbohydrates = values[1];
 		this.proteins = values[2];
 		this.fats = values[3];
-	}
-
-	// Copy constructor
-	public Food(String name, Food food) {
-		super(name);
-
-		validateFood(food);
-
-		this.amount = food.getAmount();
-		this.carbohydrates = food.getCarbohydrates();
-		this.proteins = food.getProteins();
-		this.fats = food.getFats();
-
-		this.calories = food.getCalories();
-
-		this.ogAmount = food.getOgAmount();
-		this.ogCarbohydrates = food.getOgCarbohydrates();
-		this.ogProteins = food.getOgProteins();
-		this.ogFats = food.getOgFats();
-		this.ogCalories = food.getOgCalories();
 	}
 
 	private void validateFood(Food food) {
@@ -194,6 +196,9 @@ public class Food extends Item {
 	}
 
 	public double getQuantity() {
+		// Quantity cannot be <= 0
+		if(this.quantity <= 0) this.quantity = 1;
+		
 		return this.quantity;
 	}
 	
