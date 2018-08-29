@@ -182,13 +182,10 @@ public class DietTabController extends BaseFoodController implements Initializab
 		controller.setSpinnerValue(Double.toString(selectedFood.getQuantity()));
 
 		// pass food values into textfield
-		String[] values = new String[] {
-				// Remove (custom)
-				selectedFood.getName(), Double.toString(selectedFood.getAmount()),
-				Double.toString(selectedFood.getCarbohydrates()), Double.toString(selectedFood.getProteins()) , Double.toString(selectedFood.getFats())
-				};
+		
+		
 
-		controller.setTextFieldValues(values);
+		controller.setFood(selectedFood);
 		// showAndWait will block execution until the window closes...
 		stage.showAndWait();
 

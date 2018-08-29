@@ -339,4 +339,17 @@ public class Food extends Item {
 		// Set quantity too
 		this.setQuantity(quantity);
 	}
+
+	public String[] getStrValues() {
+	
+		String[] vals = {
+				this.name, 
+				Double.toString(this.amount), 
+				Double.toString(this.carbohydrates), 
+				Double.toString(this.proteins), 
+				Double.toString(this.fats)
+		};
+		
+		return vals;
+	}
 }
