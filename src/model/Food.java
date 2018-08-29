@@ -12,12 +12,12 @@ public class Food extends Item {
 	private boolean template = false;
 
 	// Nutrition values
-	private double amount = 0;
-	private double carbohydrates = 0;
-	private double proteins = 0;
-	private double fats = 0;
+	private double amount;
+	private double carbohydrates;
+	private double proteins;
+	private double fats;
 	// Calculated from proteins, carbohydrates and fats
-	private double calories = 0;
+	private double calories;
 	private double quantity = 1;
 
 	// Used to tell if this food was imported from the database or if we added it
