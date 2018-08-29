@@ -76,4 +76,10 @@ public class ExercisesTest {
 		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200});
 		assertEquals(200, e1.getCaloriesBurned(), 1.0);
 	}
+	
+	@Test
+	public void testConstructorName() {
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200});
+		assertEquals("Bench Press", e1.getName());
+	}
 }
