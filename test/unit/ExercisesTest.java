@@ -13,8 +13,15 @@ public class ExercisesTest {
 	@Test
 	public void throwsIllegalArgumentExceptionIfArrayEmpty() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Invalid array size");
+		exception.expectMessage("Invalid array size!");
 		Exercise e1 = new Exercise("Cake", new Number[] {});
+	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfArrayNegative() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Negative array values!");
+		Exercise e1 = new Exercise("Cake", new Number[] {-1, 5, 5, 5});
 	}
 
 }

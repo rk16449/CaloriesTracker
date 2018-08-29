@@ -22,6 +22,7 @@ public class Exercise extends Item {
 	/**
 	 * Constructor which takes array of numbers 
 	 * @param name
+	 * @param nums [reps, sets, weight, caloriesBurned]
 	 */
 	public Exercise(String name, Number[] nums) {
 		super(name);
@@ -63,7 +64,7 @@ public class Exercise extends Item {
 	private void validateArray(Number[] nums) {
 		
 		// Not enough array values
-		if(nums.length != 4) throw new IllegalArgumentException("Invalid array size");
+		if(nums.length != 4) throw new IllegalArgumentException("Invalid array size!");
 		
 		// Reps/Sets cannot be 0
 		if(nums[0].intValue() == 0) throw new IllegalArgumentException("No reps set!");
@@ -78,7 +79,7 @@ public class Exercise extends Item {
 		
 		// Calories burned can't be > 0 if we didn't do any reps or sets
 		if(nums[3].doubleValue() > 0 && (nums[0].intValue() <= 0 || nums[1].intValue() <= 0)) {
-			throw new IllegalArgumentException("No reps or sets set for calorie burn");
+			throw new IllegalArgumentException("No reps or sets set for calorie burn!");
 		}
 	}
 	
