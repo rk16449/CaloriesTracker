@@ -30,11 +30,13 @@ public class EditExerciseController extends BaseExerciseController implements In
 	public void setEditExercise(Exercise edit) {
 		this.editExercise = edit;
 		
+		String[] vals = edit.getStrVals();
+		
 		// Now set the values of the textfields
-		tfSets.setText(Integer.toString(editExercise.getSets()));
-		tfReps.setText(Integer.toString(editExercise.getReps()));
-		tfWeight.setText(Double.toString(editExercise.getWeight()));
-		tfCaloriesBurned.setText(Double.toString(editExercise.getCaloriesBurned()));
+		tfSets.setText(vals[0]);
+		tfReps.setText(vals[1]);
+		tfWeight.setText(vals[2]);
+		tfCaloriesBurned.setText(vals[3]);
 		
 	}
 	

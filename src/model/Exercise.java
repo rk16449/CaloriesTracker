@@ -90,6 +90,17 @@ public class Exercise extends Item {
 		this.caloriesBurned = nums[3].doubleValue();
 	}
 	
+	public String[] getStrVals() {
+		String[] vals = {
+				Integer.toString(this.getSets()),
+				Integer.toString(this.getReps()),
+				Double.toString(this.getWeight()),
+				Double.toString(this.getCaloriesBurned())
+		};
+		
+		return vals;
+	}
+	
 	// TableView Getters
 	
 	public StringProperty getStrExercise() {
@@ -159,4 +170,6 @@ public class Exercise extends Item {
 	public String toString() {
 		return "Name: " + this.getName() + " { sets: " + this.getSets() + ", reps: " + this.getReps() + ", weight: " + this.getWeight() + ", caloried burned: " + this.getCaloriesBurned() + " };";
 	}
+
+
 }
