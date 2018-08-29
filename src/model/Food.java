@@ -5,21 +5,23 @@ import javafx.beans.property.StringProperty;
 
 public class Food extends Item {
 
+	
+	private String customTag = " (custom) ";
 	// Used to tell if this is the cutter (i.e the one that we select on the table)
 	private boolean template = false;
 
 	// Nutrition values
-	private double amount;
-	private double carbohydrates;
-	private double proteins;
-	private double fats;
+	private double amount = 0;
+	private double carbohydrates = 0;
+	private double proteins = 0;
+	private double fats = 0;
 	// Calculated from proteins, carbohydrates and fats
-	private double calories;
+	private double calories = 0;
 	private double quantity = 1;
 	
 	// Used to tell if this food was imported from the database or if we added it
 	// ourselves
-	private boolean custom;
+	private boolean custom = false;
 
 	// static values
 	private double ogAmount;
@@ -180,7 +182,7 @@ public class Food extends Item {
 	public void setCustom(boolean custom) {
 		this.custom = custom;
 		// This also means we should change the name to have (custom) in brackets
-		this.setName(this.getName() + " (custom) ");
+		this.setName(this.getName() + this.customTag);
 	}
 
 	public boolean getCustom() {
