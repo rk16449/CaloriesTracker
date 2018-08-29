@@ -3,7 +3,6 @@ package controllers.food;
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -12,9 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import model.Helper;
+import model.Food;
 
 public class EditCustomFoodController extends BaseFoodController implements Initializable {
 
@@ -61,26 +58,27 @@ public class EditCustomFoodController extends BaseFoodController implements Init
 		return new String[] { tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(),
 					tfProteins.getText(), tfFats.getText(), Double.toString(spinnerQuantity.getValue()) };
 	}
-	
-	public void setTextFieldValues(String[] values) {
-		tfName.setText(values[0]);
-		tfAmount.setText(values[1]);
-		tfCarbohydrates.setText(values[2]);
-		tfFats.setText(values[3]);
-		tfProteins.setText(values[4]);
-		// tfName, tfAmount, tfCarbohydrates, tfFats, tfProteins;
-	}
 
 	public void setSpinnerValue(String value) {
 		try {
 			defaultFactory.setValue(Double.parseDouble(value));
 		}catch(NumberFormatException e) {
-			
+			e.printStackTrace();
 		}
 	}
 	
 	public double getQuantity() {
 		quantity = spinnerQuantity.getValue();
 		return quantity;
+	}
+
+
+	public void setFood(Food selectedFood) {
+		String[] values = selectedFood.getStrValues();
+		tfName.setText(values[0]);
+		tfAmount.setText(values[1]);
+		tfCarbohydrates.setText(values[2]);
+		tfProteins.setText(values[3]);
+		tfFats.setText(values[4]);
 	}
 }

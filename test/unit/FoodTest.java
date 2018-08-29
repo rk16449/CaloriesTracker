@@ -54,7 +54,7 @@ public class FoodTest {
 	@Test
 	public void givenTemplateWhenCreatedChangeQuantity() {
 		// If we set a food as a template, we should not be able to change its quantity/cal/macros
-		Food f1 = new Food("Brown Bread", new double[] {100, 10, 6, 2}, true);
+		Food f1 = new Food("Brown Bread", new double[] {100, 10, 6, 2}, new boolean[] {true});
 		
 		// Try to change quantity
 		f1.setQuantity(5);
@@ -71,9 +71,8 @@ public class FoodTest {
 	@Test
 	public void givenCustomWhenCreatedModifyName() {
 		// The name of a food should change with (custom) added to it
-		Food f1 = new Food("Chicken", new double[] {100, 0, 22, 0.1});
-		f1.setCustom(true);
-		
+		Food f1 = new Food("Chicken", new double[] {100, 0, 22, 0.1}, new boolean[] {false, true});
+
 		String customTag = " (custom) ";
 		// Verify its name changed
 		assertEquals(f1.getName(), "Chicken" + customTag);

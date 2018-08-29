@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import model.Exercise;
 
-public class EditExerciseController implements Initializable {
+public class EditExerciseController extends BaseExerciseController implements Initializable {
 
 	@FXML
 	TextField tfSets, tfReps, tfWeight, tfCaloriesBurned;
@@ -30,11 +30,13 @@ public class EditExerciseController implements Initializable {
 	public void setEditExercise(Exercise edit) {
 		this.editExercise = edit;
 		
+		String[] vals = edit.getStrVals();
+		
 		// Now set the values of the textfields
-		tfSets.setText(Integer.toString(editExercise.getSets()));
-		tfReps.setText(Integer.toString(editExercise.getReps()));
-		tfWeight.setText(Double.toString(editExercise.getWeight()));
-		tfCaloriesBurned.setText(Double.toString(editExercise.getCaloriesBurned()));
+		tfSets.setText(vals[0]);
+		tfReps.setText(vals[1]);
+		tfWeight.setText(vals[2]);
+		tfCaloriesBurned.setText(vals[3]);
 		
 	}
 	
@@ -47,10 +49,7 @@ public class EditExerciseController implements Initializable {
 		try {
 			
 			// Save values into editExercise
-			editExercise.setSets(Integer.parseInt(tfSets.getText()));
-			editExercise.setReps(Integer.parseInt(tfReps.getText()));
-			editExercise.setWeight(Double.parseDouble(tfWeight.getText()));
-			editExercise.setCaloriesBurned(Double.parseDouble(tfCaloriesBurned.getText()));
+			editExercise = createExercise(editExercise);
 			
 			// Close this window and return back to ExercisesTabController
 			btnSave.getScene().getWindow().hide();

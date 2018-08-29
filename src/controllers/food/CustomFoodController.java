@@ -43,7 +43,7 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 			// Parse variables to save into new Food
 			String name = tfName.getText();
 			
-			// {amount, carbs, protein, fats}
+			// This is amount, carbs, protein, fats
 			double[] amt = {
 					Double.parseDouble(tfAmount.getText()),
 					Double.parseDouble(tfCarbohydrates.getText()),
@@ -53,26 +53,14 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 			
 			
 			
-			// Validate checkbox values
+			// Validate CheckBox values
 			if (checkboxToday.isSelected()) {
 				if (!(spinnerQuantity.getValue() >= 1 && spinnerQuantity.getValue() <= 100)) {
 					return;
 				}
-				
-				// Create a Food on the Table
-				returnFoodData = new Food(name, amt);
-				
-				
-			}else {
-				
-				// One Food to be stored once
-				returnFoodData = new Food(name, amt);
-				returnFoodData.setTemplate(true);
-				returnFoodData.setCustom(true);
-	
-				// Make sure to save everything
-				System.out.println("handleCreate:CustomFoodController");
 			}
+			
+			returnFoodData = new Food(name, amt, new boolean[] {true, true});
 			
 			
 			// Close this window and continue (DietTabController)
@@ -95,5 +83,13 @@ public class CustomFoodController extends BaseFoodController implements Initiali
 
 	public boolean addToTable() {
 		return checkboxToday.isSelected();
+	}
+
+	public double getQuantity() throws Exception {
+		if(checkboxToday.isSelected()) {
+			return spinnerQuantity.getValue();
+		}else {
+			throw new Exception("Cannot return quantity if checkbox not selected!");
+		}
 	}
 }

@@ -21,11 +21,11 @@ public class BaseFoodController extends BaseController {
 	@FXML
 	protected PieChart pieChartMacros;
 	@FXML
-	protected TextField tfName, tfAmount, tfCarbohydrates, tfFats, tfProteins;
+	protected TextField tfName, tfAmount, tfCarbohydrates, tfProteins, tfFats;
 	
 	
 	// Object holding values of doubles
-	protected Double calories = (double) 0, protein = (double) 0, fats = (double) 0, carbs = (double) 0;
+	protected Double calories = (double) 0, carbs = (double) 0, protein = (double) 0, fats = (double) 0; 
 	// Pie chart data
 	protected ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 	protected ArrayList<PieChart.Data> addedSlices = new ArrayList<PieChart.Data>();

@@ -17,10 +17,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.Exercise;
-import model.Food;
-import model.Item;
 
-public class AddExerciseController implements Initializable {
+public class AddExerciseController extends BaseExerciseController implements Initializable {
 	
 	@FXML
 	TableView<Exercise> tvExercises;
@@ -32,7 +30,7 @@ public class AddExerciseController implements Initializable {
 	Button btnAddExercise, btnSearch;
 	
 	@FXML
-	TextField tfSearch, tfSets, tfReps, tfWeight, tfCaloriesBurned;
+	TextField tfSearch;
 
 	// The current selected Exercise we need to pass back to the DietTabController
 	private Exercise returnExerciseData;
@@ -44,7 +42,9 @@ public class AddExerciseController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		// Create Dummy Data for table
+		
+		// Create Dummy Data for table 
+		/* (commenting this out will break a guideline)
 		if(addedExercises.size() == 0) {
 			Exercise e1 = new Exercise("Bench Press");
 			Exercise e2 = new Exercise("Squat");
@@ -54,10 +54,9 @@ public class AddExerciseController implements Initializable {
 			
 			addedExercises.addAll(Arrays.asList(e1, e2, e3, e4, e5));
 			exerciseData.addAll(Arrays.asList(e1, e2, e3, e4, e5));
-		}
+		}*/
 		
 		FilteredList<Exercise> flExercises = new FilteredList<Exercise>(exerciseData, p -> true);
-
 		
 		// Setup column values
 		tcExercise.setCellValueFactory(e -> e.getValue().getStrExercise());
@@ -84,21 +83,10 @@ public class AddExerciseController implements Initializable {
 		System.out.println("Add the food to the table behind us!");
 		try {
 			Exercise selectedExercise = tvExercises.getSelectionModel().getSelectedItem();
-			
-			System.out.println("We want to add: " + selectedExercise.getName());
-			
-			
-			// Create a new Exercise object based off the selection and textfields
-			Exercise newEx = new Exercise(selectedExercise.getName());
-			newEx.setReps(Integer.parseInt(tfReps.getText()));
-			newEx.setSets(Integer.parseInt(tfSets.getText()));
-			newEx.setWeight(Double.parseDouble(tfWeight.getText()));
-			newEx.setCaloriesBurned(Double.parseDouble(tfCaloriesBurned.getText()));
-			
-			
+			Exercise newEx = createExercise(selectedExercise);
 			// Update the reference of the returnable object
 			returnExerciseData = newEx;
-			
+	
 			btnAddExercise.getScene().getWindow().hide();
 		} catch (NullPointerException e) {
 			System.out.println("A table row wasn't selected");

@@ -29,7 +29,7 @@ public class Food extends Item {
 	private double ogCalories, ogCarbohydrates, ogProteins, ogFats;
 
 	/**
-	 * 
+	 * Constructor which takes quantity value
 	 * @param name
 	 * @param values {amount, carbs, protein, fats}
 	 */
@@ -39,25 +39,49 @@ public class Food extends Item {
 		validateArray(values);
 		storeArray(values);
 		calculateCalories();
+		
+		// Set quantity
+		if(values.length == 5) {
+			this.setQuantity(values[4]);
+		}
 	}
 
 	/**
-	 * Constructor which accepts the template boolean value
+	 * Constructor which accepts the template/custom boolean value
 	 * 
 	 * @param name
 	 * @param values
-	 * @param template
+	 * @param bools
 	 */
-	public Food(String name, double[] values, boolean template) {
+	public Food(String name, double[] values, boolean[] bools) {
 		super(name);
 
 		validateArray(values);
 		storeArray(values);
 		calculateCalories();
-
-		this.template = template;
+		validateBools(bools);
 	}
 	
+	private void validateBools(boolean[] bools) {
+		// Check amount
+		if(bools.length < 1 && bools.length > 2) throw new IllegalArgumentException("template or custom not set");
+		
+		System.out.println("Length of bool array is: " + bools.length);
+		
+		for(int i=0; i<bools.length; i++) {
+			System.out.println("values of bools: " + bools[i]);
+		}
+		
+		if(bools.length == 2) {
+			this.template = bools[0];
+			this.setCustom(bools[1]);
+		}else {
+			this.template = bools[0];
+		}
+		
+		System.out.println("Am I a custom food? " + this.getCustom());
+	}
+
 	/** 
 	 * Copy constructor
 	 * 
@@ -68,7 +92,10 @@ public class Food extends Item {
 		super(name);
 
 		validateFood(food);
-
+		setFoodValues(food);
+	}
+	
+	private void setFoodValues(Food food) {
 		this.amount = food.getAmount();
 		this.carbohydrates = food.getCarbohydrates();
 		this.proteins = food.getProteins();
@@ -81,6 +108,21 @@ public class Food extends Item {
 		this.ogProteins = food.getOgProteins();
 		this.ogFats = food.getOgFats();
 		this.ogCalories = food.getOgCalories();
+	}
+	
+	/** 
+	 * Copy constructor & its quantity
+	 * 
+	 * @param name
+	 * @param food
+	 */
+	public Food(String name, Food food, double quantity) {
+		super(name);
+
+		validateFood(food);
+		setFoodValues(food);
+		
+		this.setQuantity(quantity);
 	}
 	
 	private final void storeArray(double[] values) {
@@ -105,11 +147,13 @@ public class Food extends Item {
 	 * @param values
 	 */
 	private void validateArray(double[] values) {
+		
+		// Quantity must have been set
+		if (values.length != 4 && values.length != 5) {
+				throw new IllegalArgumentException("Invalid array size");
+		}
 
-		// Make sure there is enough values, if there isn't then throw an exception
-		if (values.length != 4)
-			throw new IllegalArgumentException("Invalid array size");
-
+		
 		// We have enough values so now check if they are positive
 		for (int i = 0; i < values.length; i++) {
 			if (values[i] < 0)
@@ -146,6 +190,16 @@ public class Food extends Item {
 		double sum = (food.getCarbohydrates() * 4) + (food.getProteins() * 4) + (food.getFats() * 9);
 		
 		if(sum != food.getCalories()) throw new IllegalArgumentException("Invalid calories given for macros");
+		
+		// Make sure if I was originally a template, I am not anymore
+		if(food.getTemplate()) {
+			this.template = false;
+		}
+		
+		// If I was a custom food then make sure I am still a custom food
+		if(food.getCustom()) {
+			this.custom = true;
+		}
 	}
 
 	public boolean getTemplate() {
@@ -275,5 +329,27 @@ public class Food extends Item {
 
 	public StringProperty getStrQuantity() {
 		return new SimpleStringProperty(Double.toString(quantity));
+	}
+
+	
+	public void setFood(Food changedFood, double quantity) {
+		validateFood(changedFood);
+		// Now set food values
+		setFoodValues(changedFood);
+		// Set quantity too
+		this.setQuantity(quantity);
+	}
+
+	public String[] getStrValues() {
+	
+		String[] vals = {
+				this.name, 
+				Double.toString(this.amount), 
+				Double.toString(this.carbohydrates), 
+				Double.toString(this.proteins), 
+				Double.toString(this.fats)
+		};
+		
+		return vals;
 	}
 }

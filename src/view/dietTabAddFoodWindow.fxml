@@ -25,8 +25,8 @@
           <TableColumn fx:id="amountColumn" prefWidth="74.0" text="Amount" />
             <TableColumn fx:id="caloriesColumn" prefWidth="78.0" text="Calories" />
             <TableColumn fx:id="carbsColumn" prefWidth="77.0" text="Carbs" />
-            <TableColumn fx:id="fatsColumn" prefWidth="74.0" text="Fats" />
             <TableColumn fx:id="proteinColumn" prefWidth="74.0" text="Protein" />
+            <TableColumn fx:id="fatsColumn" prefWidth="74.0" text="Fats" />
         </columns>
       </TableView>
       <TextField fx:id="textfieldSearch" layoutX="189.0" layoutY="39.0" />

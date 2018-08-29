@@ -58,10 +58,10 @@ public class AddFoodController extends BaseFoodController implements Initializab
 		if(addedFoods.size() == 0) {
 			System.out.println("ADDING WHOLE MILK...");
 			// Fill tableview with dummy data (later from database)
-			Food f1 = new Food("Whole Milk", new double[] { 100, 4.70, 3.50, 3.70}, true);
-			Food f2 = new Food("Protein Powder", new double[] {30, 3.77, 23.71, 0.2  }, true);
-			Food f3 = new Food("White Rice", new double[] { 100, 78.90, 6.70, 0.70 }, true);
-			Food f4 = new Food("Semi Skimmed Milk", new double[] {100, 4.80, 3.60, 1.80}, true);
+			Food f1 = new Food("Whole Milk", new double[] { 100, 4.70, 3.50, 3.70}, new boolean[] {true});
+			Food f2 = new Food("Protein Powder", new double[] {30, 3.77, 23.71, 0.2  }, new boolean[] {true});
+			Food f3 = new Food("White Rice", new double[] { 100, 78.90, 6.70, 0.70 }, new boolean[] {true});
+			Food f4 = new Food("Semi Skimmed Milk", new double[] {100, 4.80, 3.60, 1.80}, new boolean[] {true});
 	
 			// add to ArrayList
 			addedFoods.addAll(Arrays.asList(f1, f2, f3, f4));
@@ -145,7 +145,7 @@ public class AddFoodController extends BaseFoodController implements Initializab
 				}
 				
 			}catch(NullPointerException e) {
-				
+				e.printStackTrace();
 			}
 		}
 		
@@ -165,9 +165,6 @@ public class AddFoodController extends BaseFoodController implements Initializab
 			
 			// Make a copy food to return back to DietTabController
 			returnFoodData = new Food(selectedFood.getName(), selectedFood);
-			
-			//returnFoodData.setQuantity(spinnerQuantity.getValue()); // maybe do this automatically on getFood()
-			
 			
 			buttonAddFood.getScene().getWindow().hide();
 		} catch (NullPointerException e) {
