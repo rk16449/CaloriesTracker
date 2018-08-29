@@ -1,5 +1,7 @@
 package unit;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -22,16 +24,12 @@ public class ExercisesTest {
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage("Negative array values!");
 		
-		
-		
 		int counter = -1;
-		// For loop between each values  -INT.MAX < 0 
+		// For loop between each values  -1000 < 0 
 		for(int i=0; i<1000; i++) {
 			Exercise e1 = new Exercise("Bench Press", new Number[] {counter, counter, counter, counter});
 			counter--;
 		}
-		
-		
 	}
 	
 	@Test
@@ -54,5 +52,13 @@ public class ExercisesTest {
 		exception.expectMessage("Calories burned not set!");
 		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 5, 5, 0});
 	}
+	
+	@Test
+	public void testConstructorReps() {
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200});
+		assertEquals(5, e1.getReps(), 1.0);
+	}
+	
+	
 
 }
