@@ -89,11 +89,14 @@ public class AddExerciseController implements Initializable {
 			
 			
 			// Create a new Exercise object based off the selection and textfields
-			Exercise newEx = new Exercise(selectedExercise.getName());
-			newEx.setReps(Integer.parseInt(tfReps.getText()));
-			newEx.setSets(Integer.parseInt(tfSets.getText()));
-			newEx.setWeight(Double.parseDouble(tfWeight.getText()));
-			newEx.setCaloriesBurned(Double.parseDouble(tfCaloriesBurned.getText()));
+			Number[] nums = new Number[] {
+					Integer.parseInt(tfReps.getText()),
+					Integer.parseInt(tfSets.getText()),
+					Double.parseDouble(tfWeight.getText()),
+					Double.parseDouble(tfCaloriesBurned.getText())		
+					};
+			
+			Exercise newEx = new Exercise(selectedExercise.getName(), nums);
 			
 			
 			// Update the reference of the returnable object

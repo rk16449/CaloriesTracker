@@ -27,6 +27,7 @@ public class Exercise extends Item {
 		super(name);
 		
 		validateArray(nums);
+		setValues(nums);
 	}
 	
 	/**
@@ -37,6 +38,7 @@ public class Exercise extends Item {
 		super(name);
 		
 		validateArray(nums);
+		setValues(nums);
 		
 		this.custom = custom;
 	}
@@ -78,7 +80,14 @@ public class Exercise extends Item {
 		if(nums[3].doubleValue() > 0 && (nums[0].intValue() <= 0 || nums[1].intValue() <= 0)) {
 			throw new IllegalArgumentException("No reps or sets set for calorie burn");
 		}
-		
+	}
+	
+	private void setValues(Number[] nums) {
+		// Set the values
+		this.reps = nums[0].intValue();
+		this.sets = nums[1].intValue();
+		this.weight = nums[2].doubleValue();
+		this.caloriesBurned = nums[3].doubleValue();
 	}
 	
 	// TableView Getters
