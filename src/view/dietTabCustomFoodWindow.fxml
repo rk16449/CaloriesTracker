@@ -31,11 +31,11 @@
             <TextField fx:id="tfAmount" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label prefHeight="17.0" prefWidth="196.0" text="Carbohydrates:" GridPane.rowIndex="2" />
             <TextField fx:id="tfCarbohydrates" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="tfFats" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="tfProteins" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label prefHeight="17.0" prefWidth="196.0" text="Amount:" GridPane.rowIndex="1" />
-            <Label prefHeight="17.0" prefWidth="196.0" text="Fats:" GridPane.rowIndex="3" />
-            <Label prefHeight="17.0" prefWidth="196.0" text="Proteins:" GridPane.rowIndex="4" />
-            <TextField fx:id="tfProteins" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label prefHeight="17.0" prefWidth="196.0" text="Proteins:" GridPane.rowIndex="3" />
+            <Label prefHeight="17.0" prefWidth="196.0" text="Fats:" GridPane.rowIndex="4" />
+            <TextField fx:id="tfFats" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <Label layoutX="94.0" layoutY="14.0" text="Adding your own custom foods" />

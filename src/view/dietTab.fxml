@@ -26,8 +26,8 @@
             <TableColumn fx:id="tcCalories" prefWidth="79.0" text="Calories" />
             <TableColumn fx:id="tcAmount" prefWidth="71.0" text="Amount" />
           <TableColumn fx:id="tcCarbs" prefWidth="60.0" text="Carbs" />
-            <TableColumn fx:id="tcFats" prefWidth="59.0" text="Fats" />
           <TableColumn fx:id="tcProts" prefWidth="64.0" text="Protein" />
+            <TableColumn fx:id="tcFats" prefWidth="59.0" text="Fats" />
             <TableColumn fx:id="tcQuantity" prefWidth="64.0" text="Quantity" />
         </columns>
       </TableView>

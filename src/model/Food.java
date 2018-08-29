@@ -61,12 +61,20 @@ public class Food extends Item {
 		// Check amount
 		if(bools.length < 1 && bools.length > 2) throw new IllegalArgumentException("template or custom not set");
 		
+		System.out.println("Length of bool array is: " + bools.length);
+		
+		for(int i=0; i<bools.length; i++) {
+			System.out.println("values of bools: " + bools[i]);
+		}
+		
 		if(bools.length == 2) {
 			this.template = bools[0];
 			this.setCustom(bools[1]);
 		}else {
 			this.template = bools[0];
 		}
+		
+		System.out.println("Am I a custom food? " + this.getCustom());
 	}
 
 	/** 
@@ -157,6 +165,16 @@ public class Food extends Item {
 		double sum = (food.getCarbohydrates() * 4) + (food.getProteins() * 4) + (food.getFats() * 9);
 		
 		if(sum != food.getCalories()) throw new IllegalArgumentException("Invalid calories given for macros");
+		
+		// Make sure if I was originally a template, I am not anymore
+		if(food.getTemplate()) {
+			this.template = false;
+		}
+		
+		// If I was a custom food then make sure I am still a custom food
+		if(food.getCustom()) {
+			this.custom = true;
+		}
 	}
 
 	public boolean getTemplate() {

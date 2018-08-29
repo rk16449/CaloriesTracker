@@ -255,28 +255,39 @@ public class DietTabController extends BaseFoodController implements Initializab
 		}
 	}
 
-	private void addCustom(CustomFoodController controller) {
+	private void addCustom(CustomFoodController controller) throws Exception {
 		// Add values to the local database/memory table
 		if (controller.valid()) {
 			// Get Food from controller
 			Food retFood = controller.getFood();
 			
+			
 			// Copy it
 			Food newFood = new Food(retFood.getName(), retFood);
+			
 			
 			// Get rid of the other one
 			retFood = null;
 
 			// Add it to DietTabController table (if we selected to)
 			if (controller.addToTable()) {
-				addedFoods.add(newFood);
-				foodData.add(newFood);
-				currentDay.addFood(newFood);
+				// Create a copy of newFood to put into the table
+				Food tableFood = new Food(newFood.getName(), newFood);
+				
+				// Set its quantity
+				double quantity = controller.getQuantity();
+				tableFood.setQuantity(quantity);
+				
+				// Add to the entries table
+				addedFoods.add(tableFood);
+				foodData.add(tableFood);
+				currentDay.addFood(tableFood);
 			}else {
 				// Add to the AddFoodController instead make sure its set as a template
 				newFood.setTemplate(true);
 			}
 			
+			// Add to the AddFoodController table
 			AddFoodController.addedFoods.add(newFood);
 			AddFoodController.foodData.add(newFood);
 			update();
