@@ -1,5 +1,8 @@
 package unit;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -13,8 +16,77 @@ public class ExercisesTest {
 	@Test
 	public void throwsIllegalArgumentExceptionIfArrayEmpty() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Invalid array size");
-		Exercise e1 = new Exercise("Cake", new Number[] {});
+		exception.expectMessage("Invalid array size!");
+		Exercise e1 = new Exercise("Bench Press", new Number[] {});
 	}
-
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfArrayNegative() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Negative array values!");
+		
+		int counter = -1;
+		// For loop between each values  -1000 < 0 
+		for(int i=0; i<1000; i++) {
+			Exercise e1 = new Exercise("Bench Press", new Number[] {counter, counter, counter, counter});
+			counter--;
+		}
+	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfRepsZero() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("No reps set!");
+		Exercise e1 = new Exercise("Bench Press", new Number[] {0, 5, 5, 5});
+	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfSetsZero() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("No sets set!");
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 0, 5, 5});
+	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfCaloriesBurnedZero() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Calories burned not set!");
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 5, 5, 0});
+	}
+	
+	@Test
+	public void testConstructorReps() {
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200});
+		assertEquals(5, e1.getReps(), 1.0);
+	}
+	
+	@Test
+	public void testConstructorSets() {
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200});
+		assertEquals(10, e1.getSets(), 1.0);
+	}
+	
+	@Test
+	public void testConstructorWeight() {
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200});
+		assertEquals(50, e1.getWeight(), 1.0);
+	}
+	
+	@Test
+	public void testConstructorCaloriesBurned() {
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200});
+		assertEquals(200, e1.getCaloriesBurned(), 1.0);
+	}
+	
+	@Test
+	public void testConstructorName() {
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200});
+		assertEquals("Bench Press", e1.getName());
+	}
+	
+	@Test
+	public void testConstructorCustom() {
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50, 200}, true);
+		assertTrue(e1.getCustom());
+	}
 }
