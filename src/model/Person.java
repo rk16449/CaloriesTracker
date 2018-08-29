@@ -46,8 +46,7 @@ public class Person {
 	 * 
 	 */
 	public void calculateBMR() {
-		//Person p = currentPerson;
-
+		
 		if (getGender().equals("Male")) {
 			// Check what units we are in and convert to Metric
 			if (getUnits().equals("Imperial")) {

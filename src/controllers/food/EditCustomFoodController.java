@@ -66,9 +66,8 @@ public class EditCustomFoodController extends BaseFoodController implements Init
 		tfName.setText(values[0]);
 		tfAmount.setText(values[1]);
 		tfCarbohydrates.setText(values[2]);
-		tfFats.setText(values[3]);
-		tfProteins.setText(values[4]);
-		// tfName, tfAmount, tfCarbohydrates, tfFats, tfProteins;
+		tfProteins.setText(values[3]);
+		tfFats.setText(values[4]);
 	}
 
 	public void setSpinnerValue(String value) {

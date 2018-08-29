@@ -42,22 +42,33 @@ public class Food extends Item {
 	}
 
 	/**
-	 * Constructor which accepts the template boolean value
+	 * Constructor which accepts the template/custom boolean value
 	 * 
 	 * @param name
 	 * @param values
-	 * @param template
+	 * @param bools
 	 */
-	public Food(String name, double[] values, boolean template) {
+	public Food(String name, double[] values, boolean[] bools) {
 		super(name);
 
 		validateArray(values);
 		storeArray(values);
 		calculateCalories();
-
-		this.template = template;
+		validateBools(bools);
 	}
 	
+	private void validateBools(boolean[] bools) {
+		// Check amount
+		if(bools.length < 1 && bools.length > 2) throw new IllegalArgumentException("template or custom not set");
+		
+		if(bools.length == 2) {
+			this.template = bools[0];
+			this.setCustom(bools[1]);
+		}else {
+			this.template = bools[0];
+		}
+	}
+
 	/** 
 	 * Copy constructor
 	 * 
