@@ -17,8 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.Exercise;
-import model.Food;
-import model.Item;
 
 public class AddExerciseController extends BaseExerciseController implements Initializable {
 	
@@ -84,14 +82,10 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 		System.out.println("Add the food to the table behind us!");
 		try {
 			Exercise selectedExercise = tvExercises.getSelectionModel().getSelectedItem();
-			
-			System.out.println("We want to add: " + selectedExercise.getName());
-			
 			Exercise newEx = createExercise(selectedExercise);
-
 			// Update the reference of the returnable object
 			returnExerciseData = newEx;
-			
+	
 			btnAddExercise.getScene().getWindow().hide();
 		} catch (NullPointerException e) {
 			System.out.println("A table row wasn't selected");

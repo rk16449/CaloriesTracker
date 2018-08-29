@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import model.Exercise;
 
-public class EditExerciseController implements Initializable {
+public class EditExerciseController extends BaseExerciseController implements Initializable {
 
 	@FXML
 	TextField tfSets, tfReps, tfWeight, tfCaloriesBurned;
@@ -47,13 +47,7 @@ public class EditExerciseController implements Initializable {
 		try {
 			
 			// Save values into editExercise
-			Number[] nums = {
-					Integer.parseInt(tfReps.getText()),
-					Integer.parseInt(tfSets.getText()),
-					Double.parseDouble(tfWeight.getText()),
-					Double.parseDouble(tfCaloriesBurned.getText())
-					};
-			editExercise.setValues(nums);
+			editExercise = createExercise(editExercise);
 			
 			// Close this window and return back to ExercisesTabController
 			btnSave.getScene().getWindow().hide();
