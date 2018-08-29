@@ -58,8 +58,8 @@ public class EditCustomFoodController extends BaseFoodController implements Init
 	
 	public String[] getValues() {
 		// pre validation (make sure values are correct)
-		return new String[] { tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(), tfFats.getText(),
-					tfProteins.getText(), Double.toString(spinnerQuantity.getValue()) };
+		return new String[] { tfName.getText(), tfAmount.getText(), tfCarbohydrates.getText(),
+					tfProteins.getText(), tfFats.getText(), Double.toString(spinnerQuantity.getValue()) };
 	}
 	
 	public void setTextFieldValues(String[] values) {

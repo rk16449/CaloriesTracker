@@ -198,11 +198,9 @@ public class DietTabController extends BaseFoodController implements Initializab
 		String[] retVals = controller.getValues();
 
 		// Get values back from controller and update them into the food object
-		selectedFood.setName(retVals[0]);
-		selectedFood.setAmount(Double.parseDouble(retVals[1]));
-		selectedFood.setCarbohydrates(Double.parseDouble(retVals[2]));
-		selectedFood.setFats(Double.parseDouble(retVals[3]));
-		selectedFood.setProteins(Double.parseDouble(retVals[4]));
+		double doubleVals[] = {Double.parseDouble(retVals[1]), Double.parseDouble(retVals[2]), Double.parseDouble(retVals[3]), Double.parseDouble(retVals[4])};
+		Food changedFood = new Food(retVals[0], doubleVals);
+		selectedFood = changedFood;
 
 		// Quantity last value that gets updated because we need new values above
 		selectedFood.setQuantity(controller.getQuantity());
