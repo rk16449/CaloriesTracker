@@ -82,7 +82,7 @@ public class Exercise extends Item {
 		}
 	}
 	
-	private void setValues(Number[] nums) {
+	public void setValues(Number[] nums) {
 		// Set the values
 		this.reps = nums[0].intValue();
 		this.sets = nums[1].intValue();

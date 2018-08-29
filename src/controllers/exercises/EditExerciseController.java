@@ -47,10 +47,13 @@ public class EditExerciseController implements Initializable {
 		try {
 			
 			// Save values into editExercise
-			editExercise.setSets(Integer.parseInt(tfSets.getText()));
-			editExercise.setReps(Integer.parseInt(tfReps.getText()));
-			editExercise.setWeight(Double.parseDouble(tfWeight.getText()));
-			editExercise.setCaloriesBurned(Double.parseDouble(tfCaloriesBurned.getText()));
+			Number[] nums = {
+					Integer.parseInt(tfReps.getText()),
+					Integer.parseInt(tfSets.getText()),
+					Double.parseDouble(tfWeight.getText()),
+					Double.parseDouble(tfCaloriesBurned.getText())
+					};
+			editExercise.setValues(nums);
 			
 			// Close this window and return back to ExercisesTabController
 			btnSave.getScene().getWindow().hide();
