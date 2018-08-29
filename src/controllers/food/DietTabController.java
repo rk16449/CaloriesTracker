@@ -187,8 +187,8 @@ public class DietTabController extends BaseFoodController implements Initializab
 		String[] values = new String[] {
 				// Remove (custom)
 				selectedFood.getName(), Double.toString(selectedFood.getAmount()),
-				Double.toString(selectedFood.getCarbohydrates()), Double.toString(selectedFood.getFats()),
-				Double.toString(selectedFood.getProteins()) };
+				Double.toString(selectedFood.getCarbohydrates()), Double.toString(selectedFood.getProteins()) , Double.toString(selectedFood.getFats())
+				};
 
 		controller.setTextFieldValues(values);
 		// showAndWait will block execution until the window closes...
@@ -198,12 +198,12 @@ public class DietTabController extends BaseFoodController implements Initializab
 		String[] retVals = controller.getValues();
 
 		// Get values back from controller and update them into the food object
-		double doubleVals[] = {Double.parseDouble(retVals[1]), Double.parseDouble(retVals[2]), Double.parseDouble(retVals[3]), Double.parseDouble(retVals[4])};
+		double doubleVals[] = {Double.parseDouble(retVals[1]), Double.parseDouble(retVals[2]), Double.parseDouble(retVals[3]), Double.parseDouble(retVals[4]),  controller.getQuantity()};
 		
-		Food changedFood = new Food(retVals[0], doubleVals, controller.getQuantity());
+		Food changedFood = new Food(retVals[0], doubleVals);
 		
 		// Update reference of selectedFood
-		selectedFood = changedFood;
+		selectedFood.setFood(changedFood, controller.getQuantity());
 	}
 
 	private void handleNormalEdit(Food selectedFood) throws IOException {

@@ -145,7 +145,7 @@ public class AddFoodController extends BaseFoodController implements Initializab
 				}
 				
 			}catch(NullPointerException e) {
-				
+				e.printStackTrace();
 			}
 		}
 		

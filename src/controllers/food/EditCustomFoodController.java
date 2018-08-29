@@ -74,7 +74,7 @@ public class EditCustomFoodController extends BaseFoodController implements Init
 		try {
 			defaultFactory.setValue(Double.parseDouble(value));
 		}catch(NumberFormatException e) {
-			
+			e.printStackTrace();
 		}
 	}
 	

@@ -29,7 +29,7 @@ public class Food extends Item {
 	private double ogCalories, ogCarbohydrates, ogProteins, ogFats;
 
 	/**
-	 * 
+	 * Constructor which takes quantity value
 	 * @param name
 	 * @param values {amount, carbs, protein, fats}
 	 */
@@ -39,22 +39,11 @@ public class Food extends Item {
 		validateArray(values);
 		storeArray(values);
 		calculateCalories();
-	}
-	
-	/**
-	 * Constructor which takes quantity value
-	 * @param name
-	 * @param values {amount, carbs, protein, fats}
-	 */
-	public Food(String name, double[] values, double quantity) {
-		super(name);
-
-		validateArray(values);
-		storeArray(values);
-		calculateCalories();
 		
-		// Set the quantity (after calculating and storing everything else above)
-		this.setQuantity(quantity);
+		// Set quantity
+		if(values.length == 5) {
+			this.setQuantity(values[4]);
+		}
 	}
 
 	/**
@@ -103,7 +92,10 @@ public class Food extends Item {
 		super(name);
 
 		validateFood(food);
-
+		setFoodValues(food);
+	}
+	
+	private void setFoodValues(Food food) {
 		this.amount = food.getAmount();
 		this.carbohydrates = food.getCarbohydrates();
 		this.proteins = food.getProteins();
@@ -128,19 +120,7 @@ public class Food extends Item {
 		super(name);
 
 		validateFood(food);
-
-		this.amount = food.getAmount();
-		this.carbohydrates = food.getCarbohydrates();
-		this.proteins = food.getProteins();
-		this.fats = food.getFats();
-
-		this.calories = food.getCalories();
-
-		this.ogAmount = food.getOgAmount();
-		this.ogCarbohydrates = food.getOgCarbohydrates();
-		this.ogProteins = food.getOgProteins();
-		this.ogFats = food.getOgFats();
-		this.ogCalories = food.getOgCalories();
+		setFoodValues(food);
 		
 		this.setQuantity(quantity);
 	}
@@ -167,11 +147,13 @@ public class Food extends Item {
 	 * @param values
 	 */
 	private void validateArray(double[] values) {
+		
+		// Quantity must have been set
+		if (values.length != 4 && values.length != 5) {
+				throw new IllegalArgumentException("Invalid array size");
+		}
 
-		// Make sure there is enough values, if there isn't then throw an exception
-		if (values.length != 4)
-			throw new IllegalArgumentException("Invalid array size");
-
+		
 		// We have enough values so now check if they are positive
 		for (int i = 0; i < values.length; i++) {
 			if (values[i] < 0)
@@ -347,5 +329,14 @@ public class Food extends Item {
 
 	public StringProperty getStrQuantity() {
 		return new SimpleStringProperty(Double.toString(quantity));
+	}
+
+	
+	public void setFood(Food changedFood, double quantity) {
+		validateFood(changedFood);
+		// Now set food values
+		setFoodValues(changedFood);
+		// Set quantity too
+		this.setQuantity(quantity);
 	}
 }
