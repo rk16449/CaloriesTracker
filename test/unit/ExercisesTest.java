@@ -129,4 +129,18 @@ public class ExercisesTest {
 		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50.0, 200.0});
 		e1.setValues(new Number[] {10, 0, 10, 10});
 	}
+	
+	@Test
+	public void testCopyConstructorValues() {
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50.0, 200.0});
+		
+		Exercise e2 = new Exercise(e1);
+		
+		assertEquals(e1.getName(), e2.getName());
+		assertEquals(e1.getReps(), e2.getReps());
+		assertEquals(e1.getSets(), e2.getSets());
+		assertEquals(e1.getWeight(), e2.getWeight(), 0.0);
+		assertEquals(e1.getCaloriesBurned(), e2.getCaloriesBurned(), 0.0);
+		assertEquals(e1.getCustom(), e2.getCustom());
+	}
 }
