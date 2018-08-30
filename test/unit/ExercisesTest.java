@@ -105,4 +105,12 @@ public class ExercisesTest {
 		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50.0, 200.0});
 		e1.setValues(new Number[] {-1, -2, -3, -4});
 	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfValsCaloriesZero() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Calories burned not set!");
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50.0, 200.0});
+		e1.setValues(new Number[] {10, 10, 10, 0});
+	}
 }
