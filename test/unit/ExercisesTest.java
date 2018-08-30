@@ -113,4 +113,12 @@ public class ExercisesTest {
 		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50.0, 200.0});
 		e1.setValues(new Number[] {10, 10, 10, 0});
 	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfValsRepsZero() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Reps not set!");
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50.0, 200.0});
+		e1.setValues(new Number[] {0, 10, 10, 0});
+	}
 }
