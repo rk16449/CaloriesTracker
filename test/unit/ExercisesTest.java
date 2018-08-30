@@ -97,4 +97,12 @@ public class ExercisesTest {
 		String[] values = {"5", "10", "50.0", "200.0"};
 		assertArrayEquals(values, e1.getStrVals());
 	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfValsNegative() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Negative array values!");
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50.0, 200.0});
+		e1.setValues(new Number[] {-1, -2, -3, -4});
+	}
 }
