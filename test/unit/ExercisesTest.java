@@ -117,8 +117,16 @@ public class ExercisesTest {
 	@Test
 	public void throwsIllegalArgumentExceptionIfValsRepsZero() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Reps not set!");
+		exception.expectMessage("No reps set!");
 		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50.0, 200.0});
-		e1.setValues(new Number[] {0, 10, 10, 0});
+		e1.setValues(new Number[] {0, 10, 10, 10});
+	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfValsSetsZero() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("No sets set!");
+		Exercise e1 = new Exercise("Bench Press", new Number[] {5, 10, 50.0, 200.0});
+		e1.setValues(new Number[] {10, 0, 10, 10});
 	}
 }
