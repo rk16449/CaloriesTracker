@@ -52,10 +52,13 @@ public class MainProgramController implements Initializable {
 			Day d = days.get(i);
 
 			if (d.getDate().isEqual(date)) {
+				
+				System.out.println("This Day already existed!");
 				return d;
 			}
 		}
 
+		System.out.println("Day didn't exist, so we are creating one instead!");
 		// Save to static arrayList if we didn't find it above
 		Day newDay = new Day(date);
 		days.add(newDay);
@@ -92,6 +95,9 @@ public class MainProgramController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+
+		
 		
 		// Set listener on tab
 		tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
