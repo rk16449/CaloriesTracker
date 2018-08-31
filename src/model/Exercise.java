@@ -49,8 +49,8 @@ public class Exercise extends Item {
 	 * @param name
 	 * @param exercise
 	 */
-	public Exercise(String name, Exercise exercise) {
-		super(name);
+	public Exercise(Exercise exercise) {
+		super(exercise.getName());
 		
 		this.reps = exercise.getReps();
 		this.sets = exercise.getSets();
@@ -58,9 +58,7 @@ public class Exercise extends Item {
 		this.caloriesBurned = exercise.getCaloriesBurned();
 		this.custom = exercise.getCustom();
 	}
-	
-	// Validation methods
-	
+
 	private void validateArray(Number[] nums) {
 		
 		// Not enough array values
@@ -83,7 +81,15 @@ public class Exercise extends Item {
 		
 	}
 	
+	/**
+	 * 
+	 * @param nums [reps, sets, weight, caloriesBurned]
+	 */
 	public void setValues(Number[] nums) {
+		// Validate values
+		validateArray(nums);
+		
+		
 		// Set the values
 		this.reps = nums[0].intValue();
 		this.sets = nums[1].intValue();
@@ -93,8 +99,8 @@ public class Exercise extends Item {
 	
 	public String[] getStrVals() {
 		String[] vals = {
-				Integer.toString(this.getSets()),
 				Integer.toString(this.getReps()),
+				Integer.toString(this.getSets()),
 				Double.toString(this.getWeight()),
 				Double.toString(this.getCaloriesBurned())
 		};
