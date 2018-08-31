@@ -174,7 +174,7 @@ public class ExercisesTabController implements Initializable {
 			if (!found) {
 				
 				// Copy the object
-				Exercise newExercise = new Exercise(controller.getExercise().getName(), controller.getExercise());
+				Exercise newExercise = new Exercise(controller.getExercise());
 
 				// Add values to the table!
 				addedExercises.add(newExercise);
@@ -244,7 +244,7 @@ public class ExercisesTabController implements Initializable {
 			Exercise retrievedEx = controller.getExercise();
 			
 			// Copy it
-			Exercise newEx = new Exercise(retrievedEx.getName(), retrievedEx);
+			Exercise newEx = new Exercise(retrievedEx);
 			// Make sure we apply it as a custom
 			newEx.setCustom(true);
 

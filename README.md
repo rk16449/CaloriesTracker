@@ -40,7 +40,7 @@ Minimum Requirements:
 
 ## Summary Page
 
-![Main](../master/screenshots/summaryPage.JPG)
+![Main](../master/screenshots/summaryPageV2.JPG)
 
 
 ## Diet Page

@@ -44,7 +44,7 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 		
 		
 		// Create Dummy Data for table 
-		/* (commenting this out will break a guideline)
+		// (commenting this out will break a guideline)
 		if(addedExercises.size() == 0) {
 			Exercise e1 = new Exercise("Bench Press");
 			Exercise e2 = new Exercise("Squat");
@@ -54,7 +54,7 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 			
 			addedExercises.addAll(Arrays.asList(e1, e2, e3, e4, e5));
 			exerciseData.addAll(Arrays.asList(e1, e2, e3, e4, e5));
-		}*/
+		}
 		
 		FilteredList<Exercise> flExercises = new FilteredList<Exercise>(exerciseData, p -> true);
 		
