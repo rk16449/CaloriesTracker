@@ -22,7 +22,7 @@ public class Person {
 	private double BMI = 0;
 	private double BMR = 0;
 	private double TDEE = 0;
-	private  double goalCalories;
+	private  double goalCalories = 2169;
 	
 	/* Singleton class */
 	private Person() {
