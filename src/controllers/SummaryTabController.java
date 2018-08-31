@@ -46,6 +46,16 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		// Create 365 days
+		LocalDate start = LocalDate.parse("2018-01-01"),
+		          end   = LocalDate.parse("2018-12-31");
+		LocalDate next = start.minusDays(1);
+		while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
+		    System.out.println(next);
+		    MainProgramController.days.add(new Day(next));
+		}
+		
+		
 		person = Person.getInstance();
 
 		// Setup pie chart
@@ -74,8 +84,7 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	}
 	
 	public void update() {
-		updateTotalValues();
-		updatePieChart();
+		updatePieChart(LocalDate.now());
 		updateGUIPieChart();
 		updateBarChart();
 		updateProgressBar();
@@ -97,14 +106,17 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 			// Reference to Day
 			Day day = MainProgramController.days.get(i);
 			
-			
+			// Convert LocalDate to Date so we can check with between method
 			Date date = Date.from(day.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 			
 			// Check if this day is between certain values of the week only
 			if(between(date, getWeekStartDate(), getWeekEndDate())) {
 				// Create a new chart
 				XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+				
+				
 				series1.setName(day.getDate().toString());
+				System.out.println("Setting name for: " + series1.getName());
 				
 				// Convert the format
 				DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
@@ -113,8 +125,12 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 
 				charts.add(series1);
 				
+				
+				
 				// Setting the data to bar chart
 				dailyProgress.getData().add(series1);
+				
+				System.out.println("Amount of barchart data: " + dailyProgress.getData().size());
 			}
 		}
 	}

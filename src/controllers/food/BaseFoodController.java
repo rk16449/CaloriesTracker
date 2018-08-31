@@ -38,31 +38,34 @@ public class BaseFoodController extends BaseController {
 	protected void setupPieChart() {
 		// Setup pie chart
 		PieChart.Data sliceProteins = new PieChart.Data("Protein", protein);
-		PieChart.Data sliceFats = new PieChart.Data("Fats", fats);
 		PieChart.Data sliceCarbs = new PieChart.Data("Carbohydrates", carbs);
+		PieChart.Data sliceFats = new PieChart.Data("Fats", fats);
+		
 		addedSlices.add(sliceProteins);
-		addedSlices.add(sliceFats);
 		addedSlices.add(sliceCarbs);
+		addedSlices.add(sliceFats);
+		
 		pieChartData.add(sliceProteins);
-		pieChartData.add(sliceFats);
 		pieChartData.add(sliceCarbs);
+		pieChartData.add(sliceFats);
+		
 		pieChartMacros.setData(pieChartData);
 		pieChartMacros.setTitle("Daily Macros");
 	}
 
-	protected void updatePieChart() {
+	protected void updatePieChart(LocalDate date) {
 		// Update the pie chart with the current day values
-		updateTotalValues();
+		updateTotalValues(date);
 		updateGUIPieChart();
 	}
 	
-	protected void updateTotalValues() {
+	protected void updateTotalValues(LocalDate date) {
 		protein = (double) 0;
 		carbs = (double) 0;
 		fats = (double) 0;
 
 		// Add up the total from the foods on the table
-		for (int i = 0; i < MainProgramController.getDay(LocalDate.now()).getFoods().size(); i++) {
+		for (int i = 0; i < MainProgramController.getDay(date).getFoods().size(); i++) {
 			Food f = MainProgramController.getDay(LocalDate.now()).getFoods().get(i);
 			protein += f.getProteins();
 			carbs += f.getCarbohydrates();
@@ -81,7 +84,7 @@ public class BaseFoodController extends BaseController {
 	}
 	
 	/**
-	 * Method to make sure the textfield data are valid
+	 * Method to make sure the TextField data are valid
 	 * @return
 	 */
 	protected boolean valid() {

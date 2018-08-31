@@ -64,7 +64,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 		// Loads the foods into the GUI table
 		loadTableFoods();
 		// Update the values of total calories, carbs, fats, protein etc
-		updateTotalValues();
+		updateTotalValues(LocalDate.now());
 		// Update the GUI
 		update();
 	}
@@ -94,6 +94,8 @@ public class DietTabController extends BaseFoodController implements Initializab
 		dpDate.setOnAction(new EventHandler() {
 			public void handle(Event t) {
 				LocalDate date = dpDate.getValue();
+				
+				System.out.println("Selecting a day: of value: " + date.toString());
 
 				// Update the currentDay
 				currentDay = MainProgramController.getDay(date);
@@ -101,11 +103,14 @@ public class DietTabController extends BaseFoodController implements Initializab
 				// Clear the table
 				addedFoods.clear();
 				foodData.clear();
+				
+				// Clear the PieChart
+				
 
 				// Load the food into the table
 				loadAddedFoods();
 				loadTableFoods();
-				updateTotalValues();
+				updateTotalValues(date);
 				update();
 			}
 		});
@@ -130,7 +135,8 @@ public class DietTabController extends BaseFoodController implements Initializab
 	}
 
 	private void update() {
-		updatePieChart();
+		updatePieChart(dpDate.getValue());
+		updateGUIPieChart();
 		updateGUIMacrosInfo();
 		tvEntries.refresh();
 	}
