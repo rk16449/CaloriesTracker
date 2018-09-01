@@ -139,8 +139,13 @@ public class Person {
 	public int getAge() {
 		return age;
 	}
+	
+	private void validateValue(double value) {
+		if(value < 0) throw new IllegalArgumentException("Negative value set!");
+	}
 
 	public void setAge(int age) {
+		validateValue(age);
 		this.age = age;
 	}
 
@@ -149,6 +154,7 @@ public class Person {
 	}
 
 	public void setWeight(double weight) {
+		validateValue(weight);
 		this.weight = weight;
 	}
 
@@ -157,6 +163,7 @@ public class Person {
 	}
 
 	public void setHeight(double height) {
+		validateValue(height);
 		this.height = height;
 	}
 
@@ -177,6 +184,7 @@ public class Person {
 	}
 	
 	public void setGoalCalories(double value) {
+		validateValue(value);
 		this.goalCalories = value;
 	}
 
