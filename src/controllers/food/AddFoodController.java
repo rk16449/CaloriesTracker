@@ -164,7 +164,7 @@ public class AddFoodController extends BaseFoodController implements Initializab
 			System.out.println("The quantity to add is: " + spinnerQuantity.getValue());
 			
 			// Make a copy food to return back to DietTabController
-			returnFoodData = new Food(selectedFood.getName(), selectedFood);
+			returnFoodData = new Food(selectedFood);
 			
 			buttonAddFood.getScene().getWindow().hide();
 		} catch (NullPointerException e) {

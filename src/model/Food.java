@@ -30,8 +30,10 @@ public class Food extends Item {
 
 	/**
 	 * Constructor which takes quantity value
+	 * 
 	 * @param name
-	 * @param values {amount, carbs, protein, fats}
+	 * @param values
+	 *            {amount, carbs, protein, fats}
 	 */
 	public Food(String name, double[] values) {
 		super(name);
@@ -39,9 +41,9 @@ public class Food extends Item {
 		validateArray(values);
 		storeArray(values);
 		calculateCalories();
-		
+
 		// Set quantity
-		if(values.length == 5) {
+		if (values.length == 5) {
 			this.setQuantity(values[4]);
 		}
 	}
@@ -61,40 +63,41 @@ public class Food extends Item {
 		calculateCalories();
 		validateBools(bools);
 	}
-	
+
 	private void validateBools(boolean[] bools) {
 		// Check amount
-		if(bools.length < 1 && bools.length > 2) throw new IllegalArgumentException("template or custom not set");
-		
+		if (bools.length < 1 && bools.length > 2)
+			throw new IllegalArgumentException("template or custom not set");
+
 		System.out.println("Length of bool array is: " + bools.length);
-		
-		for(int i=0; i<bools.length; i++) {
+
+		for (int i = 0; i < bools.length; i++) {
 			System.out.println("values of bools: " + bools[i]);
 		}
-		
-		if(bools.length == 2) {
+
+		if (bools.length == 2) {
 			this.template = bools[0];
 			this.setCustom(bools[1]);
-		}else {
+		} else {
 			this.template = bools[0];
 		}
-		
+
 		System.out.println("Am I a custom food? " + this.getCustom());
 	}
 
-	/** 
+	/**
 	 * Copy constructor
 	 * 
 	 * @param name
 	 * @param food
 	 */
-	public Food(String name, Food food) {
-		super(name);
+	public Food(Food food) {
+		super(food.getName());
 
 		validateFood(food);
 		setFoodValues(food);
 	}
-	
+
 	private void setFoodValues(Food food) {
 		this.amount = food.getAmount();
 		this.carbohydrates = food.getCarbohydrates();
@@ -109,22 +112,29 @@ public class Food extends Item {
 		this.ogFats = food.getOgFats();
 		this.ogCalories = food.getOgCalories();
 	}
-	
-	/** 
+
+	/**
 	 * Copy constructor & its quantity
 	 * 
 	 * @param name
 	 * @param food
 	 */
-	public Food(String name, Food food, double quantity) {
-		super(name);
+	public Food(Food food, double quantity) {
+		super(food.getName());
 
 		validateFood(food);
 		setFoodValues(food);
-		
+
 		this.setQuantity(quantity);
 	}
-	
+
+	/**
+	 * Called once, upon creation to store the original values of this food
+	 * (template)
+	 * 
+	 * @param values
+	 *            macro values of the food
+	 */
 	private final void storeArray(double[] values) {
 		// Store static values (that will never change)
 		ogAmount = values[0];
@@ -147,13 +157,12 @@ public class Food extends Item {
 	 * @param values
 	 */
 	private void validateArray(double[] values) {
-		
+
 		// Quantity must have been set
 		if (values.length != 4 && values.length != 5) {
-				throw new IllegalArgumentException("Invalid array size");
+			throw new IllegalArgumentException("Invalid array size");
 		}
 
-		
 		// We have enough values so now check if they are positive
 		for (int i = 0; i < values.length; i++) {
 			if (values[i] < 0)
@@ -171,6 +180,13 @@ public class Food extends Item {
 		this.fats = values[3];
 	}
 
+	/**
+	 * Validates the food values being passed in and will throw
+	 * IllegalArgumentException whenever invalid
+	 * 
+	 * @param food
+	 *            the food we want to check is valid
+	 */
 	private void validateFood(Food food) {
 		// Validates the food object that was passed in by checking its macros
 		ArrayList<Double> vals = new ArrayList<Double>();
@@ -179,27 +195,60 @@ public class Food extends Item {
 		int i, len = vals.size();
 		for (i = 0; i < len; i++) {
 			// Check for negatives
-			if(vals.get(i) < 0) throw new IllegalArgumentException("Negative array values");
+			if (vals.get(i) < 0)
+				throw new IllegalArgumentException("Negative array values");
 		}
 
 		// Make sure amount is not 0
-		if(food.getAmount() == 0) throw new IllegalArgumentException("Amount cannot be 0");
-
+		if (food.getAmount() == 0)
+			throw new IllegalArgumentException("Amount cannot be 0");
 
 		// Make sure the calories that are set is correct
 		double sum = (food.getCarbohydrates() * 4) + (food.getProteins() * 4) + (food.getFats() * 9);
-		
-		if(sum != food.getCalories()) throw new IllegalArgumentException("Invalid calories given for macros");
-		
+
+		if (sum != food.getCalories())
+			throw new IllegalArgumentException("Invalid calories given for macros");
+
 		// Make sure if I was originally a template, I am not anymore
-		if(food.getTemplate()) {
+		if (food.getTemplate()) {
 			this.template = false;
 		}
-		
+
 		// If I was a custom food then make sure I am still a custom food
-		if(food.getCustom()) {
+		if (food.getCustom()) {
 			this.custom = true;
 		}
+	}
+
+	/**
+	 * Changes the current foods values and multiplies those values by quantity
+	 * 
+	 * @param changedFood
+	 *            the food we want to copy macro values from
+	 * @param quantity
+	 *            the number to multiply macro values by
+	 */
+	public void setFood(Food changedFood, double quantity) {
+		validateFood(changedFood);
+		// Now set food values
+		setFoodValues(changedFood);
+		// Set quantity too
+		this.setQuantity(quantity);
+	}
+
+	/**
+	 * Used to retrieve the original values of this Food (when created) in string
+	 * representation Mainly used when trying to edit the values of food and
+	 * TextFields require strings
+	 * 
+	 * @return
+	 */
+	public String[] getStrValues() {
+
+		String[] vals = { this.name, Double.toString(this.ogAmount), Double.toString(this.ogCarbohydrates),
+				Double.toString(this.ogProteins), Double.toString(this.ogFats) };
+
+		return vals;
 	}
 
 	public boolean getTemplate() {
@@ -251,11 +300,12 @@ public class Food extends Item {
 
 	public double getQuantity() {
 		// Quantity cannot be <= 0
-		if(this.quantity <= 0) this.quantity = 1;
-		
+		if (this.quantity <= 0)
+			this.quantity = 1;
+
 		return this.quantity;
 	}
-	
+
 	public boolean getCustom() {
 		return this.custom;
 	}
@@ -329,27 +379,5 @@ public class Food extends Item {
 
 	public StringProperty getStrQuantity() {
 		return new SimpleStringProperty(Double.toString(quantity));
-	}
-
-	
-	public void setFood(Food changedFood, double quantity) {
-		validateFood(changedFood);
-		// Now set food values
-		setFoodValues(changedFood);
-		// Set quantity too
-		this.setQuantity(quantity);
-	}
-
-	public String[] getStrValues() {
-	
-		String[] vals = {
-				this.name, 
-				Double.toString(this.ogAmount), 
-				Double.toString(this.ogCarbohydrates), 
-				Double.toString(this.ogProteins), 
-				Double.toString(this.ogFats)
-		};
-		
-		return vals;
 	}
 }

@@ -260,12 +260,12 @@ public class DietTabController extends BaseFoodController implements Initializab
 		// Add values to the local database/memory table
 		if (controller.valid()) {
 			// Copy a Food from controller
-			Food newFood = new Food(controller.getFood().getName(), controller.getFood());
+			Food newFood = new Food(controller.getFood());
 
 			// Add it to DietTabController table (if we selected to)
 			if (controller.addToTable()) {
 				// Create a copy of newFood and also change its quantity
-				Food tableFood = new Food(newFood.getName(), newFood, controller.getQuantity());
+				Food tableFood = new Food(newFood, controller.getQuantity());
 
 				// Add to the entries table
 				addedFoods.add(tableFood);
@@ -337,7 +337,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 				System.out.println("No Food was found, creating a new entry here!");
 				
 				// Copy the object
-				Food newFood = new Food(controller.getFood().getName(), controller.getFood(), controller.getQuantity());
+				Food newFood = new Food(controller.getFood(), controller.getQuantity());
 				
 				// Add values to the table!
 				addedFoods.add(newFood);
