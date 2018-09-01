@@ -163,6 +163,7 @@ public class Person {
 	}
 
 	public void setHeight(double height) {
+		validateValue(height);
 		this.height = height;
 	}
 
@@ -183,6 +184,7 @@ public class Person {
 	}
 	
 	public void setGoalCalories(double value) {
+		validateValue(value);
 		this.goalCalories = value;
 	}
 

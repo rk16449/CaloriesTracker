@@ -36,5 +36,14 @@ public class PersonTest {
 		
 		p.setWeight(-450);
 	}
+	
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfNegativeHeightSet() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Negative value set!");
+		
+		p.setHeight(-183);
+	}
 
 }
