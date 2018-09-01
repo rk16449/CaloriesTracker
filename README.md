@@ -42,7 +42,10 @@ Minimum Requirements:
 
 ![Main](../master/screenshots/summaryPageV2.JPG)
 
-
 ## Diet Page
 
 ![Main](../master/screenshots/dietpage.JPG)
+
+## Exercises Page
+
+![Main](../master/screenshots/exercisesPage.JPG)

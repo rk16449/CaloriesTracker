@@ -23,7 +23,7 @@ import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import model.Day;
 import model.Exercise;
-
+import controllers.exercises.*;
 
 
 
@@ -42,6 +42,12 @@ public class MainProgramController implements Initializable {
 	private Tab tabGoals;
 	@FXML
 	private GoalsTabController GoalsTabController;
+	
+	
+	@FXML
+	private Tab tabExercises;
+	@FXML
+	private ExercisesTabController ExercisesTabController;
 	
 	
 	// (Global) whenever we add an exercise we store it in here once
@@ -137,6 +143,8 @@ public class MainProgramController implements Initializable {
 	        	SummaryTabController.update();
 	        }else if(newTab == tabGoals) {
 	        	GoalsTabController.update();
+	        }else if(newTab == tabExercises) {
+	        	ExercisesTabController.update();
 	        }
 	    });
 		
