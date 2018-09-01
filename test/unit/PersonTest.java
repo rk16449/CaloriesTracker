@@ -46,4 +46,12 @@ public class PersonTest {
 		p.setHeight(-183);
 	}
 
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfNegativeCaloriesSet() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Negative value set!");
+		
+		p.setGoalCalories(-5000);
+	}
 }
