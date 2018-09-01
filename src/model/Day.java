@@ -6,10 +6,29 @@ import java.util.ArrayList;
 public class Day implements Comparable<Day> {
 
 	private LocalDate date;
+	
+	public static ArrayList<LocalDate> dates = new ArrayList<LocalDate>();
 
 	public Day(LocalDate date) {
+		
+		validateDate(date);
+		
 		this.date = date;
 	}
+	
+	private void validateDate(LocalDate date) {
+		
+		// Loop through dates arraylist to see if this date already exists
+		for(int i=0; i<dates.size(); i++) {
+			if(dates.get(i).equals(date)) {
+				throw new IllegalArgumentException("This date already exists!");
+			}
+		}
+		
+		// Else, store it inside dates
+		dates.add(date);
+	}
+	
 
 	private ArrayList<Food> foods = new ArrayList<Food>();
 	private ArrayList<Exercise> exercises = new ArrayList<Exercise>();
