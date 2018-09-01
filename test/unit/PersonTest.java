@@ -2,11 +2,13 @@ package unit;
 
 import static org.junit.Assert.*;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.css.PseudoClass;
 import model.Person;
 
 public class PersonTest {
@@ -61,5 +63,17 @@ public class PersonTest {
 		exception.expectMessage("Illegal gender set!");
 		
 		p.setGender("asldh2h32u3allajsd");
+	}
+	
+	@Test
+	public void settingMaleGender() {
+		p.setGender("Male");
+		Assert.assertEquals("Male", p.getGender());
+	}
+	
+	@Test
+	public void settingFemaleGender() {
+		p.setGender("Female");
+		Assert.assertEquals("Female", p.getGender());
 	}
 }
