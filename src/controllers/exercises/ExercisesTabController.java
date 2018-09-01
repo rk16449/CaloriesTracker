@@ -259,6 +259,10 @@ public class ExercisesTabController implements Initializable {
 			addedExercises.remove(selectedExercise);
 			exerciseData.remove(selectedExercise);
 			currentDay.deleteExercise(selectedExercise);
+			
+			
+			// Do a check on all days/exercises to remove Exercises from the addedExercises arrayList
+			
 
 			update();
 		} catch (NullPointerException e) {
