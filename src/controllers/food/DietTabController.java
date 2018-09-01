@@ -370,19 +370,8 @@ public class DietTabController extends BaseFoodController implements Initializab
 			// Check if this food already exists in the table, if it does increase its
 			// quantity instead
 			
+			found = Day.updateQuantity(currentDay, controller, found);
 			
-			for (int i = 0; i < currentDay.getFoods().size(); i++) {
-				// Assumes we don't have foods with exactly the same name.. (try adding id in
-				// later)
-				if (currentDay.getFoods().get(i).getName().equals(controller.getFood().getName())) {
-					found = true;
-					
-					System.out.println("Updating quantity on addEntry");
-					
-					currentDay.getFoods().get(i).setQuantity(currentDay.getFoods().get(i).getQuantity() + controller.getQuantity());
-					break;
-				}
-			}
 
 			// Add a new row entry if same food isn't already added
 			if (!found) {
