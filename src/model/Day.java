@@ -3,13 +3,63 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import controllers.food.AddFoodController;
+
 public class Day implements Comparable<Day> {
 
 	private LocalDate date;
+	
+	public static ArrayList<LocalDate> dates = new ArrayList<LocalDate>();
 
 	public Day(LocalDate date) {
+		
+		validateDate(date);
+		
 		this.date = date;
 	}
+	
+	private void validateDate(LocalDate date) {
+		
+		// Loop through dates arraylist to see if this date already exists
+		for(int i=0; i<dates.size(); i++) {
+			if(dates.get(i).equals(date)) {
+				throw new IllegalArgumentException("This date already exists!");
+			}
+		}
+		
+		// Else, store it inside dates
+		dates.add(date);
+	}
+	
+	/**
+	 * Destructively Loads the exercises on this day into the ArrayList passed
+	 */
+	public static void loadAddedExercises(Day currentDay, ArrayList<Exercise> addedExercises) {
+		// loop through the currentDay food
+		for (int i = 0; i < currentDay.getExercises().size(); i++) {
+			Exercise f = currentDay.getExercises().get(i);
+			addedExercises.add(f);
+		}
+	}
+	
+	
+	public static boolean updateQuantity(Day currentDay, AddFoodController controller, boolean found) {
+		for (int i = 0; i < currentDay.getFoods().size(); i++) {
+			// Assumes we don't have foods with exactly the same name.. (try adding id in
+			// later)
+			if (currentDay.getFoods().get(i).getName().equals(controller.getFood().getName())) {
+				found = true;
+				
+				System.out.println("Updating quantity on addEntry");
+				
+				currentDay.getFoods().get(i).setQuantity(currentDay.getFoods().get(i).getQuantity() + controller.getQuantity());
+				break;
+			}
+		}
+		
+		return found;
+	}
+	
 
 	private ArrayList<Food> foods = new ArrayList<Food>();
 	private ArrayList<Exercise> exercises = new ArrayList<Exercise>();

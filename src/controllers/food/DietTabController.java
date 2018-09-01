@@ -31,26 +31,26 @@ import model.Helper;
 
 public class DietTabController extends BaseFoodController implements Initializable {
 
+	// FXML Components
 	@FXML
-	private TableView<Food> tvEntries;
-
+	TableView<Food> tvEntries;
 	@FXML
-	private TableColumn<Food, String> tcFoods, tcAmount, tcCalories, tcCarbs, tcFats, tcProts,
+	TableColumn<Food, String> tcFoods, tcAmount, tcCalories, tcCarbs, tcFats, tcProts,
 			tcQuantity;
-
 	@FXML
-	private Button btnAddEntry, btnEdit, btnDelete, btnCustom;
-
+	Button btnAddEntry, btnEdit, btnDelete, btnCustom;
 	@FXML
-	private TextField tfCalories, tfCarbs, tfFats, tfProtein;
-
+	TextField tfCalories, tfCarbs, tfFats, tfProtein;
 	@FXML
-	private DatePicker dpDate;
+	DatePicker dpDate;
 
 	// Used to check the current loaded date and day
 	private static LocalDate currentDate;
 	private static Day currentDay;
 
+	/**
+	 * First method that will run and setup the Controller
+	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		// Setup the date to today and in turn only load that days data
@@ -69,15 +69,21 @@ public class DietTabController extends BaseFoodController implements Initializab
 		update();
 	}
 
+	/**
+	 * Sets the current day based off the date picker value
+	 */
 	private void setupDay() {
 		dpDate.setValue(LocalDate.now());
 		currentDate = dpDate.getValue();
 		currentDay = MainProgramController.getDay(currentDate);
 	}
 
+	/**
+	 * Sets up the FXML table view with the Food string getters
+	 */
 	private void setupTable() {
 		// Initialize the person table with the two columns.
-		tcFoods.setCellValueFactory(cellData -> cellData.getValue().getStrFood());
+		tcFoods.setCellValueFactory(cellData -> cellData.getValue().getStrName());
 		tcAmount.setCellValueFactory(cellData -> cellData.getValue().getStrAmount());
 		tcCalories.setCellValueFactory(cellData -> cellData.getValue().getStrCalories());
 		tcCarbs.setCellValueFactory(cellData -> cellData.getValue().getStrCarbs());
@@ -89,6 +95,10 @@ public class DietTabController extends BaseFoodController implements Initializab
 		tvEntries.setItems(foodData);
 	}
 
+	/**
+	 * Sets up the FXML Date Picker and creates a listener for whenever we change values
+	 * if we do change values we will change the currentDay and update the table values
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setupDatePicker() {
 		dpDate.setOnAction(new EventHandler() {
@@ -116,6 +126,9 @@ public class DietTabController extends BaseFoodController implements Initializab
 		});
 	}
 
+	/**
+	 * Called to load the current days food values into the table
+	 */
 	private void loadAddedFoods() {
 		// loop through the currentDay food
 		for (int i = 0; i < currentDay.getFoods().size(); i++) {
@@ -123,9 +136,8 @@ public class DietTabController extends BaseFoodController implements Initializab
 		}
 	}
 
-
 	/**
-	 * loads the local memory arraylist into the GUI table arraylist
+	 * loads the local memory ArrayList into the GUI table ArrayList
 	 */
 	private void loadTableFoods() {
 		// Calculate total data
@@ -134,6 +146,9 @@ public class DietTabController extends BaseFoodController implements Initializab
 		}
 	}
 
+	/**
+	 * Calls whenever we change a date or switching between tabs, updates the GUI components
+	 */
 	private void update() {
 		updatePieChart(dpDate.getValue());
 		updateGUIPieChart();
@@ -142,6 +157,9 @@ public class DietTabController extends BaseFoodController implements Initializab
 	}
 
 
+	/**
+	 * Updates the TextFields of Macros 
+	 */
 	private void updateGUIMacrosInfo() {
 		tfCalories.setText(Double.toString(Helper.round(calories, 2)));
 		tfCarbs.setText(Double.toString(Helper.round(carbs, 2)));
@@ -149,6 +167,11 @@ public class DietTabController extends BaseFoodController implements Initializab
 		tfProtein.setText(Double.toString(Helper.round(protein, 2)));
 	}
 
+	/**
+	 * FXML button handler for Editing Foods on the TableView
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void handleEdit(ActionEvent event) throws IOException {
 		System.out.println("Create edit food window here");
@@ -172,6 +195,12 @@ public class DietTabController extends BaseFoodController implements Initializab
 		}
 	}
 
+	/**
+	 * method which is called inside the FXML button handler 'handleEdit'
+	 * opens a custom edit window to change its values
+	 * @param selectedFood
+	 * @throws IOException
+	 */
 	private void handleCustomEdit(Food selectedFood) throws IOException {
 		// Create window
 		FXMLLoader fxmlLoader = new FXMLLoader();
@@ -187,15 +216,12 @@ public class DietTabController extends BaseFoodController implements Initializab
 		EditCustomFoodController controller = fxmlLoader.<EditCustomFoodController>getController();
 		controller.setSpinnerValue(Double.toString(selectedFood.getQuantity()));
 
-		// pass food values into textfield
-		
-		
-
+		// Pass food values into TextFields
 		controller.setFood(selectedFood);
 		// showAndWait will block execution until the window closes...
 		stage.showAndWait();
 
-		// get the updated values and set them into the selected food
+		// Get the updated values and set them into the selected food
 		String[] retVals = controller.getValues();
 
 		// Get values back from controller and update them into the food object
@@ -207,6 +233,12 @@ public class DietTabController extends BaseFoodController implements Initializab
 		selectedFood.setFood(changedFood, controller.getQuantity());
 	}
 
+	/**
+	 * method which is called inside the FXML button handler 'handleEdit'
+	 * opens a normal edit window for changing quantity of foods
+	 * @param selectedFood
+	 * @throws IOException
+	 */
 	private void handleNormalEdit(Food selectedFood) throws IOException {
 		// Create window
 		FXMLLoader fxmlLoader = new FXMLLoader();
@@ -229,6 +261,11 @@ public class DietTabController extends BaseFoodController implements Initializab
 		selectedFood.setQuantity(controller.getQuantity());
 	}
 
+	/**
+	 * FXML button handler for adding custom foods to the TableView
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void handleCustom(ActionEvent event) throws IOException {
 		try {
@@ -256,16 +293,22 @@ public class DietTabController extends BaseFoodController implements Initializab
 		}
 	}
 
+	/**
+	 * method which is called inside the FXML button handler 'handleCustom'
+	 * gets the values from the CustomFoodController and adds it to the table
+	 * @param controller
+	 * @throws Exception
+	 */
 	private void addCustom(CustomFoodController controller) throws Exception {
 		// Add values to the local database/memory table
 		if (controller.valid()) {
 			// Copy a Food from controller
-			Food newFood = new Food(controller.getFood().getName(), controller.getFood());
+			Food newFood = new Food(controller.getFood());
 
 			// Add it to DietTabController table (if we selected to)
 			if (controller.addToTable()) {
 				// Create a copy of newFood and also change its quantity
-				Food tableFood = new Food(newFood.getName(), newFood, controller.getQuantity());
+				Food tableFood = new Food(newFood, controller.getQuantity());
 
 				// Add to the entries table
 				addedFoods.add(tableFood);
@@ -280,6 +323,11 @@ public class DietTabController extends BaseFoodController implements Initializab
 		}
 	}
 
+	/**
+	 * FXML button handler for adding normal foods to the table
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void handleAddEntry(ActionEvent event) throws IOException {
 		// Open a window which has a search bar to search for foods on the database
@@ -311,6 +359,10 @@ public class DietTabController extends BaseFoodController implements Initializab
 		}
 	}
 
+	/**
+	 * method which is called inside the FXML method 
+	 * @param controller
+	 */
 	private void addEntry(AddFoodController controller) {
 		try {
 			System.out.println("DietTabController: " + controller.getFood().getName());
@@ -318,26 +370,15 @@ public class DietTabController extends BaseFoodController implements Initializab
 			// Check if this food already exists in the table, if it does increase its
 			// quantity instead
 			
+			found = Day.updateQuantity(currentDay, controller, found);
 			
-			for (int i = 0; i < currentDay.getFoods().size(); i++) {
-				// Assumes we don't have foods with exactly the same name.. (try adding id in
-				// later)
-				if (currentDay.getFoods().get(i).getName().equals(controller.getFood().getName())) {
-					found = true;
-					
-					System.out.println("Updating quantity on addEntry");
-					
-					currentDay.getFoods().get(i).setQuantity(currentDay.getFoods().get(i).getQuantity() + controller.getQuantity());
-					break;
-				}
-			}
 
 			// Add a new row entry if same food isn't already added
 			if (!found) {
 				System.out.println("No Food was found, creating a new entry here!");
 				
 				// Copy the object
-				Food newFood = new Food(controller.getFood().getName(), controller.getFood(), controller.getQuantity());
+				Food newFood = new Food(controller.getFood(), controller.getQuantity());
 				
 				// Add values to the table!
 				addedFoods.add(newFood);
@@ -352,6 +393,11 @@ public class DietTabController extends BaseFoodController implements Initializab
 		}
 	}
 
+	/**
+	 * FXML button handler for deleting foods off the table
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void handleDeleteEntry(ActionEvent event) throws IOException {
 		// Make sure we selected an entry on the table

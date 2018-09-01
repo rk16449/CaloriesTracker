@@ -73,7 +73,7 @@ public class AddFoodController extends BaseFoodController implements Initializab
 		}
 
 		// Initialize the person table with the two columns.
-		foodColumn.setCellValueFactory(cellData -> cellData.getValue().getStrFood());
+		foodColumn.setCellValueFactory(cellData -> cellData.getValue().getStrName());
 
 		amountColumn.setCellValueFactory(cellData -> cellData.getValue().getStrAmount());
 		caloriesColumn.setCellValueFactory(cellData -> cellData.getValue().getStrCalories());
@@ -164,7 +164,7 @@ public class AddFoodController extends BaseFoodController implements Initializab
 			System.out.println("The quantity to add is: " + spinnerQuantity.getValue());
 			
 			// Make a copy food to return back to DietTabController
-			returnFoodData = new Food(selectedFood.getName(), selectedFood);
+			returnFoodData = new Food(selectedFood);
 			
 			buttonAddFood.getScene().getWindow().hide();
 		} catch (NullPointerException e) {
