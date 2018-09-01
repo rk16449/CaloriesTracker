@@ -75,6 +75,17 @@ public class PersonTest {
 	}
 	
 	@Test
+	public void throwsIllegalArguementExceptionIfBodyFatNegativet() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Negative value set!");
+		
+		// set bodyfat to negative
+		p.setBodyfat(-0.5);
+	}
+	
+	
+	
+	@Test
 	public void throwsIllegalArguementExceptionIfBodyFatAbove100Percent() {
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage("Illegal bodyfat set!");
