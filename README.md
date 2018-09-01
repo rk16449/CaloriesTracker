@@ -40,12 +40,12 @@ Minimum Requirements:
 
 ## Summary Page
 
-![Main](../master/screenshots/summaryPageV2.JPG)
+![Main](screenshots/summaryPageV2.JPG)
 
 ## Diet Page
 
-![Main](../master/screenshots/dietpage.JPG)
+![Main](screenshots/dietpage.JPG)
 
 ## Exercises Page
 
-![Main](../master/screenshots/exercisesPage.JPG)
+![Main](screenshots/exercisesPage.JPG)
