@@ -178,5 +178,13 @@ public class Exercise extends Item {
 		return "Name: " + this.getName() + " { sets: " + this.getSets() + ", reps: " + this.getReps() + ", weight: " + this.getWeight() + ", caloried burned: " + this.getCaloriesBurned() + " };";
 	}
 
+	public void setExercise(Exercise exercise) {
+		this.reps = exercise.getReps();
+		this.sets = exercise.getSets();
+		this.weight = exercise.getWeight();
+		this.caloriesBurned = exercise.getCaloriesBurned();
+		this.custom = exercise.getCustom();
+	}
+
 
 }

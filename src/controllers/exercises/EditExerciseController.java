@@ -47,9 +47,13 @@ public class EditExerciseController extends BaseExerciseController implements In
 	@FXML
 	protected void handleSave(ActionEvent event) throws IOException {
 		try {
+		
 			
 			// Save values into editExercise
 			editExercise = createExercise(editExercise);
+			
+			
+			System.out.println("New weight values: " + editExercise.getWeight());
 			
 			// Close this window and return back to ExercisesTabController
 			btnSave.getScene().getWindow().hide();
