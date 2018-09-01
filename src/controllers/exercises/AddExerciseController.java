@@ -80,10 +80,12 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 	
 	@FXML
 	protected void handleAddExercise(ActionEvent event) throws IOException {
-		System.out.println("Add the food to the table behind us!");
+		System.out.println("Add the exercise to the table behind us!");
 		try {
 			Exercise selectedExercise = tvExercises.getSelectionModel().getSelectedItem();
-			Exercise newEx = createExercise(selectedExercise);
+			
+			// Creates a new exercise based off the TextFields
+			Exercise newEx = super.createExercise(selectedExercise);
 			// Update the reference of the returnable object
 			returnExerciseData = newEx;
 	
