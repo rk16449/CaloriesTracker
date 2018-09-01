@@ -1,7 +1,6 @@
 package unit;
 
-import static org.junit.Assert.*;
-
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,4 +53,45 @@ public class PersonTest {
 		
 		p.setGoalCalories(-5000);
 	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfIllegalGenderSet() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Illegal gender set!");
+		
+		p.setGender("asldh2h32u3allajsd");
+	}
+	
+	@Test
+	public void settingMaleGender() {
+		p.setGender("Male");
+		Assert.assertEquals("Male", p.getGender());
+	}
+	
+	@Test
+	public void settingFemaleGender() {
+		p.setGender("Female");
+		Assert.assertEquals("Female", p.getGender());
+	}
+	
+	@Test
+	public void throwsIllegalArguementExceptionIfBodyFatNegativet() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Negative value set!");
+		
+		// set bodyfat to negative
+		p.setBodyfat(-0.5);
+	}
+	
+	
+	
+	@Test
+	public void throwsIllegalArguementExceptionIfBodyFatAbove100Percent() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Illegal bodyfat set!");
+		
+		// set bodyfat to 150%
+		p.setBodyfat(1.50);
+	}
+	
 }

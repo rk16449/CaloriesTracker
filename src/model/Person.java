@@ -97,6 +97,12 @@ public class Person {
 	}
 
 	public void setBodyfat(double bodyfat) {
+		
+		validateValue(bodyfat);
+		
+		// Greater than 100%
+		if(bodyfat > 1.0) throw new IllegalArgumentException("Illegal bodyfat set!");
+		
 		this.bodyfat = bodyfat;
 	}
 
@@ -167,8 +173,11 @@ public class Person {
 		this.height = height;
 	}
 
-	public void setGender(String newValue) {
-		this.gender = newValue;
+	public void setGender(String gender) {
+		
+		if(!gender.equals("Male") && !gender.equals("Female")) throw new IllegalArgumentException("Illegal gender set!");
+		
+		this.gender = gender;
 	}
 
 	public double getBodyfat() {
