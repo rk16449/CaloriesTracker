@@ -14,16 +14,27 @@ public class PersonTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 	
+	public static Person p;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		p = Person.getInstance();
 	}
 
 	@Test
-	public void throwsIllegalArgumentExceptionIfNegativeAge() {
+	public void throwsIllegalArgumentExceptionIfNegativeAgeSet() {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Negative age set!");
-		Person p = Person.getInstance();
+		exception.expectMessage("Negative value set!");
+		
 		p.setAge(-50);
+	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfNegativeWeightSet() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Negative value set!");
+		
+		p.setWeight(-450);
 	}
 
 }
