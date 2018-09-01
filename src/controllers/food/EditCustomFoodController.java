@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import model.Food;
@@ -17,20 +18,27 @@ public class EditCustomFoodController extends BaseFoodController implements Init
 
 	// FXML Components
 	@FXML
-	private Spinner<Double> spinnerQuantity;
+	Spinner<Double> spinnerQuantity;
 	@FXML
-	private Button buttonSave;
+	Button buttonSave;
+	@FXML
+	CheckBox checkBoxMacros;
 	
 	// Controller Variables
-	private SpinnerValueFactory<Double> defaultFactory;
 	private double quantity = 1;
-
+	private SpinnerValueFactory<Double> defaultFactory;
+	
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		defaultFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 100);
 		spinnerQuantity.setValueFactory(defaultFactory);
 	}
-
 	
+	@FXML
+	protected void handleCheckBoxMacros(ActionEvent event) throws IOException {
+		
+	}
+
 	@FXML
 	protected void handleSave(ActionEvent event) throws IOException {
 

@@ -344,10 +344,10 @@ public class Food extends Item {
 	
 		String[] vals = {
 				this.name, 
-				Double.toString(this.amount), 
-				Double.toString(this.carbohydrates), 
-				Double.toString(this.proteins), 
-				Double.toString(this.fats)
+				Double.toString(this.ogAmount), 
+				Double.toString(this.ogCarbohydrates), 
+				Double.toString(this.ogProteins), 
+				Double.toString(this.ogFats)
 		};
 		
 		return vals;
