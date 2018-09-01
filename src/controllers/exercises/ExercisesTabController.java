@@ -72,10 +72,10 @@ public class ExercisesTabController implements Initializable {
 		setupDay();
 		setupDatePicker();
 		setupTable();
-		setupLineChart();
+		updateLineChart();
 	}
 	
-	public void setupLineChart() {
+	public void updateLineChart() {
 		// Whenever we click on an exercise on the table, we want to show the weight used each week
 		// Assuming that's when we want to take our weight averages
 		
@@ -185,7 +185,7 @@ public class ExercisesTabController implements Initializable {
 	
 	public void update() {
 		tvExercises.refresh();
-		setupLineChart();
+		updateLineChart();
 	}
 	
 
@@ -305,17 +305,25 @@ public class ExercisesTabController implements Initializable {
 			Exercise newEx = new Exercise(retrievedEx);
 			// Make sure we apply it as a custom
 			newEx.setCustom(true);
+			
+			
 
 			// Add it to daily the table (if we selected to)
 			if (controller.addToTable()) {
+				System.out.println("Add to Table was selected @@@@@@@@@@@@@");
+				
 				addedExercises.add(newEx);
 				exerciseData.add(newEx);
+				currentDay.addExercise(newEx);
+				
+				// Add it as a unique exercise
+				MainProgramController.addExercise(newEx);
 			}
 
 			// Add to the local memory arraylist, the table gui and the currentDay arraylist
 			AddExerciseController.addedExercises.add(newEx);
 			AddExerciseController.exerciseData.add(newEx);
-			currentDay.addExercise(newEx);
+			
 			update();
 		}catch(NullPointerException e) {
 			System.out.println("Null exercise set");
@@ -327,6 +335,8 @@ public class ExercisesTabController implements Initializable {
 		// Create window
 		try {
 			Exercise selectedExercise = tvExercises.getSelectionModel().getSelectedItem();
+			
+			System.out.println("Selected Exercise weight value is --> " + selectedExercise.getWeight());
 			
 			
 			FXMLLoader fxmlLoader = new FXMLLoader();
@@ -345,8 +355,13 @@ public class ExercisesTabController implements Initializable {
 			// showAndWait will block execution until the window closes...
 			stage.showAndWait();
 			
+			System.out.println("New weight returned was: " + controller.getEditExercise().getWeight());
+			
 			// Refresh reference
-			selectedExercise = controller.getEditExercise();
+			selectedExercise.setExercise(controller.getEditExercise());
+			
+			System.out.println("Selected exercise new weight: " + selectedExercise.getWeight());
+	
 			
 			update();
 		}catch(NullPointerException e) {
