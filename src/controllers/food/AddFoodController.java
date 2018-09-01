@@ -73,7 +73,7 @@ public class AddFoodController extends BaseFoodController implements Initializab
 		}
 
 		// Initialize the person table with the two columns.
-		foodColumn.setCellValueFactory(cellData -> cellData.getValue().getStrFood());
+		foodColumn.setCellValueFactory(cellData -> cellData.getValue().getStrName());
 
 		amountColumn.setCellValueFactory(cellData -> cellData.getValue().getStrAmount());
 		caloriesColumn.setCellValueFactory(cellData -> cellData.getValue().getStrCalories());
