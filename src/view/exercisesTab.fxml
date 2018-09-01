@@ -32,7 +32,7 @@
       <Button fx:id="btnAddExercise" layoutX="37.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleAddExercise" prefHeight="29.0" prefWidth="99.0" text="Add Entry" />
       <Button fx:id="btnCustom" layoutX="154.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleCustom" prefHeight="29.0" prefWidth="99.0" text="Custom" />
       <Button fx:id="btnEdit" layoutX="271.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="29.0" prefWidth="99.0" text="Edit" />
-      <LineChart layoutX="475.0" layoutY="133.0" prefHeight="307.0" prefWidth="416.0">
+      <LineChart fx:id="lineChartExercises" layoutX="475.0" layoutY="133.0" prefHeight="307.0" prefWidth="416.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>

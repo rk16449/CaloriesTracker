@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
@@ -48,6 +49,9 @@ public class ExercisesTabController implements Initializable {
 	@FXML
 	Button btnAddExercise, btnCustom, btnEdit, btnDelete;
 	
+	@FXML
+	LineChart lineChartExercises;
+	
 	
 	// Hold the food data on the table in text form
 	private ObservableList<Exercise> exerciseData = FXCollections.observableArrayList();
@@ -63,7 +67,14 @@ public class ExercisesTabController implements Initializable {
 		setupDay();
 		setupDatePicker();
 		setupTable();
+		setupLineChart();
+	}
+	
+	private void setupLineChart() {
+		// Whenever we click on an exercise on the table, we want to show the weight used each week
+		// Assuming that's when we want to take our weight averages
 		
+		// The chart can have multiple lines, each line represents an entire exercise
 	}
 	
 	private void setupTable() {
