@@ -4,7 +4,9 @@ import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -73,10 +75,12 @@ public class ExercisesTabController implements Initializable {
 		setupLineChart();
 	}
 	
-	private void setupLineChart() {
+	public void setupLineChart() {
 		// Whenever we click on an exercise on the table, we want to show the weight used each week
 		// Assuming that's when we want to take our weight averages
 		
+		// Re-Sort the days in order
+		Collections.sort(MainProgramController.days);
 		// The chart can have multiple lines, each line represents an entire exercise
 		
 		// Clear this lineChart
@@ -107,8 +111,11 @@ public class ExercisesTabController implements Initializable {
 					
 					// Check if this is the same one
 					if(currentExercise.getName().equals(lineExercise.getName())) {
+						
+						// Convert the format
+						DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
 						// Add the data
-						series1.getData().add(new XYChart.Data(currentDay.getDate().toString(), currentExercise.getWeight()));
+						series1.getData().add(new XYChart.Data(currentDay.getDate().format(sdf).toString(), currentExercise.getWeight()));
 						charts.add(series1);
 					}
 				}
@@ -176,8 +183,9 @@ public class ExercisesTabController implements Initializable {
 		}
 	}
 	
-	private void update() {
+	public void update() {
 		tvExercises.refresh();
+		setupLineChart();
 	}
 	
 
