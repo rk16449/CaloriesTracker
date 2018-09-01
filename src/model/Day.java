@@ -31,6 +31,18 @@ public class Day implements Comparable<Day> {
 		dates.add(date);
 	}
 	
+	/**
+	 * Destructively Loads the exercises on this day into the ArrayList passed
+	 */
+	public static void loadAddedExercises(Day currentDay, ArrayList<Exercise> addedExercises) {
+		// loop through the currentDay food
+		for (int i = 0; i < currentDay.getExercises().size(); i++) {
+			Exercise f = currentDay.getExercises().get(i);
+			addedExercises.add(f);
+		}
+	}
+	
+	
 	public static boolean updateQuantity(Day currentDay, AddFoodController controller, boolean found) {
 		for (int i = 0; i < currentDay.getFoods().size(); i++) {
 			// Assumes we don't have foods with exactly the same name.. (try adding id in

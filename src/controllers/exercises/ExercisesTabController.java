@@ -199,23 +199,14 @@ public class ExercisesTabController implements Initializable {
 				exerciseData.clear();
 
 				// Load the exercise into the table 
-				loadAddedExercises();
+				Day.loadAddedExercises(currentDay, addedExercises);
 				loadTableExercises();
 				update();
 			}
 		});
 	}
 	
-	/**
-	 * Loads the exercises on this day
-	 */
-	private void loadAddedExercises() {
-		// loop through the currentDay food
-		for (int i = 0; i < currentDay.getExercises().size(); i++) {
-			Exercise f = currentDay.getExercises().get(i);
-			addedExercises.add(f);
-		}
-	}
+	
 	
 	/**
 	 * loads the local memory arraylist into the GUI table arraylist
