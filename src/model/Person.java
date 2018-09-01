@@ -141,6 +141,7 @@ public class Person {
 	}
 
 	public void setAge(int age) {
+		if(age < 0) throw new IllegalArgumentException("Negative age set!");
 		this.age = age;
 	}
 
