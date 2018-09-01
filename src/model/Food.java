@@ -353,7 +353,7 @@ public class Food extends Item {
 	 * String methods (for viewing on the table, but not their direct values)
 	 * 
 	 */
-	public StringProperty getStrFood() {
+	public StringProperty getStrName() {
 		return new SimpleStringProperty(this.getName());
 	}
 
