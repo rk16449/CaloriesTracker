@@ -36,7 +36,7 @@ Minimum Requirements:
 
 ## Login Page
 
-![Main](../../screenshots/loginpage.JPG)
+![Main](../screenshots/loginpage.JPG)
 
 ## Summary Page
 
