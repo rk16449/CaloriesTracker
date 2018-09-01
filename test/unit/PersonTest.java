@@ -54,4 +54,12 @@ public class PersonTest {
 		
 		p.setGoalCalories(-5000);
 	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfIllegalGenderSet() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Illegal gender set!");
+		
+		p.setGender("asldh2h32u3allajsd");
+	}
 }
