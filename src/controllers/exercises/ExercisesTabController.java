@@ -23,6 +23,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -50,7 +51,7 @@ public class ExercisesTabController implements Initializable {
 	Button btnAddExercise, btnCustom, btnEdit, btnDelete;
 	
 	@FXML
-	LineChart lineChartExercises;
+	LineChart<?, ?> lineChartExercises;
 	
 	
 	// Hold the food data on the table in text form
@@ -60,6 +61,8 @@ public class ExercisesTabController implements Initializable {
 	// Used to check the current loaded date and day
 	private static LocalDate currentDate;
 	private static Day currentDay;
+	
+	private ArrayList<XYChart.Series> charts = new ArrayList<XYChart.Series>();
 	
 	
 	// Start of ExercisesTabController runs on creation
@@ -75,6 +78,44 @@ public class ExercisesTabController implements Initializable {
 		// Assuming that's when we want to take our weight averages
 		
 		// The chart can have multiple lines, each line represents an entire exercise
+		
+		// Clear this lineChart
+		charts.clear();
+		lineChartExercises.getData().clear();
+		
+		lineChartExercises.setTitle("Weight of Exercises");
+		
+		// Checkout how many different exercises we have ever added into days
+		
+		// For each exercise, of each week add a point in the line chart
+		for(int i=0; i<MainProgramController.addedExercises.size(); i++) {
+			
+			Exercise lineExercise = MainProgramController.addedExercises.get(i);
+			
+			XYChart.Series series1 = new XYChart.Series();
+	        series1.setName(lineExercise.getName());
+			
+			// Loop through every day and get the exercise weight data on this date
+			for(int z=0; z<MainProgramController.days.size(); z++) {
+				
+				Day currentDay = MainProgramController.days.get(z);
+				
+				// Loop through the excercises on this day
+				for(int p=0; p<currentDay.getExercises().size(); p++) {
+					
+					Exercise currentExercise = currentDay.getExercises().get(p);
+					
+					// Check if this is the same one
+					if(currentExercise.getName().equals(lineExercise.getName())) {
+						// Add the data
+						series1.getData().add(new XYChart.Data(currentDay.getDate().toString(), currentExercise.getWeight()));
+						charts.add(series1);
+					}
+				}
+			}
+			
+			lineChartExercises.getData().addAll(series1);
+		} 
 	}
 	
 	private void setupTable() {
@@ -179,19 +220,17 @@ public class ExercisesTabController implements Initializable {
 	private void addEntry(AddExerciseController controller) {
 		try {
 			System.out.println("ExercieTabController: " + controller.getExercise());
-			boolean found = false;
-			
-			// Add a new row entry
-			if (!found) {
-				
-				// Copy the object
-				Exercise newExercise = new Exercise(controller.getExercise());
 
-				// Add values to the table!
-				addedExercises.add(newExercise);
-				exerciseData.add(newExercise);
-				currentDay.addExercise(newExercise);
-			}
+			// Copy the object
+			Exercise newExercise = new Exercise(controller.getExercise());
+
+			// Add values to the table!
+			addedExercises.add(newExercise);
+			exerciseData.add(newExercise);
+			currentDay.addExercise(newExercise);
+			
+			// Try to add it uniquely (used for LineChart)
+			MainProgramController.addExercise(newExercise);
 
 			// Update GUI
 			update();

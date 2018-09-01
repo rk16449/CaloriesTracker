@@ -22,6 +22,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import model.Day;
+import model.Exercise;
 
 
 
@@ -41,6 +42,32 @@ public class MainProgramController implements Initializable {
 	private Tab tabGoals;
 	@FXML
 	private GoalsTabController GoalsTabController;
+	
+	
+	// (Global) whenever we add an exercise we store it in here once
+	public static ArrayList<Exercise> addedExercises = new ArrayList<Exercise>();
+	
+	// Calls whenever we press add on addExerciseController
+	public static boolean addExercise(Exercise ex) {
+		boolean found = false;
+		// Check if it exists in the added Exercises arraylist
+		for(int i=0; i<addedExercises.size(); i++) {
+			// If the same name exists
+			if(addedExercises.get(i).getName().equals(ex.getName())) {
+				System.out.println("This exercise exists!");
+				found = true;
+				break;
+			}
+		}
+		
+		if(!found) {
+			System.out.println("This exercise doesn't exist, so we're going to add it here!");
+			addedExercises.add(ex);
+		}
+		
+		return found;
+	}
+	
 	
 	// (Global) static array of days
 	public static ArrayList<Day> days = new ArrayList<Day>();
