@@ -1,14 +1,11 @@
 package unit;
 
-import static org.junit.Assert.*;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.css.PseudoClass;
 import model.Person;
 
 public class PersonTest {
@@ -76,4 +73,14 @@ public class PersonTest {
 		p.setGender("Female");
 		Assert.assertEquals("Female", p.getGender());
 	}
+	
+	@Test
+	public void throwsIllegalArguementExceptionIfBodyFatAbove100Percent() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Illegal bodyfat set!");
+		
+		// set bodyfat to 150%
+		p.setBodyfat(1.50);
+	}
+	
 }

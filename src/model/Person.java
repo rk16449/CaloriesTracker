@@ -97,6 +97,12 @@ public class Person {
 	}
 
 	public void setBodyfat(double bodyfat) {
+		
+		validateValue(bodyfat);
+		
+		// Greater than 100%
+		if(bodyfat > 1.0) throw new IllegalArgumentException("Illegal bodyfat set!");
+		
 		this.bodyfat = bodyfat;
 	}
 
