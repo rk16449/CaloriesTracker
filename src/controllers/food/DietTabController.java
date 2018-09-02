@@ -93,6 +93,29 @@ public class DietTabController extends BaseFoodController implements Initializab
 
 		// Add observable list data to the table
 		tvEntries.setItems(foodData);
+		
+		// Disable buttons on start
+		btnDelete.setDisable(true);
+    	btnDelete.setVisible(false);
+    	btnEdit.setDisable(true);
+    	btnEdit.setVisible(false);
+		
+		
+		// Setup a table handler which will show Edit/Delete if we select a food
+		tvEntries.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+		    if (newSelection != null) {
+	        	btnDelete.setDisable(false);
+	        	btnDelete.setVisible(true);
+	        	btnEdit.setDisable(false);
+	        	btnEdit.setVisible(true);
+		    }else {
+		    	// Hide the buttons
+		    	btnDelete.setDisable(true);
+	        	btnDelete.setVisible(false);
+	        	btnEdit.setDisable(true);
+	        	btnEdit.setVisible(false);
+		    }
+		});
 	}
 
 	/**
