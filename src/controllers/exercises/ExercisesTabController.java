@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -171,6 +172,9 @@ public class ExercisesTabController implements Initializable {
 		int countDays = 0;
 		int countExercises = 0;
 		
+		
+		ArrayList<String> dates = new ArrayList<String>();
+		
 		// Preload the Date axis with the current week if there are no values in this month
 		for(int i=0; i<MainProgramController.days.size(); i++) {
 			
@@ -186,6 +190,16 @@ public class ExercisesTabController implements Initializable {
 			
 			// Only check values between here
 			if(between(date, getMonthStart(), getMonthEnd())) {
+				
+				
+				if(countDays % 5 == 0) {
+					
+					DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
+					dates.add(day.getDate().format(sdf).toString());
+				}
+				
+				
+				
 				// Increases the amount of current month days checked
 				countDays++;
 				
@@ -223,7 +237,7 @@ public class ExercisesTabController implements Initializable {
 		
 		// If there is less than 5 exercises stored this month, generate some Date axis values
 		if(countExercises < 5) {
-			
+			categoryAxisDate.setCategories(FXCollections.<String>observableArrayList(dates)); 
 		}
 		
 		
