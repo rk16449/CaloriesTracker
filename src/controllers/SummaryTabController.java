@@ -122,9 +122,7 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 			Day day = MainProgramController.days.get(i);
 			
 			// Convert LocalDate to Date so we can check with between method
-			Date date = Date.from(day.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-			// Add 1 second to this date so that we can fit the interval
-			date.setSeconds(1);
+			Date date = Date.from(day.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant().plusSeconds(1));
 
 			// Check if this day is between certain values of the week only
 			if(between(date, getWeekStartDate(), getWeekEndDate())) {
