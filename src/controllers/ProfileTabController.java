@@ -89,6 +89,10 @@ public class ProfileTabController extends BaseController implements Initializabl
 		cbGender.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
 
+	/**
+	 * Updates whether or not the button 'Metric' or 'Imperial' switches to underline
+	 * based off the units value
+	 */
 	private void updateButtonUnderline() {
 		// Setup buttons
 		if (units.equals("Metric")) {
@@ -99,14 +103,24 @@ public class ProfileTabController extends BaseController implements Initializabl
 			btnImperial.setUnderline(true);
 		}
 	}
-
+	
+	/**
+	 * Method to disable or enable TextFields
+	 * @param value
+	 * 			true if disable TextField
+	 */
 	private void disableTF(boolean value) {
-		// Activate the textfields based on value
+		// Activate the TextFields based on value
 		for (int i = 0; i < refTF.size(); i++) {
 			refTF.get(i).setDisable(value);
 		}
 	}
 
+	/**
+	 * FXML button handler for editing the profile values
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void handleEditProfile(ActionEvent event) throws IOException {
 
@@ -141,6 +155,11 @@ public class ProfileTabController extends BaseController implements Initializabl
 		}
 	}
 
+	/**
+	 * FXML button handler for changing to Metric units
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void handleMetric(ActionEvent event) throws IOException {
 
@@ -161,6 +180,11 @@ public class ProfileTabController extends BaseController implements Initializabl
 
 	}
 
+	/**
+	 * FXML button handler for changing to Imperial units
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void handleImperial(ActionEvent event) throws IOException {
 
