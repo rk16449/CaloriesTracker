@@ -173,12 +173,16 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	    return valid;
 	}
 	
+	/**
+	 * Creates a Date object with time 00:00:00 of the starting week day
+	 * @return
+	 * 	Date object which represents the Start of the Week
+	 */
 	public static Date getWeekStartDate() {
+		
 		Calendar c = Calendar.getInstance(new Locale("en","UK"));
 		c.setFirstDayOfWeek(Calendar.MONDAY);
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-		
-		// Set time to 00:00:00
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 	    c.set(Calendar.SECOND, 0);
