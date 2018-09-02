@@ -44,6 +44,9 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	// value for max total calories needed on progress bar (dynamic)
 	private double totalCalories = 3200;
 	
+	/**
+	 * First method this class runs, sets up the controller
+	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		// Creates 365 day objects
@@ -62,11 +65,17 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		update();
 	}
 	
+	/**
+	 * Sets up the bar chart values, called once in initialize
+	 */
 	private void setupBarChart() {
 		dailyProgress.setBarGap(-30);
 		dailyProgress.setLegendVisible(false);
 	}
 	
+	/**
+	 * Temporarily creates 365 'empty' day objects
+	 */
 	private void setupDays() {
 		// Create 365 days if they don't already exist
 		if(MainProgramController.days.size() == 0) {
@@ -80,6 +89,9 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		}
 	}
 	
+	/**
+	 * Updates the progress bar percentage value and the TextField below it with current and max calories of Person 
+	 */
 	private void updateProgressBar() {
 		// Finds out the current goal of calories is
 		totalCalories = person.getGoalCalories();
@@ -146,27 +158,43 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		}
 	}
 	
+	/**
+	 * Checks if a date is between two dates
+	 * @param date
+	 * 			the date we want to check
+	 * @param dateStart
+	 * 			start date
+	 * @param dateEnd
+	 * 			end date
+	 * @return
+	 * 		true if the date specified is between the start and end dates
+	 */
 	public static boolean between(Date date, Date dateStart, Date dateEnd) {
+		
+		boolean valid = false;
+		
 	    if (date != null && dateStart != null && dateEnd != null) {
 	        if (date.after(dateStart) && date.before(dateEnd)) {
-	            return true;
+	        	valid = true;
 	        }
 	        else if(date.equals(dateStart) || date.equals(dateEnd)) {
-	        	return true;
-	        }
-	        else {
-	            return false;
+	        	valid = true;
 	        }
 	    }
-	    return false;
+	    
+	    return valid;
 	}
 	
+	/**
+	 * Creates a Date object with time 00:00:00 of the 'Monday' of the current week
+	 * @return
+	 * 		Monday Date object
+	 */
 	public static Date getWeekStartDate() {
+		
 		Calendar c = Calendar.getInstance(new Locale("en","UK"));
 		c.setFirstDayOfWeek(Calendar.MONDAY);
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-		
-		// Set time to 00:00:00
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 	    c.set(Calendar.SECOND, 0);
@@ -174,14 +202,18 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	    return c.getTime();
 	}
 
+	/**
+	 * Creates a Date object of the 'Sunday' of the current week with 23:59:59 time
+	 * @return
+	 * 		Sunday Date object 
+	 */
 	public static Date getWeekEndDate() {
+		
 	    Calendar calendar = Calendar.getInstance();
 	    while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
 	        calendar.add(Calendar.DATE, 1);
 	    }
 	    calendar.add(Calendar.DATE, -1);
-	    
-	    // Set time to 23:59:59
 	    calendar.set(Calendar.HOUR_OF_DAY, 23);
 	    calendar.set(Calendar.MINUTE, 59);
 	    calendar.set(Calendar.SECOND, 59);
