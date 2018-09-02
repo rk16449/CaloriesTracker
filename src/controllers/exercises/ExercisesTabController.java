@@ -22,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -53,6 +54,9 @@ public class ExercisesTabController implements Initializable {
 	
 	@FXML
 	LineChart<?, ?> lineChartExercises;
+	
+	@FXML
+	CategoryAxis categoryAxisDate;
 	
 	@FXML
 	NumberAxis numberAxisWeight;
@@ -113,14 +117,15 @@ public class ExercisesTabController implements Initializable {
 		lineChartExercises.getData().clear();
 		
 		// GUI representation
-		createLineChart();
+		//createLineChart();
+		setupLineChartCurrentWeek();
 	}
 	
 	/**
 	 * Goes through all the days, their exercises (weight) and converts to LineChart points
 	 */
 	@SuppressWarnings("unchecked")
-	private void createLineChart() {
+	private void createLineChartOld() {
 		// Checkout how many different exercises we have ever added
 		// For each exercise, of each week add a point in the line chart
 		for(int i=0; i<MainProgramController.addedExercises.size(); i++) {
@@ -163,9 +168,13 @@ public class ExercisesTabController implements Initializable {
 	
 	private void setupLineChartCurrentWeek() {
 		
-		// Loop through all the days until we are in the current month
+		int countDays = 0;
+		int countExercises = 0;
+		
+		// Preload the Date axis with the current week if there are no values in this month
 		for(int i=0; i<MainProgramController.days.size(); i++) {
 			
+			// Reference to Day
 			Day day = MainProgramController.days.get(i);
 			
 			// Convert LocalDate to Date so we can check with between method
@@ -173,17 +182,59 @@ public class ExercisesTabController implements Initializable {
 			// Add 1 second to this date so that we can fit the interval
 			date.setSeconds(1);
 			
-			// Check that the date is in the correct range
+			
+			
+			// Only check values between here
 			if(between(date, getMonthStart(), getMonthEnd())) {
+				// Increases the amount of current month days checked
+				countDays++;
 				
+				
+				// We gotta loop through added exercises first
+				for(int z=0; z<MainProgramController.addedExercises.size(); z++) {
+					
+					Exercise zExercise = MainProgramController.addedExercises.get(z);
+					
+					// Check for a match with the exercises in this day
+					for(int p=0; p<day.getExercises().size(); p++) {
+						
+						Exercise pExercise = day.getExercises().get(p);
+						
+						if(zExercise.getName().equals(pExercise.getName())) {
+							countExercises++;
+						}
+					}
+
+				}
+				
+				
+				// Also check if there is more than 5 exercises added?
+				System.out.println("countDays: " + countDays + " getMonthdays: " + getMonthDays());
 			}
 			
-			// If there are no exercises set this month, then pre-load days of the current week
+			// Exit loop, we don't need to check other months ahead of us
+			if(countDays >= getMonthDays()) break;
+		}
+		
+		
+		
+		// Check how many loaded exercises there were
+		System.out.println("count exercises: " + countExercises);
+		
+		// If there is less than 5 exercises stored this month, generate some Date axis values
+		if(countExercises < 5) {
 			
 		}
 		
-		// Loop through all the exercises of the current week and show it
 		
+		
+	}
+	
+	// return the amount of days in the current month
+	private int getMonthDays() {
+		Calendar c = Calendar.getInstance();
+		int monthMaxDays = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+		return monthMaxDays;
 	}
 	
 	private Date getMonthStart() {
