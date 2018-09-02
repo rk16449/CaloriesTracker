@@ -149,8 +149,11 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	/**
 	 * Checks if a date is between two dates
 	 * @param date
+	 * 			the date we want to check
 	 * @param dateStart
+	 * 			start date
 	 * @param dateEnd
+	 * 			end date
 	 * @return
 	 * 		true if the date specified is between the start and end dates
 	 */
@@ -166,6 +169,7 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	        	valid = true;
 	        }
 	    }
+	    
 	    return valid;
 	}
 	
