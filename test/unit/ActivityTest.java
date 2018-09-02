@@ -5,12 +5,12 @@ package unit;
 
 import static org.junit.Assert.*;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import junit.framework.Assert;
 import model.Activity;
 
 /**
@@ -42,7 +42,11 @@ public class ActivityTest {
 		a.setActivityLevel(-5);
 	}
 	
-
+	@Test
+	public void testGetActivityLevelFromConstructor() {
+		Activity a = new Activity("Sedentary", 1.2);
+		Assert.assertEquals(1.2, a.getActivityLevel(), 0.0);
+	}
 
 
 }
