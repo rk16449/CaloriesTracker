@@ -3,8 +3,7 @@
  */
 package unit;
 
-import static org.junit.Assert.*;
-
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,8 +29,33 @@ public class ActivityTest {
 	public void throwsIllegalArgumentExceptionIfConstructorActivityNegative() {
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage("Negative activity level set!");
-		Activity a = new Activity("Lose Weight", -5);
+		Activity a = new Activity("Sedentary", -5);
+	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfSetNegativeActivityLevel() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Negative activity level set!");
+		Activity a = new Activity("Sedentary", 1.2);
+		a.setActivityLevel(-5);
+	}
+	
+	@Test
+	public void testGetActivityLevelFromConstructor() {
+		Activity a = new Activity("Sedentary", 1.2);
+		Assert.assertEquals(1.2, a.getActivityLevel(), 0.0);
 	}
 
-
+	@Test
+	public void testGetActivityLevelFromSetter() {
+		Activity a = new Activity("Sedentary", 1.2);
+		a.setActivityLevel(1.8);
+		Assert.assertEquals(1.8, a.getActivityLevel(), 0.0);
+	}
+	
+	@Test
+	public void testToStringGivesActivityName() {
+		Activity a = new Activity("Sedentary", 1.2);
+		Assert.assertEquals("Sedentary", a.toString());
+	}
 }
