@@ -126,7 +126,7 @@ public class ExercisesTabController implements Initializable {
 	 * Goes through all the days, their exercises (weight) and converts to LineChart points
 	 */
 	@SuppressWarnings("unchecked")
-	private void createLineChartOld() {
+	private void createLineChart() {
 		// Checkout how many different exercises we have ever added
 		// For each exercise, of each week add a point in the line chart
 		for(int i=0; i<MainProgramController.addedExercises.size(); i++) {
@@ -216,6 +216,7 @@ public class ExercisesTabController implements Initializable {
 						
 						if(zExercise.getName().equals(pExercise.getName())) {
 							countExercises++;
+							break; // go to next day
 						}
 					}
 
@@ -238,10 +239,9 @@ public class ExercisesTabController implements Initializable {
 		// If there is less than 5 exercises stored this month, generate some Date axis values
 		if(countExercises < 5) {
 			categoryAxisDate.setCategories(FXCollections.<String>observableArrayList(dates)); 
+		}else {
+			createLineChart();
 		}
-		
-		
-		
 	}
 	
 	// return the amount of days in the current month
