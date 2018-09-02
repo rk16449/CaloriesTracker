@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import junit.framework.Assert;
 import model.Activity;
 
 /**
@@ -30,8 +31,18 @@ public class ActivityTest {
 	public void throwsIllegalArgumentExceptionIfConstructorActivityNegative() {
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage("Negative activity level set!");
-		Activity a = new Activity("Lose Weight", -5);
+		Activity a = new Activity("Sedentary", -5);
 	}
+	
+	@Test
+	public void throwsIllegalArgumentExceptionIfSetNegativeActivityLevel() {
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Negative activity level set!");
+		Activity a = new Activity("Sedentary", 1.2);
+		a.setActivityLevel(-5);
+	}
+	
+
 
 
 }
