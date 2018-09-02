@@ -175,6 +175,7 @@ public class DietTabController extends BaseFoodController implements Initializab
 	private void update() {
 		updatePieChart(dpDate.getValue());
 		updateGUIPieChart();
+		updateTotalValues(dpDate.getValue());
 		updateGUIMacrosInfo();
 		tvEntries.refresh();
 	}

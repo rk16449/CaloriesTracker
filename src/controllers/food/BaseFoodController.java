@@ -66,7 +66,7 @@ public class BaseFoodController extends BaseController {
 
 		// Add up the total from the foods on the table
 		for (int i = 0; i < MainProgramController.getDay(date).getFoods().size(); i++) {
-			Food f = MainProgramController.getDay(LocalDate.now()).getFoods().get(i);
+			Food f = MainProgramController.getDay(date).getFoods().get(i);
 			protein += f.getProteins();
 			carbs += f.getCarbohydrates();
 			fats += f.getFats();
@@ -78,9 +78,9 @@ public class BaseFoodController extends BaseController {
 
 	protected void updateGUIPieChart() {
 		// now update the slices manually (good enough for such small amount of slices)
+		addedSlices.get(2).setPieValue(carbs);
 		addedSlices.get(0).setPieValue(protein);
 		addedSlices.get(1).setPieValue(fats);
-		addedSlices.get(2).setPieValue(carbs);
 	}
 	
 	/**
