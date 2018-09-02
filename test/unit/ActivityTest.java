@@ -48,5 +48,10 @@ public class ActivityTest {
 		Assert.assertEquals(1.2, a.getActivityLevel(), 0.0);
 	}
 
-
+	@Test
+	public void testGetActivityLevelFromSetter() {
+		Activity a = new Activity("Sedentary", 1.2);
+		a.setActivityLevel(1.8);
+		Assert.assertEquals(1.8, a.getActivityLevel(), 0.0);
+	}
 }
