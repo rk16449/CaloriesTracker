@@ -1,15 +1,19 @@
 package model;
 
 public abstract class Item {
-
-	private static int start_id = 0;
 	
-	private int id = 0;
 	protected String name;
+	protected static int start_id = 0;
+	private int id = 0;
+	
 	
 	public Item(String name) {
 		this.name = name;
-		this.id += start_id;
+		
+		if(start_id >= Integer.MAX_VALUE) throw new IllegalArgumentException("Maximum items reached!");
+		
+		this.id = start_id;
+		start_id++;
 	}
 
 	public int getId() {
