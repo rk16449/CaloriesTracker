@@ -174,9 +174,9 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	}
 	
 	/**
-	 * Creates a Date object with time 00:00:00 of the starting week day
+	 * Creates a Date object with time 00:00:00 of the 'Monday' of the current week
 	 * @return
-	 * 	Date object which represents the Start of the Week
+	 * 		Monday Date object
 	 */
 	public static Date getWeekStartDate() {
 		
@@ -190,14 +190,18 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	    return c.getTime();
 	}
 
+	/**
+	 * Creates a Date object of the 'Sunday' of the current week with 23:59:59 time
+	 * @return
+	 * 		Sunday Date object 
+	 */
 	public static Date getWeekEndDate() {
+		
 	    Calendar calendar = Calendar.getInstance();
 	    while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
 	        calendar.add(Calendar.DATE, 1);
 	    }
 	    calendar.add(Calendar.DATE, -1);
-	    
-	    // Set time to 23:59:59
 	    calendar.set(Calendar.HOUR_OF_DAY, 23);
 	    calendar.set(Calendar.MINUTE, 59);
 	    calendar.set(Calendar.SECOND, 59);
