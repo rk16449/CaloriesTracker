@@ -28,6 +28,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -62,6 +63,9 @@ public class ExercisesTabController implements Initializable {
 	@FXML
 	NumberAxis numberAxisWeight;
 	
+	@FXML
+	ChoiceBox choiceBoxTimeLine;
+	
 	
 	// Hold the food data on the table in text form
 	private ObservableList<Exercise> exerciseData = FXCollections.observableArrayList();
@@ -79,8 +83,8 @@ public class ExercisesTabController implements Initializable {
 		setupDay();
 		setupDatePicker();
 		setupTable();
-		setupLineChart();
-		updateLineChart();
+		
+		setupLineChartCurrentWeek();
 	}
 	
 	/**
@@ -118,8 +122,8 @@ public class ExercisesTabController implements Initializable {
 		lineChartExercises.getData().clear();
 		
 		// GUI representation
-		//createLineChart();
-		setupLineChartCurrentWeek();
+		createLineChart();
+		
 	}
 	
 	/**
@@ -192,7 +196,7 @@ public class ExercisesTabController implements Initializable {
 			if(between(date, getMonthStart(), getMonthEnd())) {
 				
 				
-				if(countDays % 5 == 0) {
+				if(countDays % 2 == 0) {
 					
 					DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
 					dates.add(day.getDate().format(sdf).toString());
@@ -382,6 +386,11 @@ public class ExercisesTabController implements Initializable {
 	public void update() {
 		tvExercises.refresh();
 		updateLineChart();
+	}
+	
+	@FXML
+	protected void handleChoiceBoxTimeLine(ActionEvent event) throws IOException {
+		
 	}
 	
 
