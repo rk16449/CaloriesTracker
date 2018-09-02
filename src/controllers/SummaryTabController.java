@@ -44,6 +44,9 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	// value for max total calories needed on progress bar (dynamic)
 	private double totalCalories = 3200;
 	
+	/**
+	 * First method this class runs, sets up the controller
+	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		// Creates 365 day objects
@@ -62,11 +65,17 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		update();
 	}
 	
+	/**
+	 * Sets up the bar chart values, called once in initialize
+	 */
 	private void setupBarChart() {
 		dailyProgress.setBarGap(-30);
 		dailyProgress.setLegendVisible(false);
 	}
 	
+	/**
+	 * Temporarily creates 365 'empty' day objects
+	 */
 	private void setupDays() {
 		// Create 365 days if they don't already exist
 		if(MainProgramController.days.size() == 0) {
@@ -80,6 +89,9 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		}
 	}
 	
+	/**
+	 * Updates the progress bar percentage value and the TextField below it with current and max calories of Person 
+	 */
 	private void updateProgressBar() {
 		// Finds out the current goal of calories is
 		totalCalories = person.getGoalCalories();
