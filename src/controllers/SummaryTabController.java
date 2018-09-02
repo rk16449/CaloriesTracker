@@ -155,18 +155,18 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	 * 		true if the date specified is between the start and end dates
 	 */
 	public static boolean between(Date date, Date dateStart, Date dateEnd) {
+		
+		boolean valid = false;
+		
 	    if (date != null && dateStart != null && dateEnd != null) {
 	        if (date.after(dateStart) && date.before(dateEnd)) {
-	            return true;
+	        	valid = true;
 	        }
 	        else if(date.equals(dateStart) || date.equals(dateEnd)) {
-	        	return true;
-	        }
-	        else {
-	            return false;
+	        	valid = true;
 	        }
 	    }
-	    return false;
+	    return valid;
 	}
 	
 	public static Date getWeekStartDate() {
