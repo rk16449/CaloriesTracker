@@ -23,7 +23,7 @@ public class Day implements Comparable<Day> {
 		// Loop through dates arraylist to see if this date already exists
 		for(int i=0; i<dates.size(); i++) {
 			if(dates.get(i).equals(date)) {
-				throw new IllegalArgumentException("This date already exists!");
+				throw new IllegalArgumentException("Tryig to create day: This date already exists!");
 			}
 		}
 		
