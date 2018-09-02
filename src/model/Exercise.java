@@ -173,7 +173,6 @@ public class Exercise extends Item {
 	}
 	
 	// toString
-
 	public String toString() {
 		return "Name: " + this.getName() + " { sets: " + this.getSets() + ", reps: " + this.getReps() + ", weight: " + this.getWeight() + ", caloried burned: " + this.getCaloriesBurned() + " };";
 	}
