@@ -34,7 +34,7 @@
       <Button fx:id="btnEdit" layoutX="271.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="29.0" prefWidth="99.0" text="Edit" />
       <LineChart fx:id="lineChartExercises" layoutX="475.0" layoutY="133.0" prefHeight="307.0" prefWidth="416.0">
         <xAxis>
-          <CategoryAxis fx:id="categoryAxisDate" label="Date" side="BOTTOM" />
+          <CategoryAxis fx:id="categoryAxisDate" side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis fx:id="numberAxisWeight" label="Weight" side="LEFT" upperBound="3000.0" />
