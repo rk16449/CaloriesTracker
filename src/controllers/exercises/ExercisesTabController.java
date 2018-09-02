@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import controllers.MainProgramController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -64,7 +66,7 @@ public class ExercisesTabController implements Initializable {
 	NumberAxis numberAxisWeight;
 	
 	@FXML
-	ChoiceBox choiceBoxTimeLine;
+	ChoiceBox<String> choiceBoxTimeLine;
 	
 	
 	// Hold the food data on the table in text form
@@ -83,8 +85,28 @@ public class ExercisesTabController implements Initializable {
 		setupDay();
 		setupDatePicker();
 		setupTable();
-		
+		setupChoiceBox();
 		setupLineChartCurrentWeek();
+	}
+	
+	private void setupChoiceBox() {
+		// Setup values into the ChoiceBox and place an event listener to choice the amount that the line graph will show
+		choiceBoxTimeLine.setItems(FXCollections.observableArrayList("Weekly", "Monthly", "Yearly"));
+
+		choiceBoxTimeLine.setValue("Weekly");
+		
+		// Add event listener
+		ChangeListener<String> changeListener = new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, //
+					String oldValue, String newValue) {
+				if (newValue != null) {
+					// Depending on this value, change linechart view
+				}
+			}
+		};
+		// Selected Item Changed.
+		choiceBoxTimeLine.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
 	
 	/**
