@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import controllers.MainProgramController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,6 +30,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -62,6 +65,9 @@ public class ExercisesTabController implements Initializable {
 	@FXML
 	NumberAxis numberAxisWeight;
 	
+	@FXML
+	ChoiceBox<String> choiceBoxTimeLine;
+	
 	
 	// Hold the food data on the table in text form
 	private ObservableList<Exercise> exerciseData = FXCollections.observableArrayList();
@@ -79,8 +85,42 @@ public class ExercisesTabController implements Initializable {
 		setupDay();
 		setupDatePicker();
 		setupTable();
-		setupLineChart();
-		updateLineChart();
+		setupChoiceBox();
+		setupLineChartCurrentWeek();
+	}
+	
+	private void setupChoiceBox() {
+		// Setup values into the ChoiceBox and place an event listener to choice the amount that the line graph will show
+		choiceBoxTimeLine.setItems(FXCollections.observableArrayList("Weekly", "Monthly", "Yearly"));
+
+		choiceBoxTimeLine.setValue("Weekly");
+		
+		// Add event listener
+		ChangeListener<String> changeListener = new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, //
+					String oldValue, String newValue) {
+				if (newValue != null) {
+					// Depending on this value, change linechart view
+					
+					clearLineChart();
+					
+				}
+			}
+		};
+		// Selected Item Changed.
+		choiceBoxTimeLine.getSelectionModel().selectedItemProperty().addListener(changeListener);
+	}
+	
+	/**
+	 * Clears all the values in the line chart so we can rebuild it
+	 */
+	private void clearLineChart() {
+		rgCharts.clear();
+		lineChartExercises.getData().clear();
+		
+		// remove any fixed categories
+		categoryAxisDate.getCategories().clear();
 	}
 	
 	/**
@@ -114,19 +154,18 @@ public class ExercisesTabController implements Initializable {
 		Collections.sort(MainProgramController.days);
 		
 		// Clear this lineChart (since this is recalled)
-		rgCharts.clear();
-		lineChartExercises.getData().clear();
+		clearLineChart();
 		
 		// GUI representation
-		//createLineChart();
-		setupLineChartCurrentWeek();
+		createLineChart();
+		
 	}
 	
 	/**
 	 * Goes through all the days, their exercises (weight) and converts to LineChart points
 	 */
 	@SuppressWarnings("unchecked")
-	private void createLineChartOld() {
+	private void createLineChart() {
 		// Checkout how many different exercises we have ever added
 		// For each exercise, of each week add a point in the line chart
 		for(int i=0; i<MainProgramController.addedExercises.size(); i++) {
@@ -192,7 +231,7 @@ public class ExercisesTabController implements Initializable {
 			if(between(date, getMonthStart(), getMonthEnd())) {
 				
 				
-				if(countDays % 5 == 0) {
+				if(countDays % 2 == 0) {
 					
 					DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
 					dates.add(day.getDate().format(sdf).toString());
@@ -216,6 +255,7 @@ public class ExercisesTabController implements Initializable {
 						
 						if(zExercise.getName().equals(pExercise.getName())) {
 							countExercises++;
+							break; // go to next day
 						}
 					}
 
@@ -238,10 +278,9 @@ public class ExercisesTabController implements Initializable {
 		// If there is less than 5 exercises stored this month, generate some Date axis values
 		if(countExercises < 5) {
 			categoryAxisDate.setCategories(FXCollections.<String>observableArrayList(dates)); 
+		}else {
+			createLineChart();
 		}
-		
-		
-		
 	}
 	
 	// return the amount of days in the current month
@@ -382,6 +421,11 @@ public class ExercisesTabController implements Initializable {
 	public void update() {
 		tvExercises.refresh();
 		updateLineChart();
+	}
+	
+	@FXML
+	protected void handleChoiceBoxTimeLine(ActionEvent event) throws IOException {
+		
 	}
 	
 
