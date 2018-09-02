@@ -146,6 +146,14 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		}
 	}
 	
+	/**
+	 * Checks if a date is between two dates
+	 * @param date
+	 * @param dateStart
+	 * @param dateEnd
+	 * @return
+	 * 		true if the date specified is between the start and end dates
+	 */
 	public static boolean between(Date date, Date dateStart, Date dateEnd) {
 	    if (date != null && dateStart != null && dateEnd != null) {
 	        if (date.after(dateStart) && date.before(dateEnd)) {
