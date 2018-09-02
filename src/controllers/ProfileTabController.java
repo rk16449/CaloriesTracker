@@ -23,11 +23,11 @@ public class ProfileTabController extends BaseController implements Initializabl
 
 	// FXML Components
 	@FXML
-	private TextField tfFirstName, tfLastName, tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist;
+	TextField tfFirstName, tfLastName, tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist;
 	@FXML
-	private ChoiceBox<String> cbGender;
+	ChoiceBox<String> cbGender;
 	@FXML
-	private Button btnEditProfile, btnMetric, btnImperial;
+	Button btnEditProfile, btnMetric, btnImperial;
 
 	// Reference to TextFields above
 	private ArrayList<Node> refTF = new ArrayList<Node>();
@@ -36,8 +36,12 @@ public class ProfileTabController extends BaseController implements Initializabl
 	// Used to tell if we need to unlock TextFields or not
 	private boolean editMode = false;
 
+	/**
+	 * First method this class runs, sets up the controller
+	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
+		// Update reference to person
 		person = Person.getInstance();
 
 		// Setup values
