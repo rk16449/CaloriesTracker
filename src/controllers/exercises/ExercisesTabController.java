@@ -102,11 +102,25 @@ public class ExercisesTabController implements Initializable {
 					String oldValue, String newValue) {
 				if (newValue != null) {
 					// Depending on this value, change linechart view
+					
+					clearLineChart();
+					
 				}
 			}
 		};
 		// Selected Item Changed.
 		choiceBoxTimeLine.getSelectionModel().selectedItemProperty().addListener(changeListener);
+	}
+	
+	/**
+	 * Clears all the values in the line chart so we can rebuild it
+	 */
+	private void clearLineChart() {
+		rgCharts.clear();
+		lineChartExercises.getData().clear();
+		
+		// remove any fixed categories
+		categoryAxisDate.getCategories().clear();
 	}
 	
 	/**
@@ -140,8 +154,7 @@ public class ExercisesTabController implements Initializable {
 		Collections.sort(MainProgramController.days);
 		
 		// Clear this lineChart (since this is recalled)
-		rgCharts.clear();
-		lineChartExercises.getData().clear();
+		clearLineChart();
 		
 		// GUI representation
 		createLineChart();
