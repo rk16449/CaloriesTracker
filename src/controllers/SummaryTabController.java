@@ -1,9 +1,7 @@
 package controllers;
 
-/* Import java, javafx, mainPackage */
+/* Import java, javafx */
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -29,45 +27,57 @@ import model.Person;
 
 public class SummaryTabController extends BaseFoodController implements Initializable {
 	@FXML
-	private Label labelCalories;
+	Label labelCalories;
 	@FXML
-	private ProgressBar progressBarCalories;
+	ProgressBar progressBarCalories;
 	@FXML
-	private BarChart<String, Number> dailyProgress;
+	BarChart<String, Number> dailyProgress;
 	@FXML
-	private CategoryAxis categoryAxisDate;
+	CategoryAxis categoryAxisDate;
 	@FXML
-	private NumberAxis numberAxisCalories;
+	NumberAxis numberAxisCalories;
 	
+	// Holds bar chart data points
+	@SuppressWarnings("rawtypes")
 	private ArrayList<XYChart.Series> charts = new ArrayList<XYChart.Series>();
 	
-
-	// value for max total calories needed on progress bar
+	// value for max total calories needed on progress bar (dynamic)
 	private double totalCalories = 3200;
-
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		// Create 365 days
-		LocalDate start = LocalDate.parse("2018-01-01"),
-		          end   = LocalDate.parse("2018-12-31");
-		LocalDate next = start.minusDays(1);
-		while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
-		    System.out.println(next);
-		    MainProgramController.days.add(new Day(next));
-		}
+		// Creates 365 day objects
+		setupDays();
 		
-		
+		// Reference to the Person
 		person = Person.getInstance();
 
 		// Setup pie chart
 		setupPieChart();
 		
 		// Setup bar chart
-		dailyProgress.setBarGap(-30);
-		dailyProgress.setLegendVisible(false);
+		setupBarChart();
 
 		// Setup bar chart based of total calories per day
 		update();
+	}
+	
+	private void setupBarChart() {
+		dailyProgress.setBarGap(-30);
+		dailyProgress.setLegendVisible(false);
+	}
+	
+	private void setupDays() {
+		// Create 365 days if they don't already exist
+		if(MainProgramController.days.size() == 0) {
+			LocalDate start = LocalDate.parse("2018-01-01"),
+			          end   = LocalDate.parse("2018-12-31");
+			LocalDate next = start.minusDays(1);
+			while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
+			    System.out.println(next);
+			    MainProgramController.days.add(new Day(next));
+			}
+		}
 	}
 	
 	private void updateProgressBar() {
