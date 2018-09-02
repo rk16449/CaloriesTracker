@@ -115,6 +115,9 @@ public class MainProgramController implements Initializable {
     	// Logout
     	if (result.get() == buttonTypeOne){
     		// Reset the users data
+    		reset();
+    		
+    		// Load login page
     		Parent loginFXML = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
     		Scene scene = new Scene(loginFXML);
     		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -125,6 +128,10 @@ public class MainProgramController implements Initializable {
     		appStage.show();
     	}
 	}
+    
+    private void reset() {
+    	// Flush out days, exercises, diets etc
+    }
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

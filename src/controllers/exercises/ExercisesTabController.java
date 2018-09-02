@@ -4,9 +4,12 @@ import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import controllers.MainProgramController;
@@ -160,17 +163,69 @@ public class ExercisesTabController implements Initializable {
 	
 	private void setupLineChartCurrentWeek() {
 		
-		// Loop through all the days until we are in the current week
+		// Loop through all the days until we are in the current month
 		for(int i=0; i<MainProgramController.days.size(); i++) {
 			
+			Day day = MainProgramController.days.get(i);
+			
+			// Convert LocalDate to Date so we can check with between method
+			Date date = Date.from(day.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+			// Add 1 second to this date so that we can fit the interval
+			date.setSeconds(1);
 			
 			// Check that the date is in the correct range
+			if(between(date, getMonthStart(), getMonthEnd())) {
+				
+			}
 			
+			// If there are no exercises set this month, then pre-load days of the current week
 			
 		}
 		
 		// Loop through all the exercises of the current week and show it
 		
+	}
+	
+	private Date getMonthStart() {
+		
+		Calendar c = Calendar.getInstance();   // this takes current date
+	    c.set(Calendar.DAY_OF_MONTH, 1);
+	    
+	    // set the hours, mins, seconds
+	    c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+	    c.set(Calendar.SECOND, 0);
+	    
+		return c.getTime();
+	}
+	
+	private Date getMonthEnd() {
+		
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+		
+		// Set time to 23:59:59
+		cal.set(Calendar.HOUR_OF_DAY, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		
+		return cal.getTime();
+	}
+	
+	public static boolean between(Date date, Date dateStart, Date dateEnd) {
+	    if (date != null && dateStart != null && dateEnd != null) {
+	        if (date.after(dateStart) && date.before(dateEnd)) {
+	            return true;
+	        }
+	        else if(date.equals(dateStart) || date.equals(dateEnd)) {
+	        	return true;
+	        }
+	        else {
+	            return false;
+	        }
+	    }
+	    return false;
 	}
 	
 	/**
