@@ -158,6 +158,21 @@ public class ExercisesTabController implements Initializable {
 		} 
 	}
 	
+	private void setupLineChartCurrentWeek() {
+		
+		// Loop through all the days until we are in the current week
+		for(int i=0; i<MainProgramController.days.size(); i++) {
+			
+			
+			// Check that the date is in the correct range
+			
+			
+		}
+		
+		// Loop through all the exercises of the current week and show it
+		
+	}
+	
 	/**
 	 * Sets up table so each column is linked with Exercise getters
 	 */
@@ -171,6 +186,27 @@ public class ExercisesTabController implements Initializable {
 		
 		// Add observable list data to the table
 		tvExercises.setItems(exerciseData);
+		
+		// Disable buttons on start
+		showBtns(false);
+		
+		
+		// Setup a table handler which will show Edit/Delete if we select a food
+		tvExercises.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+		    if (newSelection != null) {
+		    	showBtns(true);
+		    }else {
+		    	// Hide the buttons
+		    	showBtns(false);
+		    }
+		});
+	}
+	
+	private void showBtns(boolean value) {
+		btnDelete.setDisable(!value);
+    	btnDelete.setVisible(value);
+    	btnEdit.setDisable(!value);
+    	btnEdit.setVisible(value);
 	}
 	
 	/**
