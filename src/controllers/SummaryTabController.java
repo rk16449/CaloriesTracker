@@ -94,6 +94,9 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		labelCalories.setText("Calories remaining: " + Double.toString(Helper.round(calories, 2)) + " / " + Double.toString(Helper.round(totalCalories, 2)));
 	}
 	
+	/**
+	 * Is called whenever switching to this tab, recalculates pie chart/bar chart/progress bar data
+	 */
 	public void update() {
 		updatePieChart(LocalDate.now());
 		updateGUIPieChart();
@@ -112,13 +115,8 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		charts.clear();
 		dailyProgress.getData().clear();
 		
-		System.out.println("------------------Updating Bar Chart-----------");
-		
-		
+		// Loop through every day
 		for (int i = 0; i < MainProgramController.days.size(); i++) {
-			
-			
-			// System.out.println("testing days");
 			
 			// Reference to Day
 			Day day = MainProgramController.days.get(i);
@@ -127,38 +125,25 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 			Date date = Date.from(day.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 			// Add 1 second to this date so that we can fit the interval
 			date.setSeconds(1);
-			
-			
-			
+
 			// Check if this day is between certain values of the week only
 			if(between(date, getWeekStartDate(), getWeekEndDate())) {
-				
-				
-				System.out.println("Checking date: " + date.toString());
-				System.out.println("Week Start Date: " + getWeekStartDate().toString());
-				System.out.println("Week end Date: " + getWeekEndDate().toString());
-				
-				
+
 				// Create a new chart
 				XYChart.Series<String, Number> series1 = new XYChart.Series<>();
 				
-				
+				// Set the name of the bar
 				series1.setName(day.getDate().toString());
-				System.out.println("Setting name for: " + series1.getName());
-				
-				// Convert the format
+
+				// Convert the LocalDate format
 				DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
-				
 				series1.getData().add(new XYChart.Data<>(day.getDate().format(sdf), day.getTotalFoodCalories()));
 
+				// Save a reference to ArrayList
 				charts.add(series1);
-				
-				
-				
+
 				// Setting the data to bar chart
 				dailyProgress.getData().add(series1);
-				
-				System.out.println("Amount of barchart data: " + dailyProgress.getData().size());
 			}
 		}
 	}
