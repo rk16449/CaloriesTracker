@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import controllers.food.BaseFoodController;
@@ -101,16 +102,33 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		charts.clear();
 		dailyProgress.getData().clear();
 		
+		System.out.println("------------------Updating Bar Chart-----------");
+		
 		
 		for (int i = 0; i < MainProgramController.days.size(); i++) {
+			
+			
+			// System.out.println("testing days");
+			
 			// Reference to Day
 			Day day = MainProgramController.days.get(i);
 			
 			// Convert LocalDate to Date so we can check with between method
 			Date date = Date.from(day.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+			// Add 1 second to this date so that we can fit the interval
+			date.setSeconds(1);
+			
+			
 			
 			// Check if this day is between certain values of the week only
 			if(between(date, getWeekStartDate(), getWeekEndDate())) {
+				
+				
+				System.out.println("Checking date: " + date.toString());
+				System.out.println("Week Start Date: " + getWeekStartDate().toString());
+				System.out.println("Week end Date: " + getWeekEndDate().toString());
+				
+				
 				// Create a new chart
 				XYChart.Series<String, Number> series1 = new XYChart.Series<>();
 				
@@ -140,6 +158,9 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	        if (date.after(dateStart) && date.before(dateEnd)) {
 	            return true;
 	        }
+	        else if(date.equals(dateStart) || date.equals(dateEnd)) {
+	        	return true;
+	        }
 	        else {
 	            return false;
 	        }
@@ -148,11 +169,16 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	}
 	
 	public static Date getWeekStartDate() {
-	    Calendar calendar = Calendar.getInstance();
-	    while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-	        calendar.add(Calendar.DATE, -1);
-	    }
-	    return calendar.getTime();
+		Calendar c = Calendar.getInstance(new Locale("en","UK"));
+		c.setFirstDayOfWeek(Calendar.MONDAY);
+		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		
+		// Set time to 00:00:00
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+	    c.set(Calendar.SECOND, 0);
+		
+	    return c.getTime();
 	}
 
 	public static Date getWeekEndDate() {
@@ -161,6 +187,12 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	        calendar.add(Calendar.DATE, 1);
 	    }
 	    calendar.add(Calendar.DATE, -1);
+	    
+	    // Set time to 23:59:59
+	    calendar.set(Calendar.HOUR_OF_DAY, 23);
+	    calendar.set(Calendar.MINUTE, 59);
+	    calendar.set(Calendar.SECOND, 59);
+	    
 	    return calendar.getTime();
 	}
 }
