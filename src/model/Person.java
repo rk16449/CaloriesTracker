@@ -17,7 +17,7 @@ public class Person {
 	private int age = 20;
 	private double weight = 70;
 	private double height = 183;
-	private double bodyfat = 19.0;
+	private double bodyfat = 0.19;
 	private double waist = 85;
 	private double BMI = 0;
 	private double BMR = 0;
