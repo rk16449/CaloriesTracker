@@ -33,26 +33,19 @@
             <Label fx:id="labelCalories" alignment="CENTER" prefHeight="17.0" prefWidth="303.0" text="Weight gain, medium intensity, 3200 Calories" />
          </children>
       </VBox>
-      <GridPane layoutX="58.0" layoutY="59.0" prefHeight="90.0" prefWidth="379.0">
+      
+      <GridPane layoutX="167.0" layoutY="59.0" prefHeight="90.0" prefWidth="270.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="118.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="11.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="182.0" minWidth="10.0" prefWidth="174.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="34.0" minHeight="2.0" prefHeight="28.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" prefHeight="110.0" prefWidth="335.0" text="Current Goal:">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfCurrentGoal" editable="false" prefHeight="47.0" prefWidth="205.0" GridPane.columnIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font></TextField>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="143.0" text="Current Goal:" />
+            <TextField fx:id="tfCurrentGoal" editable="false" prefHeight="39.0" prefWidth="189.0" GridPane.columnIndex="2" />
          </children>
       </GridPane>
    </children>
