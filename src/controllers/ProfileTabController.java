@@ -75,7 +75,7 @@ public class ProfileTabController extends BaseController implements Initializabl
 		// Setup button underlines for units
 		updateButtonUnderline();
 
-		// Setup choicebox
+		// Setup ChoiceBox
 		setupChoiceBox();
 	}
 
@@ -102,13 +102,10 @@ public class ProfileTabController extends BaseController implements Initializabl
 		cbGender.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
 	
+	/**
+	 * Load the images for male and female genders, so the imageViewGender can use them and switch between either
+	 */
 	private void loadGenderImages() {
-		
-		
-		File file = new File(".");
-		String currentDirectory = file.getAbsolutePath();
-		System.out.println(currentDirectory);
-		
 		try {
 			 maleGender = new Image("file:media/male.png");
 			 femaleGender = new Image("file:media/female.jpg");
