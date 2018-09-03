@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import model.Person;
 
 public class ProfileTabController extends BaseController implements Initializable {
@@ -28,6 +29,8 @@ public class ProfileTabController extends BaseController implements Initializabl
 	ChoiceBox<String> cbGender;
 	@FXML
 	Button btnEditProfile, btnMetric, btnImperial;
+	@FXML
+	ImageView imageViewGender;
 
 	// Reference to TextFields above
 	private ArrayList<Node> refTF = new ArrayList<Node>();
