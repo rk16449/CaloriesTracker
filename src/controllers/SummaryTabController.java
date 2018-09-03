@@ -138,15 +138,8 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 			// Convert LocalDate to Date so we can check with between method
 			Date date = Date.from(day.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant().plusSeconds(1));
 
-			System.out.println("Date Start ----------------> : " + getWeekStartDate().toString());
-
-			System.out.println("Date End ----------------> : " + getWeekEndDate().toString());
-			
-			System.out.println("Date new end --------------> " + lastDayOfWeek().toString());
-
 			// Check if this day is between certain values of the week only
-			if (between(date, getWeekStartDate(), lastDayOfWeek())) {
-
+			if (between(date, getFirstDayOfWeek(), getLastDayOfWeek())) {
 				// Create a new chart
 				XYChart.Series<String, Number> series1 = new XYChart.Series<>();
 
@@ -197,7 +190,7 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	 * 
 	 * @return Monday Date object
 	 */
-	public static Date getWeekStartDate() {
+	public static Date getFirstDayOfWeek() {
 
 		Calendar c = Calendar.getInstance(new Locale("en", "UK"));
 		c.setFirstDayOfWeek(Calendar.MONDAY);
@@ -214,21 +207,7 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	 * 
 	 * @return Sunday Date object
 	 */
-	public static Date getWeekEndDate() {
-
-		Calendar calendar = Calendar.getInstance();
-		while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-			calendar.add(Calendar.DATE, 1);
-		}
-		calendar.add(Calendar.DATE, -1);
-		calendar.set(Calendar.HOUR_OF_DAY, 23);
-		calendar.set(Calendar.MINUTE, 59);
-		calendar.set(Calendar.SECOND, 59);
-
-		return calendar.getTime();
-	}
-
-	public Date lastDayOfWeek() {
+	public Date getLastDayOfWeek() {
 		Calendar cal = Calendar.getInstance();
 		int day = cal.get(Calendar.DAY_OF_YEAR);
 		while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
