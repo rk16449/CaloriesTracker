@@ -85,14 +85,12 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	 */
 	private void setupDays() {
 		// Create 365 days if they don't already exist
-		// if(MainProgramController.days.size() == 0) {
 		LocalDate start = LocalDate.parse("2018-01-01"), end = LocalDate.parse("2018-12-31");
 		LocalDate next = start.minusDays(1);
 		while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
 			System.out.println(next);
 			MainProgramController.days.add(new Day(next));
 		}
-		// }
 	}
 
 	/**
