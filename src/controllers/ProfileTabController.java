@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
@@ -17,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.Person;
 
@@ -38,6 +40,8 @@ public class ProfileTabController extends BaseController implements Initializabl
 	private String units = "Metric";
 	// Used to tell if we need to unlock TextFields or not
 	private boolean editMode = false;
+	// References to images
+	private Image maleGender, femaleGender;
 
 	/**
 	 * First method this class runs, sets up the controller
@@ -46,6 +50,9 @@ public class ProfileTabController extends BaseController implements Initializabl
 
 		// Update reference to person
 		person = Person.getInstance();
+		
+		// Load images
+		loadGenderImages();
 
 		// Setup values
 		tfFirstName.setText(person.getFirstName());
@@ -95,9 +102,27 @@ public class ProfileTabController extends BaseController implements Initializabl
 		cbGender.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
 	
+	private void loadGenderImages() {
+		
+		
+		File file = new File(".");
+		String currentDirectory = file.getAbsolutePath();
+		System.out.println(currentDirectory);
+		
+		try {
+			 maleGender = new Image("file:media/male.png");
+			 femaleGender = new Image("file:media/female.jpg");
+		}catch(IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private void updateImageGender(String value) {
-		
+		if(value.equals("Male")) {
+			imageViewGender.setImage(maleGender);
+		}else if(value.equals("Female")){
+			imageViewGender.setImage(femaleGender);
+		}
 	}
 
 	/**
