@@ -195,7 +195,15 @@ public class ExercisesTabController implements Initializable {
 	}
 	
 	private void createWeeklyLineChart() {
+		// Create a date range between the current 'selected' week in date picker
+		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		
+		// Debug
+		System.out.println("Date range for weekly was: " + selectedDate.toString());
+		
+		// Get start of the week from 'selectedDate'
+		
+		// Get end of the week from 'selectedDate'
 	}
 	
 	private void createMonthlyLineChart() {
