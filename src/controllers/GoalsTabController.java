@@ -25,11 +25,11 @@ public class GoalsTabController extends BaseController implements Initializable 
 
 	// References to FXML components
 	@FXML
-	private TextField tfCurrentGoal, tfTDEE, tfBMR, tfCaloricReqs;
+	TextField tfCurrentGoal, tfTDEE, tfBMR, tfCaloricReqs;
 	@FXML
-	private Button btnMaintainWeight, btnGainWeight, btnLoseWeight;
+	Button btnMaintainWeight, btnGainWeight, btnLoseWeight;
 	@FXML
-	private ChoiceBox<Activity> cbActivityLevel;
+	ChoiceBox<Activity> cbActivityLevel;
 
 	
 	// References to the 'current' selected Goal and Activity of this page
