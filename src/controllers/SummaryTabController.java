@@ -21,6 +21,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import model.Day;
 import model.Helper;
 import model.Person;
@@ -36,6 +37,8 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	CategoryAxis categoryAxisDate;
 	@FXML
 	NumberAxis numberAxisCalories;
+	@FXML
+	TextField tfCurrentGoal;
 
 	// Holds bar chart data points
 	@SuppressWarnings("rawtypes")
@@ -48,6 +51,9 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	 * First method this class runs, sets up the controller
 	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		// Setup the current goal textfield
+		setupCurrentGoal();
 
 		// Creates 365 day objects
 		setupDays();
@@ -63,6 +69,10 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 
 		// Setup bar chart based of total calories per day
 		update();
+	}
+	
+	private void setupCurrentGoal() {
+		tfCurrentGoal.setText(person.getCurrentGoal().getName());
 	}
 
 	/**

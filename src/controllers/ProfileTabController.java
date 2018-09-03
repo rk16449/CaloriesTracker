@@ -1,8 +1,6 @@
 package controllers;
 
-import java.io.File;
 import java.io.IOException;
-/* Import java, javafx, mainPackage */
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +48,7 @@ public class ProfileTabController extends BaseController implements Initializabl
 
 		// Update reference to person
 		person = Person.getInstance();
-		
+
 		// Load images
 		loadGenderImages();
 
@@ -65,7 +63,7 @@ public class ProfileTabController extends BaseController implements Initializabl
 
 		cbGender.setValue(person.getGender());
 
-		// Add textfields into a reference arraylist (so we can loop better)
+		// Add Textfields into a reference ArrayList (so we can loop better)
 		refTF.addAll(Arrays.asList(tfAge, tfFirstName, tfLastName, tfAge, tfHeight, tfWeight, tfBodyfat, tfWaist,
 				btnMetric, btnImperial, cbGender));
 
@@ -75,12 +73,13 @@ public class ProfileTabController extends BaseController implements Initializabl
 		// Setup button underlines for units
 		updateButtonUnderline();
 
-		// Setup choicebox
+		// Setup ChoiceBox
 		setupChoiceBox();
 	}
 
 	/**
-	 * Sets up the ChoiceBox 'cbGender' with values and it's event listener, which updates to Person's gender
+	 * Sets up the ChoiceBox 'cbGender' with values and it's event listener, which
+	 * updates to Person's gender
 	 */
 	private void setupChoiceBox() {
 		cbGender.setItems(FXCollections.observableArrayList("Male", "Female"));
@@ -88,11 +87,10 @@ public class ProfileTabController extends BaseController implements Initializabl
 		// Add event listener
 		ChangeListener<String> changeListener = new ChangeListener<String>() {
 			@Override
-			public void changed(ObservableValue<? extends String> observable,
-					String oldValue, String newValue) {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (newValue != null) {
 					person.setGender(newValue);
-					
+
 					// Depending on the value we select above, change the image of the gender
 					updateImageGender(newValue);
 				}
@@ -101,33 +99,38 @@ public class ProfileTabController extends BaseController implements Initializabl
 		// Selected Item Changed.
 		cbGender.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
-	
+
+	/**
+	 * Load the images for male and female genders, so the imageViewGender can use
+	 * them and switch between either
+	 */
 	private void loadGenderImages() {
-		
-		
-		File file = new File(".");
-		String currentDirectory = file.getAbsolutePath();
-		System.out.println(currentDirectory);
-		
 		try {
-			 maleGender = new Image("file:media/male.png");
-			 femaleGender = new Image("file:media/female.jpg");
-		}catch(IllegalArgumentException e) {
+			maleGender = new Image("file:media/male.png");
+			femaleGender = new Image("file:media/female.jpg");
+		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Method which updates the imageViewGender FXML component with either
+	 * female/male image
+	 * 
+	 * @param value
+	 *            the gender name for image
+	 */
 	private void updateImageGender(String value) {
-		if(value.equals("Male")) {
+		if (value.equals("Male")) {
 			imageViewGender.setImage(maleGender);
-		}else if(value.equals("Female")){
+		} else if (value.equals("Female")) {
 			imageViewGender.setImage(femaleGender);
 		}
 	}
 
 	/**
-	 * Updates whether or not the button 'Metric' or 'Imperial' switches to underline
-	 * based off the units value
+	 * Updates whether or not the button 'Metric' or 'Imperial' switches to
+	 * underline based off the units value
 	 */
 	private void updateButtonUnderline() {
 		// Setup buttons
@@ -139,11 +142,12 @@ public class ProfileTabController extends BaseController implements Initializabl
 			btnImperial.setUnderline(true);
 		}
 	}
-	
+
 	/**
 	 * Method to disable or enable TextFields
+	 * 
 	 * @param value
-	 * 			true if disable TextField
+	 *            true if disable TextField
 	 */
 	private void disableTF(boolean value) {
 		// Activate the TextFields based on value
@@ -154,6 +158,7 @@ public class ProfileTabController extends BaseController implements Initializabl
 
 	/**
 	 * FXML button handler for editing the profile values
+	 * 
 	 * @param event
 	 * @throws IOException
 	 */
@@ -163,14 +168,14 @@ public class ProfileTabController extends BaseController implements Initializabl
 		// Flip
 		editMode = !editMode;
 
-		// If we are in editmode
+		// If we are in edit mode
 		if (editMode) {
 
 			System.out.println("Edit mode activated");
 
 			btnEditProfile.setText("Save Changes");
 
-			// Activate textfields
+			// Activate TextFields
 			disableTF(false);
 		} else {
 			// Save changes to Profile
@@ -186,13 +191,14 @@ public class ProfileTabController extends BaseController implements Initializabl
 
 			btnEditProfile.setText("Edit Profile");
 
-			// Disable the textfields
+			// Disable the TextFields
 			disableTF(true);
 		}
 	}
 
 	/**
 	 * FXML button handler for changing to Metric units
+	 * 
 	 * @param event
 	 * @throws IOException
 	 */
@@ -213,11 +219,11 @@ public class ProfileTabController extends BaseController implements Initializabl
 
 		units = "Metric";
 		updateButtonUnderline();
-
 	}
 
 	/**
 	 * FXML button handler for changing to Imperial units
+	 * 
 	 * @param event
 	 * @throws IOException
 	 */
