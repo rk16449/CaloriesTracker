@@ -25,11 +25,11 @@ public class GoalsTabController extends BaseController implements Initializable 
 
 	// References to FXML components
 	@FXML
-	private TextField tfCurrentGoal, tfTDEE, tfBMR, tfCaloricReqs;
+	TextField tfCurrentGoal, tfTDEE, tfBMR, tfCaloricReqs;
 	@FXML
-	private Button btnMaintainWeight, btnGainWeight, btnLoseWeight;
+	Button btnMaintainWeight, btnGainWeight, btnLoseWeight;
 	@FXML
-	private ChoiceBox<Activity> cbActivityLevel;
+	ChoiceBox<Activity> cbActivityLevel;
 
 	
 	// References to the 'current' selected Goal and Activity of this page
@@ -171,7 +171,7 @@ public class GoalsTabController extends BaseController implements Initializable 
 
 		person.calculateTDEE();
 		tfTDEE.setText(Double.toString(Helper.round(person.getTDEE(), 2)));
-
+		
 		// Set the new calorie goal for the Person
 		person.setGoalCalories(person.getTDEE() * currentGoal.getMultiplier());
 
@@ -196,6 +196,9 @@ public class GoalsTabController extends BaseController implements Initializable 
 	private void updateGoal(String name) {
 		// set the 'current' Goal object of this controller
 		currentGoal = getGoal(name);
+		
+		// Update persons goal
+		person.setCurrentGoal(currentGoal);
 
 		// set the TextField value of this current Goal
 		tfCurrentGoal.setText(currentGoal.getName());

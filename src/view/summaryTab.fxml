@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="909.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SummaryTabController">
    <children>
@@ -45,7 +46,10 @@
         </rowConstraints>
          <children>
             <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="143.0" text="Current Goal:" />
-            <TextField fx:id="tfCurrentGoal" editable="false" prefHeight="39.0" prefWidth="189.0" GridPane.columnIndex="2" />
+            <TextField fx:id="tfCurrentGoal" editable="false" prefHeight="39.0" prefWidth="189.0" GridPane.columnIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
          </children>
       </GridPane>
    </children>
