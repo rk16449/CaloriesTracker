@@ -217,7 +217,23 @@ public class ExercisesTabController implements Initializable {
 		System.out.println("Date range for monthly was: " + selectedDate.toString());
 		
 		// Get start of the month from 'selectedDate'
-		System.out.println("Week start date: " + getStartOfMonth(selectedDate));
+		System.out.println("Month start date: " + getStartOfMonth(selectedDate));
+		
+		// Get end of the month from 'selectedDate'
+		System.out.println("Month end date: " + getEndOfMonth(selectedDate));
+	}
+	
+	private Date getEndOfMonth(Date selectedDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(selectedDate);
+		
+		// Set the day to the end of the month and time to 23:59:59
+		cal.set(Calendar.DAY_OF_MONTH, getMonthDays(selectedDate));
+		cal.set(Calendar.HOUR, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		
+		return cal.getTime();
 	}
 	
 	private Date getStartOfMonth(Date selectedDate) {
@@ -386,8 +402,9 @@ public class ExercisesTabController implements Initializable {
 	}
 
 	// return the amount of days in the current month
-	private int getMonthDays() {
+	private int getMonthDays(Date selectedDate) {
 		Calendar c = Calendar.getInstance();
+		c.setTime(selectedDate);
 		int monthMaxDays = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 		return monthMaxDays;
 	}
