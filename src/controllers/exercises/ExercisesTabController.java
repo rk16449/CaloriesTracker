@@ -78,6 +78,9 @@ public class ExercisesTabController implements Initializable {
 	private static Day currentDay;
 	// Stores the current LineChart data inside an arrayList
 	private ArrayList<XYChart.Series<?, ?>> rgCharts = new ArrayList<XYChart.Series<?, ?>>();
+	// Stores the LineChart current view mode
+	private String[] currentMode = {"Weekly", "Monthly", "Yearly"};
+	
 	
 	
 	// Start of ExercisesTabController runs on creation
