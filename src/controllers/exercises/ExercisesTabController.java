@@ -180,6 +180,30 @@ public class ExercisesTabController implements Initializable {
 
 		System.out.println("Timeline selected: " + value);
 		
+		
+		switch(value) {
+			case "Weekly":
+				createWeeklyLineChart();
+				break;
+			case "Monthly":
+				createMonthlyLineChart();
+				break;
+			case "Yearly":
+				createYearlyLineChart();
+				break;
+		}
+	}
+	
+	private void createWeeklyLineChart() {
+		
+	}
+	
+	private void createMonthlyLineChart() {
+		
+	}
+	
+	private void createYearlyLineChart() {
+		
 	}
 
 	private void deprecatedCreateLineChart() {
