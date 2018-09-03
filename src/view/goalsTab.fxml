@@ -21,9 +21,9 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="34.0" minHeight="2.0" prefHeight="34.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="34.0" minHeight="2.0" prefHeight="28.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label alignment="CENTER" prefHeight="110.0" prefWidth="335.0" text="Current Goal:">
@@ -31,7 +31,10 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="tfCurrentGoal" editable="false" prefHeight="43.0" prefWidth="14.0" GridPane.columnIndex="1" />
+            <TextField fx:id="tfCurrentGoal" editable="false" prefHeight="47.0" prefWidth="205.0" GridPane.columnIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
          </children>
       </GridPane>
       <GridPane layoutX="528.0" layoutY="103.0" prefHeight="184.0" prefWidth="302.0">
