@@ -81,15 +81,23 @@ public class ProfileTabController extends BaseController implements Initializabl
 		// Add event listener
 		ChangeListener<String> changeListener = new ChangeListener<String>() {
 			@Override
-			public void changed(ObservableValue<? extends String> observable, //
+			public void changed(ObservableValue<? extends String> observable,
 					String oldValue, String newValue) {
 				if (newValue != null) {
 					person.setGender(newValue);
+					
+					// Depending on the value we select above, change the image of the gender
+					updateImageGender(newValue);
 				}
 			}
 		};
 		// Selected Item Changed.
 		cbGender.getSelectionModel().selectedItemProperty().addListener(changeListener);
+	}
+	
+	
+	private void updateImageGender(String value) {
+		
 	}
 
 	/**
