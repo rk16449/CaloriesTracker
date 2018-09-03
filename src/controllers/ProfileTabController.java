@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
@@ -17,6 +18,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.Person;
 
 public class ProfileTabController extends BaseController implements Initializable {
@@ -28,6 +31,8 @@ public class ProfileTabController extends BaseController implements Initializabl
 	ChoiceBox<String> cbGender;
 	@FXML
 	Button btnEditProfile, btnMetric, btnImperial;
+	@FXML
+	ImageView imageViewGender;
 
 	// Reference to TextFields above
 	private ArrayList<Node> refTF = new ArrayList<Node>();
@@ -35,6 +40,8 @@ public class ProfileTabController extends BaseController implements Initializabl
 	private String units = "Metric";
 	// Used to tell if we need to unlock TextFields or not
 	private boolean editMode = false;
+	// References to images
+	private Image maleGender, femaleGender;
 
 	/**
 	 * First method this class runs, sets up the controller
@@ -43,6 +50,9 @@ public class ProfileTabController extends BaseController implements Initializabl
 
 		// Update reference to person
 		person = Person.getInstance();
+		
+		// Load images
+		loadGenderImages();
 
 		// Setup values
 		tfFirstName.setText(person.getFirstName());
@@ -73,20 +83,46 @@ public class ProfileTabController extends BaseController implements Initializabl
 	 * Sets up the ChoiceBox 'cbGender' with values and it's event listener, which updates to Person's gender
 	 */
 	private void setupChoiceBox() {
-		cbGender.setItems(FXCollections.observableArrayList("Male", "Female", "Other"));
+		cbGender.setItems(FXCollections.observableArrayList("Male", "Female"));
 
 		// Add event listener
 		ChangeListener<String> changeListener = new ChangeListener<String>() {
 			@Override
-			public void changed(ObservableValue<? extends String> observable, //
+			public void changed(ObservableValue<? extends String> observable,
 					String oldValue, String newValue) {
 				if (newValue != null) {
 					person.setGender(newValue);
+					
+					// Depending on the value we select above, change the image of the gender
+					updateImageGender(newValue);
 				}
 			}
 		};
 		// Selected Item Changed.
 		cbGender.getSelectionModel().selectedItemProperty().addListener(changeListener);
+	}
+	
+	private void loadGenderImages() {
+		
+		
+		File file = new File(".");
+		String currentDirectory = file.getAbsolutePath();
+		System.out.println(currentDirectory);
+		
+		try {
+			 maleGender = new Image("file:media/male.png");
+			 femaleGender = new Image("file:media/female.jpg");
+		}catch(IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void updateImageGender(String value) {
+		if(value.equals("Male")) {
+			imageViewGender.setImage(maleGender);
+		}else if(value.equals("Female")){
+			imageViewGender.setImage(femaleGender);
+		}
 	}
 
 	/**

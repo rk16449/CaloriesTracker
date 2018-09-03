@@ -59,7 +59,7 @@
          </children>
       </GridPane>
       <Button fx:id="btnEditProfile" layoutX="795.0" layoutY="368.0" mnemonicParsing="false" onAction="#handleEditProfile" text="Edit Profile" />
-      <ImageView fx:id="imageViewPerson" fitHeight="416.0" fitWidth="336.0" layoutX="56.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imageViewGender" fitHeight="416.0" fitWidth="336.0" layoutX="56.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../media/male.png" />
          </image>
