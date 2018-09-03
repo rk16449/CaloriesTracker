@@ -41,34 +41,33 @@ import model.Exercise;
 import model.Person;
 
 public class ExercisesTabController implements Initializable {
-	
+
 	// FXML Table
 	@FXML
 	TableView<Exercise> tvExercises;
-	
+
 	// FXML Columns
 	@FXML
 	TableColumn<Exercise, String> tcExercise, tcSets, tcReps, tcWeight, tcCaloriesBurned;
-	
+
 	@FXML
-	DatePicker dpExercises; 
-	
+	DatePicker dpExercises;
+
 	@FXML
 	Button btnAddExercise, btnCustom, btnEdit, btnDelete;
-	
+
 	@FXML
 	LineChart<?, ?> lineChartExercises;
-	
+
 	@FXML
 	CategoryAxis categoryAxisDate;
-	
+
 	@FXML
 	NumberAxis numberAxisWeight;
-	
+
 	@FXML
 	ChoiceBox<String> choiceBoxTimeLine;
-	
-	
+
 	// Hold the food data on the table in text form
 	private ObservableList<Exercise> exerciseData = FXCollections.observableArrayList();
 	// Hold the objects of foods local memory
@@ -79,25 +78,35 @@ public class ExercisesTabController implements Initializable {
 	// Stores the current LineChart data inside an arrayList
 	private ArrayList<XYChart.Series<?, ?>> rgCharts = new ArrayList<XYChart.Series<?, ?>>();
 	// Stores the LineChart current view mode
-	private String[] currentMode = {"Weekly", "Monthly", "Yearly"};
-	
-	
-	
+	private String currentMode = "Weekly";
+
 	// Start of ExercisesTabController runs on creation
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setupDay();
 		setupDatePicker();
 		setupTable();
 		setupChoiceBox();
-		setupLineChartCurrentWeek();
+		setupLineChart();
 	}
-	
+
+	private void changeMode(String value) {
+		// Change the current mode
+		currentMode = value;
+
+		// Clear the Line Chart
+		clearLineChart();
+
+		// Create the Line Chart
+		updateLineChart();
+	}
+
 	private void setupChoiceBox() {
-		// Setup values into the ChoiceBox and place an event listener to choice the amount that the line graph will show
+		// Setup values into the ChoiceBox and place an event listener to choice the
+		// amount that the line graph will show
 		choiceBoxTimeLine.setItems(FXCollections.observableArrayList("Weekly", "Monthly", "Yearly"));
 
 		choiceBoxTimeLine.setValue("Weekly");
-		
+
 		// Add event listener
 		ChangeListener<String> changeListener = new ChangeListener<String>() {
 			@Override
@@ -105,38 +114,36 @@ public class ExercisesTabController implements Initializable {
 					String oldValue, String newValue) {
 				if (newValue != null) {
 					// Depending on this value, change linechart view
-					
-					clearLineChart();
-					
+					changeMode(newValue);
 				}
 			}
 		};
 		// Selected Item Changed.
 		choiceBoxTimeLine.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
-	
+
 	/**
 	 * Clears all the values in the line chart so we can rebuild it
 	 */
 	private void clearLineChart() {
 		rgCharts.clear();
 		lineChartExercises.getData().clear();
-		
+
 		// remove any fixed categories
 		categoryAxisDate.getCategories().clear();
 	}
-	
+
 	/**
 	 * Based off the Persons Units, change the text of the LineChart y axis
 	 */
 	private void setupLineChartAxis() {
-		if(Person.getInstance().getUnits().equals(("Metric"))){
+		if (Person.getInstance().getUnits().equals(("Metric"))) {
 			numberAxisWeight.setLabel("Weight (kg) ");
-		}else {
+		} else {
 			numberAxisWeight.setLabel("Weight (lbs) ");
 		}
 	}
-	
+
 	/**
 	 * Called once in initialize, sets up the LineChart
 	 * 
@@ -144,9 +151,10 @@ public class ExercisesTabController implements Initializable {
 	private void setupLineChart() {
 		lineChartExercises.setTitle("Progressive Overload");
 	}
-	
+
 	/**
-	 * Calculates all the exercises weights that is currently added to days and represents them in LineChart
+	 * Calculates all the exercises weights that is currently added to days and
+	 * represents them in LineChart
 	 */
 	public void updateLineChart() {
 
@@ -155,222 +163,256 @@ public class ExercisesTabController implements Initializable {
 
 		// Re-Sort the days in order
 		Collections.sort(MainProgramController.days);
-		
+
 		// Clear this lineChart (since this is recalled)
 		clearLineChart();
-		
+
 		// GUI representation
-		createLineChart();
+		createLineChart(currentMode);
+	}
+
+	/**
+	 * Goes through all the days, their exercises (weight) and converts to LineChart
+	 * points
+	 */
+	@SuppressWarnings("unchecked")
+	private void createLineChart(String value) {
+
+		System.out.println("Timeline selected: " + value);
+		
+		
+		switch(value) {
+			case "Weekly":
+				createWeeklyLineChart();
+				break;
+			case "Monthly":
+				createMonthlyLineChart();
+				break;
+			case "Yearly":
+				createYearlyLineChart();
+				break;
+		}
+	}
+	
+	private void createWeeklyLineChart() {
+		// Create a date range between the current 'selected' week in date picker
+		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		
+		// Debug
+		System.out.println("Date range for weekly was: " + selectedDate.toString());
+		
+		// Get start of the week from 'selectedDate'
+		
+		// Get end of the week from 'selectedDate'
+	}
+	
+	private void createMonthlyLineChart() {
 		
 	}
 	
-	/**
-	 * Goes through all the days, their exercises (weight) and converts to LineChart points
-	 */
-	@SuppressWarnings("unchecked")
-	private void createLineChart() {
+	private void createYearlyLineChart() {
+		
+	}
+
+	private void deprecatedCreateLineChart() {
+		
+		/*
 		// Checkout how many different exercises we have ever added
 		// For each exercise, of each week add a point in the line chart
-		for(int i=0; i<MainProgramController.addedExercises.size(); i++) {
-			
+		for (int i = 0; i < MainProgramController.addedExercises.size(); i++) {
+
 			Exercise lineExercise = MainProgramController.addedExercises.get(i);
-			
+
 			@SuppressWarnings("rawtypes")
 			XYChart.Series series = new XYChart.Series();
-	        series.setName(lineExercise.getName());
-			
+			series.setName(lineExercise.getName());
+
 			// Loop through every day and get the exercise weight data on this date
-			for(int z=0; z<MainProgramController.days.size(); z++) {
-				
-				// reference to current 'day' 
+			for (int z = 0; z < MainProgramController.days.size(); z++) {
+
+				// reference to current 'day'
 				Day currentDay = MainProgramController.days.get(z);
-				
+
 				// Loop through the exercises on this day
-				for(int p=0; p<currentDay.getExercises().size(); p++) {
-					
+				for (int p = 0; p < currentDay.getExercises().size(); p++) {
+
 					// reference to current 'exercise'
 					Exercise currentExercise = currentDay.getExercises().get(p);
-					
+
 					// Check if this is the same one
-					if(currentExercise.getName().equals(lineExercise.getName())) {
-						
+					if (currentExercise.getName().equals(lineExercise.getName())) {
+
 						// Convert the date format
 						DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
 						// Add the data
-						series.getData().add(new XYChart.Data<String, Double>(currentDay.getDate().format(sdf).toString(), currentExercise.getWeight()));
+						series.getData().add(new XYChart.Data<String, Double>(
+								currentDay.getDate().format(sdf).toString(), currentExercise.getWeight()));
 						// Save reference to rgCharts ArrayList
 						rgCharts.add(series);
 					}
 				}
 			}
-			
+
 			// Finally add it to the graph
 			lineChartExercises.getData().addAll(series);
-		} 
+		}
+		*/
 	}
 	
-	private void setupLineChartCurrentWeek() {
-		
+
+	private void deprecatedSetupLineChartCurrentWeek() {
+
+		/*
 		int countDays = 0;
 		int countExercises = 0;
-		
-		
+
 		ArrayList<String> dates = new ArrayList<String>();
-		
-		// Preload the Date axis with the current week if there are no values in this month
-		for(int i=0; i<MainProgramController.days.size(); i++) {
-			
+
+		// Preload the Date axis with the current week if there are no values in this
+		// month
+		for (int i = 0; i < MainProgramController.days.size(); i++) {
+
 			// Reference to Day
 			Day day = MainProgramController.days.get(i);
-			
+
 			// Convert LocalDate to Date so we can check with between method
 			Date date = Date.from(day.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 			// Add 1 second to this date so that we can fit the interval
 			date.setSeconds(1);
-			
-			
-			
+
 			// Only check values between here
-			if(between(date, getMonthStart(), getMonthEnd())) {
-				
-				
-				if(countDays % 2 == 0) {
-					
+			if (between(date, getMonthStart(), getMonthEnd())) {
+
+				if (countDays % 2 == 0) {
+
 					DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
 					dates.add(day.getDate().format(sdf).toString());
 				}
-				
-				
-				
+
 				// Increases the amount of current month days checked
 				countDays++;
-				
-				
+
 				// We gotta loop through added exercises first
-				for(int z=0; z<MainProgramController.addedExercises.size(); z++) {
-					
+				for (int z = 0; z < MainProgramController.addedExercises.size(); z++) {
+
 					Exercise zExercise = MainProgramController.addedExercises.get(z);
-					
+
 					// Check for a match with the exercises in this day
-					for(int p=0; p<day.getExercises().size(); p++) {
-						
+					for (int p = 0; p < day.getExercises().size(); p++) {
+
 						Exercise pExercise = day.getExercises().get(p);
-						
-						if(zExercise.getName().equals(pExercise.getName())) {
+
+						if (zExercise.getName().equals(pExercise.getName())) {
 							countExercises++;
 							break; // go to next day
 						}
 					}
 
 				}
-				
-				
+
 				// Also check if there is more than 5 exercises added?
 				System.out.println("countDays: " + countDays + " getMonthdays: " + getMonthDays());
 			}
-			
+
 			// Exit loop, we don't need to check other months ahead of us
-			if(countDays >= getMonthDays()) break;
+			if (countDays >= getMonthDays())
+				break;
 		}
-		
-		
-		
+
 		// Check how many loaded exercises there were
 		System.out.println("count exercises: " + countExercises);
-		
-		// If there is less than 5 exercises stored this month, generate some Date axis values
-		if(countExercises < 5) {
-			categoryAxisDate.setCategories(FXCollections.<String>observableArrayList(dates)); 
-		}else {
+
+		// If there is less than 5 exercises stored this month, generate some Date axis
+		// values
+		if (countExercises < 5) {
+			categoryAxisDate.setCategories(FXCollections.<String>observableArrayList(dates));
+		} else {
 			createLineChart();
 		}
+		*/
 	}
-	
+
 	// return the amount of days in the current month
 	private int getMonthDays() {
 		Calendar c = Calendar.getInstance();
 		int monthMaxDays = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 		return monthMaxDays;
 	}
-	
+
 	private Date getMonthStart() {
-		
-		Calendar c = Calendar.getInstance();   // this takes current date
-	    c.set(Calendar.DAY_OF_MONTH, 1);
-	    
-	    // set the hours, mins, seconds
-	    c.set(Calendar.HOUR_OF_DAY, 0);
+
+		Calendar c = Calendar.getInstance(); // this takes current date
+		c.set(Calendar.DAY_OF_MONTH, 1);
+
+		// set the hours, mins, seconds
+		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
-	    c.set(Calendar.SECOND, 0);
-	    
+		c.set(Calendar.SECOND, 0);
+
 		return c.getTime();
 	}
-	
+
 	private Date getMonthEnd() {
-		
-		
+
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
-		
+
 		// Set time to 23:59:59
 		cal.set(Calendar.HOUR_OF_DAY, 23);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 59);
-		
+
 		return cal.getTime();
 	}
-	
+
 	public static boolean between(Date date, Date dateStart, Date dateEnd) {
-	    if (date != null && dateStart != null && dateEnd != null) {
-	        if (date.after(dateStart) && date.before(dateEnd)) {
-	            return true;
-	        }
-	        else if(date.equals(dateStart) || date.equals(dateEnd)) {
-	        	return true;
-	        }
-	        else {
-	            return false;
-	        }
-	    }
-	    return false;
+		if (date != null && dateStart != null && dateEnd != null) {
+			if (date.after(dateStart) && date.before(dateEnd)) {
+				return true;
+			} else if (date.equals(dateStart) || date.equals(dateEnd)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
 	}
-	
+
 	/**
 	 * Sets up table so each column is linked with Exercise getters
 	 */
 	private void setupTable() {
-		
+
 		tcExercise.setCellValueFactory(e -> e.getValue().getStrExercise());
 		tcSets.setCellValueFactory(e -> e.getValue().getStrSets());
 		tcReps.setCellValueFactory(e -> e.getValue().getStrReps());
 		tcWeight.setCellValueFactory(e -> e.getValue().getStrWeight());
 		tcCaloriesBurned.setCellValueFactory(e -> e.getValue().getStrCaloriesBurned());
-		
+
 		// Add observable list data to the table
 		tvExercises.setItems(exerciseData);
-		
+
 		// Disable buttons on start
 		showBtns(false);
-		
-		
+
 		// Setup a table handler which will show Edit/Delete if we select a food
 		tvExercises.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-		    if (newSelection != null) {
-		    	showBtns(true);
-		    }else {
-		    	// Hide the buttons
-		    	showBtns(false);
-		    }
+			if (newSelection != null) {
+				showBtns(true);
+			} else {
+				// Hide the buttons
+				showBtns(false);
+			}
 		});
 	}
-	
+
 	private void showBtns(boolean value) {
 		btnDelete.setDisable(!value);
-    	btnDelete.setVisible(value);
-    	btnEdit.setDisable(!value);
-    	btnEdit.setVisible(value);
+		btnDelete.setVisible(value);
+		btnEdit.setDisable(!value);
+		btnEdit.setVisible(value);
 	}
-	
+
 	/**
 	 * Sets up the current day to the selected date picker
 	 */
@@ -379,7 +421,7 @@ public class ExercisesTabController implements Initializable {
 		currentDate = dpExercises.getValue();
 		currentDay = MainProgramController.getDay(currentDate);
 	}
-	
+
 	/**
 	 * Sets up the date picker
 	 */
@@ -396,16 +438,14 @@ public class ExercisesTabController implements Initializable {
 				addedExercises.clear();
 				exerciseData.clear();
 
-				// Load the exercise into the table 
+				// Load the exercise into the table
 				Day.loadAddedExercises(currentDay, addedExercises);
 				loadTableExercises();
 				update();
 			}
 		});
 	}
-	
-	
-	
+
 	/**
 	 * loads the local memory arraylist into the GUI table arraylist
 	 */
@@ -416,31 +456,32 @@ public class ExercisesTabController implements Initializable {
 			exerciseData.add(f);
 		}
 	}
-	
+
 	/**
-	 * Is called whenever we switch to this tab, to refresh and update values
-	 * which might have changed elsewhere (profile for e.g.)
+	 * Is called whenever we switch to this tab, to refresh and update values which
+	 * might have changed elsewhere (profile for e.g.)
 	 */
 	public void update() {
 		tvExercises.refresh();
 		updateLineChart();
 	}
-	
+
 	@FXML
 	protected void handleChoiceBoxTimeLine(ActionEvent event) throws IOException {
-		
+
 	}
-	
 
 	/**
 	 * FXML button handler for adding exercises
+	 * 
 	 * @param event
 	 * @throws IOException
 	 */
 	@FXML
 	protected void handleAddExercise(ActionEvent event) throws IOException {
 		System.out.println("Open add Exercise window");
-		// Try opening 'add exercises window' which will load stored exercises from database
+		// Try opening 'add exercises window' which will load stored exercises from
+		// database
 		try {
 
 			FXMLLoader fxmlLoader = new FXMLLoader();
@@ -466,10 +507,11 @@ public class ExercisesTabController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * Is called within the FXML button handler 'handleAddExercise'
-	 * it handles adding the exercise into the table itself
+	 * Is called within the FXML button handler 'handleAddExercise' it handles
+	 * adding the exercise into the table itself
+	 * 
 	 * @param controller
 	 */
 	private void addEntry(AddExerciseController controller) {
@@ -483,7 +525,7 @@ public class ExercisesTabController implements Initializable {
 			addedExercises.add(newExercise);
 			exerciseData.add(newExercise);
 			currentDay.addExercise(newExercise);
-			
+
 			// Try to add it uniquely (used for LineChart)
 			MainProgramController.addExercise(newExercise);
 
@@ -493,10 +535,10 @@ public class ExercisesTabController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	/**
 	 * FXML button handler for deleting exercises off the table
+	 * 
 	 * @param event
 	 * @throws IOException
 	 */
@@ -510,15 +552,17 @@ public class ExercisesTabController implements Initializable {
 			addedExercises.remove(selectedExercise);
 			exerciseData.remove(selectedExercise);
 			currentDay.deleteExercise(selectedExercise);
-			
+
 			update();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * FXML button handler for adding Custom Exercises to either the table or todays entry
+	 * FXML button handler for adding Custom Exercises to either the table or todays
+	 * entry
+	 * 
 	 * @param event
 	 * @throws IOException
 	 */
@@ -548,19 +592,20 @@ public class ExercisesTabController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * Called inside the FXML button handler 'handleCustom'
-	 * handles either adding the Custom Exercise or storing it into the 'AddExerciseController' table
+	 * Called inside the FXML button handler 'handleCustom' handles either adding
+	 * the Custom Exercise or storing it into the 'AddExerciseController' table
+	 * 
 	 * @param controller
 	 */
 	private void addCustom(CustomExerciseController controller) {
-		
+
 		// Try getting controller values and create a custom exercise in the database
 		try {
 			// Get exercise object from controller
 			Exercise retrievedEx = controller.getExercise();
-			
+
 			// Copy it
 			Exercise newEx = new Exercise(retrievedEx);
 			// Make sure we apply it as a custom
@@ -569,11 +614,11 @@ public class ExercisesTabController implements Initializable {
 			// Add it to daily the table (if we selected to)
 			if (controller.addToTable()) {
 				System.out.println("Add to Table was selected");
-				
+
 				addedExercises.add(newEx);
 				exerciseData.add(newEx);
 				currentDay.addExercise(newEx);
-				
+
 				// Add it as a unique exercise
 				MainProgramController.addExercise(newEx);
 			}
@@ -581,17 +626,17 @@ public class ExercisesTabController implements Initializable {
 			// Add to the local memory arraylist, the table gui and the currentDay arraylist
 			AddExerciseController.addedExercises.add(newEx);
 			AddExerciseController.exerciseData.add(newEx);
-			
+
 			update();
-		}catch(NullPointerException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * FXML button handle for Editing exercises
-	 * will retrieve the Exercise object that is associated to the table row
-	 * and edit the values directly
+	 * FXML button handle for Editing exercises will retrieve the Exercise object
+	 * that is associated to the table row and edit the values directly
+	 * 
 	 * @param event
 	 * @throws IOException
 	 */
@@ -600,7 +645,7 @@ public class ExercisesTabController implements Initializable {
 		// Create window
 		try {
 			Exercise selectedExercise = tvExercises.getSelectionModel().getSelectedItem();
-			
+
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("/view/exercisesTabEditExerciseWindow.fxml"));
 			Scene scene = new Scene(fxmlLoader.load(), 580, 200);
@@ -610,7 +655,7 @@ public class ExercisesTabController implements Initializable {
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.setTitle("Edit Exercise");
 			stage.setScene(scene);
-			
+
 			// Controller access
 			EditExerciseController controller = fxmlLoader.<EditExerciseController>getController();
 			controller.setEditExercise(selectedExercise);
@@ -621,7 +666,7 @@ public class ExercisesTabController implements Initializable {
 			selectedExercise.setExercise(controller.getEditExercise());
 
 			update();
-		}catch(NullPointerException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 	}
