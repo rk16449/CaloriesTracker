@@ -52,9 +52,6 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		// Setup the current goal textfield
-		setupCurrentGoal();
-
 		// Creates 365 day objects
 		setupDays();
 
@@ -71,7 +68,7 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		update();
 	}
 	
-	private void setupCurrentGoal() {
+	private void updateCurrentGoalTF() {
 		tfCurrentGoal.setText(person.getCurrentGoal().getName());
 	}
 
@@ -126,6 +123,7 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		updateGUIPieChart();
 		updateBarChart();
 		updateProgressBar();
+		updateCurrentGoalTF();
 	}
 
 	/**
