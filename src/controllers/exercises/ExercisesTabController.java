@@ -202,8 +202,39 @@ public class ExercisesTabController implements Initializable {
 		System.out.println("Date range for weekly was: " + selectedDate.toString());
 		
 		// Get start of the week from 'selectedDate'
+		System.out.println("Week start date: " + getStartOfWeek(selectedDate));
 		
 		// Get end of the week from 'selectedDate'
+		System.out.println("Week end date: " + getEndOfWeek(selectedDate));
+	}
+	
+	private Date getStartOfWeek(Date currentDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		
+		// Go to the start of the week
+		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+		
+		// Ensure time is set at 00:00:00
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		
+	    return cal.getTime();
+	}
+	
+	private Date getEndOfWeek(Date currentDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		
+		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek() + 6);
+		
+		// ensure time is 23:59:59
+		cal.set(Calendar.HOUR, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		
+		return cal.getTime();
 	}
 	
 	private void createMonthlyLineChart() {
