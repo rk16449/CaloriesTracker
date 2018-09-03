@@ -86,7 +86,7 @@ public class ExercisesTabController implements Initializable {
 		setupDatePicker();
 		setupTable();
 		setupChoiceBox();
-		setupLineChartCurrentWeek();
+		setupLineChart();
 	}
 
 	private void changeMode(String value) {
@@ -178,6 +178,8 @@ public class ExercisesTabController implements Initializable {
 	@SuppressWarnings("unchecked")
 	private void createLineChart(String value) {
 
+		System.out.println("Timeline selected: " + value);
+		
 	}
 
 	private void deprecatedCreateLineChart() {
