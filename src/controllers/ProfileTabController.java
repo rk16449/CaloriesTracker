@@ -83,7 +83,7 @@ public class ProfileTabController extends BaseController implements Initializabl
 	 * Sets up the ChoiceBox 'cbGender' with values and it's event listener, which updates to Person's gender
 	 */
 	private void setupChoiceBox() {
-		cbGender.setItems(FXCollections.observableArrayList("Male", "Female", "Other"));
+		cbGender.setItems(FXCollections.observableArrayList("Male", "Female"));
 
 		// Add event listener
 		ChangeListener<String> changeListener = new ChangeListener<String>() {
