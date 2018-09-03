@@ -251,8 +251,16 @@ public class DietTabController extends BaseFoodController implements Initializab
 		
 		Food changedFood = new Food(retVals[0], doubleVals);
 		
-		// Update reference of selectedFood
-		selectedFood.setFood(changedFood, controller.getQuantity());
+		// We selected to only update Macros and not quantity
+		if(controller.getEditMacros()) {
+			// Update reference of selectedFood
+			selectedFood.setFood(changedFood, selectedFood.getQuantity());
+		}else {
+			// Update reference of selectedFood
+			selectedFood.setFood(changedFood, controller.getQuantity());
+		}
+		
+		
 	}
 
 	/**
