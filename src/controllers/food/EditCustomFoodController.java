@@ -28,15 +28,60 @@ public class EditCustomFoodController extends BaseFoodController implements Init
 	private double quantity = 1;
 	private SpinnerValueFactory<Double> defaultFactory;
 	
+	// Stores original macro values
+	private String[] originalMacros = new String[5];
+
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		defaultFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 100);
 		spinnerQuantity.setValueFactory(defaultFactory);
+		
+		
+		// Sets up an ArrayList for the TextFields
+		setupTextFieldArrayList();
 	}
 	
 	@FXML
 	protected void handleCheckBoxMacros(ActionEvent event) throws IOException {
+		System.out.println("Handle check box pressed!");
 		
+		// If its selected, disable quantity and enable TextFields
+		if(checkBoxMacros.isSelected()) {
+			editMacros(true);
+		}else {
+			editMacros(false);
+			
+			// Reset macros back to original values
+			resetMacros();
+		}
+	}
+	
+	// Used when the DietController needs to decide if we're changing quantity or macros
+	public boolean getEditMacros() {
+		return checkBoxMacros.isSelected();
+	}
+	
+	private void resetMacros() {
+		for(int i=0; i<super.rgTFs.size(); i++) {
+			rgTFs.get(i).setText(originalMacros[i]);
+		}
+	}
+	
+	private void editMacros(boolean value) {
+		spinnerQuantity.setDisable(value);
+		spinnerQuantity.getValueFactory().setValue(1.0);
+		
+		tfName.setDisable(!value);
+		tfAmount.setDisable(!value);
+		tfCarbohydrates.setDisable(!value);
+		tfProteins.setDisable(!value);
+		tfFats.setDisable(!value);
+		
+		tfName.setEditable(value);
+		tfAmount.setEditable(value);
+		tfCarbohydrates.setEditable(value);
+		tfProteins.setEditable(value);
+		tfFats.setEditable(value);
 	}
 
 	@FXML
@@ -80,13 +125,18 @@ public class EditCustomFoodController extends BaseFoodController implements Init
 		return quantity;
 	}
 
-
+	
+	
 	public void setFood(Food selectedFood) {
+		
 		String[] values = selectedFood.getStrValues();
-		tfName.setText(values[0]);
-		tfAmount.setText(values[1]);
-		tfCarbohydrates.setText(values[2]);
-		tfProteins.setText(values[3]);
-		tfFats.setText(values[4]);
+
+		// Loop through TextFields ArrayList (inherited)
+		for(int i=0; i<super.rgTFs.size(); i++) {
+			// Save its value
+			originalMacros[i] = values[i];
+			// Set it into the TextField
+			rgTFs.get(i).setText(values[i]);
+		}
 	}
 }

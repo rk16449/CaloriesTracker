@@ -23,6 +23,8 @@ public class BaseFoodController extends BaseController {
 	@FXML
 	protected TextField tfName, tfAmount, tfCarbohydrates, tfProteins, tfFats;
 	
+	// Stores TextField references in an ArrayList so we can easily loop through
+	protected ArrayList<TextField> rgTFs = new ArrayList<TextField>();
 	
 	// Object holding values of doubles
 	protected Double calories = (double) 0, carbs = (double) 0, protein = (double) 0, fats = (double) 0; 
@@ -34,6 +36,10 @@ public class BaseFoodController extends BaseController {
 	protected ObservableList<Food> foodData = FXCollections.observableArrayList();
 	// Hold the objects of foods local memory
 	protected ArrayList<Food> addedFoods = new ArrayList<Food>();
+	
+	protected void setupTextFieldArrayList() {
+		rgTFs.addAll(Arrays.asList(tfName, tfAmount, tfCarbohydrates, tfProteins, tfFats));
+	}
 	
 	protected void setupPieChart() {
 		// Setup pie chart
