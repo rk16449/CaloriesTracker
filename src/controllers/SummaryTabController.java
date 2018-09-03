@@ -68,6 +68,9 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 		update();
 	}
 	
+	/**
+	 * Updates the TextField of the current goal
+	 */
 	private void updateCurrentGoalTF() {
 		tfCurrentGoal.setText(person.getCurrentGoal().getName());
 	}
