@@ -207,6 +207,20 @@ public class ExercisesTabController implements Initializable {
 		// Get end of the week from 'selectedDate'
 		System.out.println("Week end date: " + getEndOfWeek(selectedDate));
 	}
+
+	
+	private void createMonthlyLineChart() {
+		// Create a date range between the current 'selected' week in date picker
+		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+				
+		// Debug
+		System.out.println("Date range for monthly was: " + selectedDate.toString());
+	}
+	
+	private void createYearlyLineChart() {
+		
+	}
+	
 	
 	private Date getStartOfWeek(Date currentDate) {
 		Calendar cal = Calendar.getInstance();
@@ -235,14 +249,6 @@ public class ExercisesTabController implements Initializable {
 		cal.set(Calendar.SECOND, 59);
 		
 		return cal.getTime();
-	}
-	
-	private void createMonthlyLineChart() {
-		
-	}
-	
-	private void createYearlyLineChart() {
-		
 	}
 
 	private void deprecatedCreateLineChart() {
