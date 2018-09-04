@@ -207,14 +207,32 @@ public class ExercisesTabController implements Initializable {
 		// Get end of the week from 'selectedDate'
 		System.out.println("Week end date: " + getEndOfWeek(selectedDate));
 		
-		// Loop through all added exercises
-		
+
 		// Loop through the relevant day range
+		// Find the exercises and create an ExerciseChartData object, storing the same weight value
+		// E.g. Day 1: {name: Deadlift, weight: 40}
+		// 		Day 2: {name: Deadlift, weight: 45}
+		// What would be saved is ExerciseChartData {name: Deadlift, weight[]: 40, 45 }
 		
-		// Create the line chart from exercises
+		
+		// Returns the index in the ArrayList of the starting day
+		int startIndex = getStartDateIndex(getStartOfWeek(selectedDate));
+		int endIndex = getEndDateIndex(getEndOfWeek(selectedDate));
+
+		// Loop within the date range
+		for(int i=startIndex; i<endIndex; i++) {
+			
+		}
+	}
+	
+	private int getStartDateIndex(Date startDate) {
+		return 0;
+	}
+	
+	private int getEndDateIndex(Date startDate) {
+		return 0;
 	}
 
-	
 	private void createMonthlyLineChart() {
 		// Create a date range between the current 'selected' week in date picker
 		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
