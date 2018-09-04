@@ -206,6 +206,12 @@ public class ExercisesTabController implements Initializable {
 		
 		// Get end of the week from 'selectedDate'
 		System.out.println("Week end date: " + getEndOfWeek(selectedDate));
+		
+		// Loop through all added exercises
+		
+		// Loop through the relevant day range
+		
+		// Create the line chart from exercises
 	}
 
 	
