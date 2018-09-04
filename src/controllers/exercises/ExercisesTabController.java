@@ -239,11 +239,23 @@ public class ExercisesTabController implements Initializable {
 	}
 	
 	private Date getStartOfYear(Date selectedDate) {
-		return null;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(selectedDate);
+		
+		
+		cal.set(Calendar.DAY_OF_YEAR, 1);
+		
+		return cal.getTime();
 	}
 	
 	private Date getEndOfYear(Date selectedDate) {
-		return null;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(selectedDate);
+		
+		// Return the last day of the year
+		cal.set(Calendar.DAY_OF_YEAR, cal.getActualMaximum(Calendar.DAY_OF_YEAR));
+		
+		return cal.getTime();
 	}
 	
 	
