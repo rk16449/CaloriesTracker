@@ -202,16 +202,117 @@ public class ExercisesTabController implements Initializable {
 		System.out.println("Date range for weekly was: " + selectedDate.toString());
 		
 		// Get start of the week from 'selectedDate'
+		System.out.println("Week start date: " + getStartOfWeek(selectedDate));
 		
 		// Get end of the week from 'selectedDate'
+		System.out.println("Week end date: " + getEndOfWeek(selectedDate));
 	}
+
 	
 	private void createMonthlyLineChart() {
+		// Create a date range between the current 'selected' week in date picker
+		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+				
+		// Debug
+		System.out.println("Date range for monthly was: " + selectedDate.toString());
 		
+		// Get start of the month from 'selectedDate'
+		System.out.println("Month start date: " + getStartOfMonth(selectedDate));
+		
+		// Get end of the month from 'selectedDate'
+		System.out.println("Month end date: " + getEndOfMonth(selectedDate));
 	}
+
 	
 	private void createYearlyLineChart() {
+		// Create a date range between the current 'selected' week in date picker
+		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		
+		// Debug
+		System.out.println("Date range for yearly was: " + selectedDate.toString());
+		
+		// Get start of the month from 'selectedDate'
+		System.out.println("Year start date: " + getStartOfYear(selectedDate));
+		
+		// Get end of the month from 'selectedDate'
+		System.out.println("Year end date: " + getEndOfYear(selectedDate));
+	}
+	
+	private Date getStartOfYear(Date selectedDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(selectedDate);
+		
+		
+		cal.set(Calendar.DAY_OF_YEAR, 1);
+		
+		return cal.getTime();
+	}
+	
+	private Date getEndOfYear(Date selectedDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(selectedDate);
+		
+		// Return the last day of the year
+		cal.set(Calendar.DAY_OF_YEAR, cal.getActualMaximum(Calendar.DAY_OF_YEAR));
+		
+		return cal.getTime();
+	}
+	
+	
+	private Date getEndOfMonth(Date selectedDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(selectedDate);
+		
+		// Set the day to the end of the month and time to 23:59:59
+		cal.set(Calendar.DAY_OF_MONTH, getMonthDays(selectedDate));
+		cal.set(Calendar.HOUR, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		
+		return cal.getTime();
+	}
+	
+	private Date getStartOfMonth(Date selectedDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(selectedDate);
+		
+		// Ensure its the first day, at 00:00:00
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		
+		return cal.getTime();
+	}
+	
+	
+	private Date getStartOfWeek(Date selectedDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(selectedDate);
+		
+		// Go to the start of the week
+		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+		
+		// Ensure time is set at 00:00:00
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		
+	    return cal.getTime();
+	}
+	
+	private Date getEndOfWeek(Date selectedDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(selectedDate);
+		
+		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek() + 6);
+		
+		// ensure time is 23:59:59
+		cal.set(Calendar.HOUR, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		
+		return cal.getTime();
 	}
 
 	private void deprecatedCreateLineChart() {
@@ -333,8 +434,9 @@ public class ExercisesTabController implements Initializable {
 	}
 
 	// return the amount of days in the current month
-	private int getMonthDays() {
+	private int getMonthDays(Date selectedDate) {
 		Calendar c = Calendar.getInstance();
+		c.setTime(selectedDate);
 		int monthMaxDays = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 		return monthMaxDays;
 	}
