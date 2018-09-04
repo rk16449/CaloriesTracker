@@ -3,6 +3,7 @@ package controllers.exercises;
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -216,21 +217,44 @@ public class ExercisesTabController implements Initializable {
 		
 		
 		// Returns the index in the ArrayList of the starting day
-		int startIndex = getStartDateIndex(getStartOfWeek(selectedDate));
-		int endIndex = getEndDateIndex(getEndOfWeek(selectedDate));
+		int startIndex = getDateIndex(getStartOfWeek(selectedDate));
+		int endIndex = getDateIndex(getEndOfWeek(selectedDate));
+		
+		System.out.println("Found start index to be: " + startIndex + " end index to be: " + endIndex);
 
 		// Loop within the date range
-		for(int i=startIndex; i<endIndex; i++) {
-			
+		for(int i=startIndex; i<= endIndex; i++) {
+			System.out.println("Dates selected were: " + MainProgramController.days.get(i).getDate().toString());
 		}
 	}
 	
-	private int getStartDateIndex(Date startDate) {
-		return 0;
+	public static LocalDate getLocalDateFromDate(Date date){
+		   return LocalDate.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
 	}
 	
-	private int getEndDateIndex(Date startDate) {
-		return 0;
+	private int getDateIndex(Date startDate) {
+	
+		for(int i=0; i<MainProgramController.days.size(); i++) {
+			
+			Day day = MainProgramController.days.get(i);
+			
+			int num1 = getLocalDateFromDate(startDate).getDayOfYear();
+			int num2 = day.getDate().getDayOfYear();
+			
+			// If we get a match, return the index in the ArrayList
+			if(num1 == num2){
+				return i;
+			}
+		}
+		
+		// No index found
+		return -1;
+	}
+	
+	public Date convertToDateViaInstant(LocalDate dateToConvert) {
+	    return java.util.Date.from(dateToConvert.atStartOfDay()
+	      .atZone(ZoneId.systemDefault())
+	      .toInstant());
 	}
 
 	private void createMonthlyLineChart() {
