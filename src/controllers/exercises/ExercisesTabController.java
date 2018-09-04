@@ -3,6 +3,7 @@ package controllers.exercises;
 import java.io.IOException;
 /* Import java, javafx, mainPackage */
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -206,9 +207,56 @@ public class ExercisesTabController implements Initializable {
 		
 		// Get end of the week from 'selectedDate'
 		System.out.println("Week end date: " + getEndOfWeek(selectedDate));
+		
+
+		// Loop through the relevant day range
+		// Find the exercises and create an ExerciseChartData object, storing the same weight value
+		// E.g. Day 1: {name: Deadlift, weight: 40}
+		// 		Day 2: {name: Deadlift, weight: 45}
+		// What would be saved is ExerciseChartData {name: Deadlift, weight[]: 40, 45 }
+		
+		
+		// Returns the index in the ArrayList of the starting day
+		int startIndex = getDateIndex(getStartOfWeek(selectedDate));
+		int endIndex = getDateIndex(getEndOfWeek(selectedDate));
+		
+		System.out.println("Found start index to be: " + startIndex + " end index to be: " + endIndex);
+
+		// Loop within the date range
+		for(int i=startIndex; i<= endIndex; i++) {
+			System.out.println("Dates selected were: " + MainProgramController.days.get(i).getDate().toString());
+		}
+	}
+	
+	public static LocalDate getLocalDateFromDate(Date date){
+		   return LocalDate.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
+	}
+	
+	private int getDateIndex(Date startDate) {
+	
+		for(int i=0; i<MainProgramController.days.size(); i++) {
+			
+			Day day = MainProgramController.days.get(i);
+			
+			int num1 = getLocalDateFromDate(startDate).getDayOfYear();
+			int num2 = day.getDate().getDayOfYear();
+			
+			// If we get a match, return the index in the ArrayList
+			if(num1 == num2){
+				return i;
+			}
+		}
+		
+		// No index found
+		return -1;
+	}
+	
+	public Date convertToDateViaInstant(LocalDate dateToConvert) {
+	    return java.util.Date.from(dateToConvert.atStartOfDay()
+	      .atZone(ZoneId.systemDefault())
+	      .toInstant());
 	}
 
-	
 	private void createMonthlyLineChart() {
 		// Create a date range between the current 'selected' week in date picker
 		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
