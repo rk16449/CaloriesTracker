@@ -217,9 +217,29 @@ public class ExercisesTabController implements Initializable {
 	}
 	
 	private void buildGUIWeeklyLineChart() {
+		
+		// Store all the dates into a string arraylist
+		ArrayList<String> olDates = new ArrayList<String>();
+		
 		for(int i=0; i<weeklyData.size(); i++) {
+			System.out.println("Adding ---> into ArrayList ---> " + weeklyData.get(i).getDate());
 			
+			DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
+			
+			olDates.add(weeklyData.get(i).getDate().format(sdf).toString());
 		}
+		
+		ObservableList<String> olCategory = FXCollections.observableArrayList(olDates);
+
+		
+		System.out.println("Setup categories");
+		
+		// needs to be set to false so that we can get immediate changes to category
+		numberAxisWeight.setAutoRanging(false);
+		categoryAxisDate.setAutoRanging(false);
+		
+		
+		categoryAxisDate.setCategories(olCategory);
 	}
 	
 	private void createWeeklyExerciseChartData() {
@@ -263,11 +283,11 @@ public class ExercisesTabController implements Initializable {
 			weeklyData.add(new ExerciseChartDay(day.getDate()));
 			
 			
-			/*
+			
 			// Loop through its exercises and add create an ExerciseChartData
 			for(int e=0; e<day.getExercises().size(); e++) {
 				//createWeeklyExercise(day.getExercises().get(e), day.getDate());
-			}*/
+			}
 		}
 		
 		
