@@ -39,6 +39,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Day;
 import model.Exercise;
+import model.ExerciseChartData;
+import model.ExerciseChartDay;
 import model.Person;
 
 public class ExercisesTabController implements Initializable {
@@ -80,6 +82,10 @@ public class ExercisesTabController implements Initializable {
 	private ArrayList<XYChart.Series<?, ?>> rgCharts = new ArrayList<XYChart.Series<?, ?>>();
 	// Stores the LineChart current view mode
 	private String currentMode = "Weekly";
+	
+	
+	// Stores ExerciseChartDay; weekly, monthly, yearly
+	private ArrayList<ExerciseChartDay> weeklyData = new ArrayList<ExerciseChartDay>();
 
 	// Start of ExercisesTabController runs on creation
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -130,6 +136,9 @@ public class ExercisesTabController implements Initializable {
 		rgCharts.clear();
 		lineChartExercises.getData().clear();
 
+		// remove stored chart data
+		weeklyData.clear();
+		
 		// remove any fixed categories
 		categoryAxisDate.getCategories().clear();
 	}
@@ -196,6 +205,45 @@ public class ExercisesTabController implements Initializable {
 	}
 	
 	private void createWeeklyLineChart() {
+
+		// Creates ExerciseChartData objects
+		createWeeklyExerciseChartData();
+	
+		// Debugs values
+		outputWeeklyChartData();
+		
+		// Creates GUI representation of LineChart
+		buildGUIWeeklyLineChart();
+	}
+	
+	private void buildGUIWeeklyLineChart() {
+		
+		// Store all the dates into a string arraylist
+		ArrayList<String> olDates = new ArrayList<String>();
+		
+		for(int i=0; i<weeklyData.size(); i++) {
+			System.out.println("Adding ---> into ArrayList ---> " + weeklyData.get(i).getDate());
+			
+			DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
+			
+			olDates.add(weeklyData.get(i).getDate().format(sdf).toString());
+		}
+		
+		ObservableList<String> olCategory = FXCollections.observableArrayList(olDates);
+
+		
+		System.out.println("Setup categories");
+		
+		// needs to be set to false so that we can get immediate changes to category
+		numberAxisWeight.setAutoRanging(false);
+		categoryAxisDate.setAutoRanging(false);
+		
+		
+		categoryAxisDate.setCategories(olCategory);
+	}
+	
+	private void createWeeklyExerciseChartData() {
+		
 		// Create a date range between the current 'selected' week in date picker
 		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		
@@ -214,19 +262,77 @@ public class ExercisesTabController implements Initializable {
 		// E.g. Day 1: {name: Deadlift, weight: 40}
 		// 		Day 2: {name: Deadlift, weight: 45}
 		// What would be saved is ExerciseChartData {name: Deadlift, weight[]: 40, 45 }
-		
+
+		Date start = getStartOfWeek(selectedDate);
+		Date end = getEndOfWeek(selectedDate);
 		
 		// Returns the index in the ArrayList of the starting day
-		int startIndex = getDateIndex(getStartOfWeek(selectedDate));
-		int endIndex = getDateIndex(getEndOfWeek(selectedDate));
+		int startIndex = getDateIndex(start);
+		int endIndex = getDateIndex(end);
 		
 		System.out.println("Found start index to be: " + startIndex + " end index to be: " + endIndex);
 
-		// Loop within the date range
 		for(int i=startIndex; i<= endIndex; i++) {
 			System.out.println("Dates selected were: " + MainProgramController.days.get(i).getDate().toString());
+			
+			// Reference to the current day
+			Day day = MainProgramController.days.get(i);
+			
+			
+			// Create the empty dates on the chart
+			weeklyData.add(new ExerciseChartDay(day.getDate()));
+			
+			
+			
+			// Loop through its exercises and add create an ExerciseChartData
+			for(int e=0; e<day.getExercises().size(); e++) {
+				//createWeeklyExercise(day.getExercises().get(e), day.getDate());
+			}
+		}
+		
+		
+		
+	}
+	
+	
+	private void outputWeeklyChartData() {
+		for(int i=0; i<weeklyData.size(); i++) {
+			
+			// Format the output
+			DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
+			
+			
+			System.out.println("Date: " + weeklyData.get(i).getDate().format(sdf).toString());
+			
+			// Loop through the line data on this day
+			for(int z=0; z<weeklyData.get(i).getLineData().size(); z++) {
+				
+			}
 		}
 	}
+	
+	/*
+	// Makes sure that if we have duplicate exercise names, we only increase the weight ArrayList
+	private void createWeeklyExercise(Exercise e, LocalDate current) {
+		
+		boolean found = false;
+		// Loop through 
+		for(int i=0; i<weeklyData.size(); i++) {
+			if(weeklyData.get(i).getName().equals(e.getName())) {
+				// add weight value to its ArrayList
+				weeklyData.get(i).addValues(e.getWeight());
+				found = true;
+				break;
+			}
+		}
+		
+		if(!found) {
+			ExerciseChartData eCD = new ExerciseChartData(e.getName(), current);
+			eCD.addValues(e.getWeight());
+			weeklyData.add(eCD);
+		}
+	}
+	*/
 	
 	public static LocalDate getLocalDateFromDate(Date date){
 		   return LocalDate.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
