@@ -40,6 +40,7 @@ import javafx.stage.Stage;
 import model.Day;
 import model.Exercise;
 import model.ExerciseChartData;
+import model.ExerciseChartDay;
 import model.Person;
 
 public class ExercisesTabController implements Initializable {
@@ -83,8 +84,8 @@ public class ExercisesTabController implements Initializable {
 	private String currentMode = "Weekly";
 	
 	
-	// Stores ExerciseChartData; weekly, monthly, yearly
-	private ArrayList<ExerciseChartData> weeklyData = new ArrayList<ExerciseChartData>();
+	// Stores ExerciseChartDay; weekly, monthly, yearly
+	private ArrayList<ExerciseChartDay> weeklyData = new ArrayList<ExerciseChartDay>();
 
 	// Start of ExercisesTabController runs on creation
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -257,24 +258,40 @@ public class ExercisesTabController implements Initializable {
 			// Reference to the current day
 			Day day = MainProgramController.days.get(i);
 			
+			
+			// Create the empty dates on the chart
+			weeklyData.add(new ExerciseChartDay(day.getDate()));
+			
+			
+			/*
 			// Loop through its exercises and add create an ExerciseChartData
 			for(int e=0; e<day.getExercises().size(); e++) {
-				createWeeklyExercise(day.getExercises().get(e), day.getDate());
-			}
+				//createWeeklyExercise(day.getExercises().get(e), day.getDate());
+			}*/
 		}
+		
+		
+		
 	}
+	
 	
 	private void outputWeeklyChartData() {
 		for(int i=0; i<weeklyData.size(); i++) {
-			System.out.println("Exercise name found: " + weeklyData.get(i).getName());
 			
-			for(int z=0; z<weeklyData.get(i).getValues().size(); z++) {
-				System.out.println("--- Weight values found: Date: " + weeklyData.get(i).getDate().toString() + " "+ weeklyData.get(i).getValues().get(z));
+			// Format the output
+			DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
+			
+			
+			System.out.println("Date: " + weeklyData.get(i).getDate().format(sdf).toString());
+			
+			// Loop through the line data on this day
+			for(int z=0; z<weeklyData.get(i).getLineData().size(); z++) {
+				
 			}
-			
 		}
 	}
 	
+	/*
 	// Makes sure that if we have duplicate exercise names, we only increase the weight ArrayList
 	private void createWeeklyExercise(Exercise e, LocalDate current) {
 		
@@ -295,6 +312,7 @@ public class ExercisesTabController implements Initializable {
 			weeklyData.add(eCD);
 		}
 	}
+	*/
 	
 	public static LocalDate getLocalDateFromDate(Date date){
 		   return LocalDate.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));

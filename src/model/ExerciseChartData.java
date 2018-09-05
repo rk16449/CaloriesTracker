@@ -10,7 +10,6 @@ public class ExerciseChartData extends Item{
 	
 	public ExerciseChartData(String name, LocalDate date) {
 		super(name);
-		
 		this.date = date;
 	}
 	
