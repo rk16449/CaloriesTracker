@@ -1,19 +1,19 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ExerciseChartDay {
 
-	private Date currentDate;
+	private LocalDate currentDate;
 	
 	private ArrayList<ExerciseChartData> lineData = new ArrayList<ExerciseChartData>();
 	
-	public ExerciseChartDay(Date date) {
+	public ExerciseChartDay(LocalDate date) {
 		this.currentDate = date;
 	}
 	
-	public Date getDate() {
+	public LocalDate getDate() {
 		return this.currentDate;
 	}
 
