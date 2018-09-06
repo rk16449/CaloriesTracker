@@ -254,7 +254,30 @@ public class ExercisesTabController implements Initializable {
 
 		
 		if(mode.equals("Yearly")){
-			// Here we need to get values between snapshots of th month
+			// Here we need to get values between snapshots of the month
+			
+			for(int i=startIndex; i<=endIndex; i++) {
+				Day day = MainProgramController.days.get(i);
+
+				
+
+				// Check if there is any exercises on this day, and if there is then add the day
+				if(day.getExercises().size() >= 1) {
+					chartDates.add(day.getDate());
+					// Loop through its exercises and add create an ExerciseChartData
+					for (int e = 0; e < day.getExercises().size(); e++) {
+						createExercise(day.getExercises().get(e), day.getDate());
+					}
+				}else if(i % 28 == 0) {
+					chartDates.add(day.getDate());
+					// Loop through its exercises and add create an ExerciseChartData
+					for (int e = 0; e < day.getExercises().size(); e++) {
+						createExercise(day.getExercises().get(e), day.getDate());
+					}
+				}
+			}
+			
+			
 		}else{
 			for (int i = startIndex; i <= endIndex; i++) {
 				// Reference to the current day
