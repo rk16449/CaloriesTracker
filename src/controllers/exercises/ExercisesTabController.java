@@ -208,7 +208,7 @@ public class ExercisesTabController implements Initializable {
 	/**
 	 * Method that gets invoked inside createWeeklyLineChart()
 	 */
-	private void loadExerciseChartData(String value) {
+	private void loadExerciseChartData(String mode) {
 
 		// Create a date range between the current 'selected' week in date picker
 		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -233,7 +233,7 @@ public class ExercisesTabController implements Initializable {
 		Date start = getStartOfWeek(selectedDate);
 		Date end = getEndOfWeek(selectedDate);
 		
-		switch(value) {
+		switch(mode) {
 			case "Weekly":
 				start = getStartOfWeek(selectedDate);
 				end = getEndOfWeek(selectedDate);
@@ -252,24 +252,28 @@ public class ExercisesTabController implements Initializable {
 		int startIndex = getDateIndex(start);
 		int endIndex = getDateIndex(end);
 
-		// System.out.println("Found start index to be: " + startIndex + " end index to
-		// be: " + endIndex);
+		
+		if(mode.equals("Yearly")){
+			// Here we need to get values between snapshots of th month
+		}else{
+			for (int i = startIndex; i <= endIndex; i++) {
+				// Reference to the current day
+				Day day = MainProgramController.days.get(i);
 
-		for (int i = startIndex; i <= endIndex; i++) {
-			// Reference to the current day
-			Day day = MainProgramController.days.get(i);
+				// Save the dates into ArrayList
+				chartDates.add(day.getDate());
 
-			// Save the dates into ArrayList
-			chartDates.add(day.getDate());
-
-			// Loop through its exercises and add create an ExerciseChartData
-			for (int e = 0; e < day.getExercises().size(); e++) {
-				
-				System.out.println("CREATE EXERCISE: " + day.getDate());
-				
-				createExercise(day.getExercises().get(e), day.getDate());
+				// Loop through its exercises and add create an ExerciseChartData
+				for (int e = 0; e < day.getExercises().size(); e++) {
+					
+					System.out.println("CREATE EXERCISE: " + day.getDate());
+					
+					createExercise(day.getExercises().get(e), day.getDate());
+				}
 			}
 		}
+		
+
 	}
 
 	/**
@@ -357,8 +361,8 @@ public class ExercisesTabController implements Initializable {
 		numberAxisWeight.setAutoRanging(false);
 		categoryAxisDate.setAutoRanging(false);
 		
-		categoryAxisDate.getCategories().clear();
-
+		
+		// Add the categories
 		categoryAxisDate.setCategories(olCategory);
 	}
 
