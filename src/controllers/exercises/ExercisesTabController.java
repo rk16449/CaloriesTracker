@@ -82,21 +82,19 @@ public class ExercisesTabController implements Initializable {
 	private ArrayList<XYChart.Series<?, ?>> rgCharts = new ArrayList<XYChart.Series<?, ?>>();
 	// Stores the LineChart current view mode
 	private String currentMode = "Weekly";
-	
-	
+
 	// Stores ExerciseChartDay; weekly, monthly, yearly
 	private ArrayList<ExerciseChartData> weeklyData = new ArrayList<ExerciseChartData>();
 	private ArrayList<LocalDate> weeklyDates = new ArrayList<LocalDate>();
 
 	// Start of ExercisesTabController runs on creation
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
 		setupDay();
 		setupDatePicker();
 		setupTable();
 		setupChoiceBox();
-		
-		
+
 		setupLineChart();
 	}
 
@@ -113,11 +111,10 @@ public class ExercisesTabController implements Initializable {
 			public void changed(ObservableValue<? extends String> observable, //
 					String oldValue, String newValue) {
 				if (newValue != null) {
-					
+
 					// Change the current mode
 					currentMode = newValue;
-					
-					
+
 					// Depending on this value, change linechart view
 					changeMode();
 					update();
@@ -127,18 +124,18 @@ public class ExercisesTabController implements Initializable {
 		// Selected Item Changed.
 		choiceBoxTimeLine.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
-	
+
 	/**
 	 * Called once in initialize, sets up the LineChart
 	 * 
 	 */
 	private void setupLineChart() {
-		
-		System.out.println("{setupLineChart() : 1}" );
-		
+
+		System.out.println("{setupLineChart() : 1}");
+
 		lineChartExercises.setTitle("Progressive Overload");
 	}
-	
+
 	private void changeMode() {
 		// Clear the Line Chart
 		clearLineChart();
@@ -157,7 +154,7 @@ public class ExercisesTabController implements Initializable {
 		// remove stored chart data
 		weeklyData.clear();
 		weeklyDates.clear();
-		
+
 		// remove any fixed categories
 		categoryAxisDate.getCategories().clear();
 	}
@@ -172,8 +169,6 @@ public class ExercisesTabController implements Initializable {
 			numberAxisWeight.setLabel("Weight (lbs) ");
 		}
 	}
-
-	
 
 	/**
 	 * Calculates all the exercises weights that is currently added to days and
@@ -202,352 +197,407 @@ public class ExercisesTabController implements Initializable {
 	private void createLineChart(String value) {
 
 		System.out.println("Timeline selected: " + value);
-		
-		
-		switch(value) {
-			case "Weekly":
-				createWeeklyLineChart();
-				break;
-			case "Monthly":
-				createMonthlyLineChart();
-				break;
-			case "Yearly":
-				createYearlyLineChart();
-				break;
+
+		switch (value) {
+		case "Weekly":
+			createWeeklyLineChart();
+			break;
+		case "Monthly":
+			createMonthlyLineChart();
+			break;
+		case "Yearly":
+			createYearlyLineChart();
+			break;
 		}
 	}
-	
+
 	/**
-	 * First method that gets caled to build a weekly chart
+	 * First method that gets called to build a weekly chart
 	 */
 	private void createWeeklyLineChart() {
+		// Loads ExerciseChartData objects
+		loadWeeklyExerciseChartData();
 
-		// Creates ExerciseChartData objects
-		createWeeklyExerciseChartData();
-	
-		// Debugs values
-		outputWeeklyChartData();
-		
 		// Creates GUI representation of LineChart
 		buildGUIWeeklyLineChart();
 	}
-	
-	private void buildGUIWeeklyLineChart() {
-		
-		// Builds the category axis
-		buildGUIWeeklyLineChartCategoryAxis();
-		
-		// Builds the number axis
-		buildGUIWeeklyLineChartNumberAxis();
-		
-		// Builds the line points
-		buildGUILinePoints();
-	}
-	
-	private void buildGUILinePoints() {
-		
-		// Loop through weekly Data and get the points
-		for(int i=0; i<weeklyData.size(); i++) {
-			
-			ExerciseChartData ecd = weeklyData.get(i);
-			
-			@SuppressWarnings("rawtypes")
-			XYChart.Series series = new XYChart.Series();
-			series.setName(ecd.getName());
-			
-			// Loop through dates/values
-			for(int p=0; p< ecd.getDates().size(); p++) {
-				
-				System.out.println("DATES SIZE -------------------------------------------");
-				
-				// Get the CategoryAxis value
-				DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
-				
-				String date = ecd.getDates().get(p).format(sdf).toString();
-				double value = ecd.getValues().get(p);
-				
-				System.out.println("Date: " + date);
-				System.out.println("value: " + value);
-				
-				// Add the data
-				series.getData().add(new XYChart.Data(date, value));
-			}
-			
-			// Finally add it to the graph
-			lineChartExercises.getData().addAll(series);
-		}
-		
-	}
-	
-	private void buildGUIWeeklyLineChartNumberAxis() {
-		numberAxisWeight.setLowerBound(0);
-		numberAxisWeight.setUpperBound(200);
-	}
-	
-	private void buildGUIWeeklyLineChartCategoryAxis() {
-		// Store all the dates into a string arraylist
-		ArrayList<String> olDates = new ArrayList<String>();
-		
-		for(int i=0; i<weeklyDates.size(); i++) {
-			
-			System.out.println("Adding ---> into ArrayList ---> " + weeklyDates.get(i));
-			
-			DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
-			
-			olDates.add(weeklyDates.get(i).format(sdf).toString());
-		}
-		
-		ObservableList<String> olCategory = FXCollections.observableArrayList(olDates);
 
-		
-		System.out.println("Setup categories");
-		
-		// needs to be set to false so that we can get immediate changes to category
-		// by default the axes have auto ranging enabled, so any change applied will be overridden.
-		numberAxisWeight.setAutoRanging(false);
-		categoryAxisDate.setAutoRanging(false);
-		
-		
-		categoryAxisDate.setCategories(olCategory);
-	}
-	
-	private void createWeeklyExerciseChartData() {
-		
+	/**
+	 * Method that gets invoked inside createWeeklyLineChart()
+	 */
+	private void loadWeeklyExerciseChartData() {
+
 		// Create a date range between the current 'selected' week in date picker
 		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-		
+
 		// Debug
 		System.out.println("Date range for weekly was: " + selectedDate.toString());
-		
+
 		// Get start of the week from 'selectedDate'
 		System.out.println("Week start date: " + getStartOfWeek(selectedDate));
-		
+
 		// Get end of the week from 'selectedDate'
 		System.out.println("Week end date: " + getEndOfWeek(selectedDate));
-		
 
 		// Loop through the relevant day range
-		// Find the exercises and create an ExerciseChartData object, storing the same weight value
+		// Find the exercises and create an ExerciseChartData object, storing the same
+		// weight value
 		// E.g. Day 1: {name: Deadlift, weight: 40}
-		// 		Day 2: {name: Deadlift, weight: 45}
+		// Day 2: {name: Deadlift, weight: 45}
 		// What would be saved is ExerciseChartData {name: Deadlift, weight[]: 40, 45 }
 
 		Date start = getStartOfWeek(selectedDate);
 		Date end = getEndOfWeek(selectedDate);
-		
+
 		// Returns the index in the ArrayList of the starting day
 		int startIndex = getDateIndex(start);
 		int endIndex = getDateIndex(end);
-		
-		//System.out.println("Found start index to be: " + startIndex + " end index to be: " + endIndex);
 
-		for(int i=startIndex; i<= endIndex; i++) {
+		// System.out.println("Found start index to be: " + startIndex + " end index to
+		// be: " + endIndex);
+
+		for (int i = startIndex; i <= endIndex; i++) {
 			// Reference to the current day
 			Day day = MainProgramController.days.get(i);
-			
+
 			// Save the dates into ArrayList
 			weeklyDates.add(day.getDate());
 
 			// Loop through its exercises and add create an ExerciseChartData
-			for(int e=0; e<day.getExercises().size(); e++) {
+			for (int e = 0; e < day.getExercises().size(); e++) {
 				createWeeklyExercise(day.getExercises().get(e), day.getDate());
 			}
 		}
 	}
-	
+
+	/**
+	 * Method gets invoked in loadWeeklyExerciseChartData Makes sure that if we have
+	 * duplicate exercise names, we only increase the weight ArrayList
+	 * 
+	 * @param e
+	 * @param date
+	 */
+	private void createWeeklyExercise(Exercise e, LocalDate date) {
+
+		boolean found = false;
+		// Loop through
+		for (int i = 0; i < weeklyData.size(); i++) {
+
+			// Check whether or not we already have this exercise added
+
+			if (weeklyData.get(i).getName().equals(e.getName())) {
+				found = true;
+
+				// add into weeklyData
+				weeklyData.get(i).addChartData(date, e.getWeight());
+
+				break;
+			}
+		}
+
+		if (!found) {
+
+			ArrayList<LocalDate> rgDates = new ArrayList<LocalDate>();
+			rgDates.add(date);
+
+			ArrayList<Double> rgValues = new ArrayList<Double>();
+			rgValues.add(e.getWeight());
+
+			// add a new ExerciseChartData object
+			ExerciseChartData ecd = new ExerciseChartData(e.getName(), rgDates, rgValues);
+			weeklyData.add(ecd);
+		}
+	}
+
+	/**
+	 * Second method that gets invoked inside createWeeklyLineChart
+	 */
+	private void buildGUIWeeklyLineChart() {
+
+		// Builds the category axis
+		buildGUIWeeklyLineChartCategoryAxis();
+
+		// Builds the number axis
+		buildGUIWeeklyLineChartNumberAxis();
+
+		// Builds the line points
+		buildGUILinePoints();
+	}
+
+	/**
+	 * First method that gets invoked in buildGUIWeeklyLineChart
+	 */
+	private void buildGUIWeeklyLineChartCategoryAxis() {
+		// Store all the dates into a string ArrayList
+		ArrayList<String> olDates = new ArrayList<String>();
+
+		for (int i = 0; i < weeklyDates.size(); i++) {
+
+			System.out.println("Adding ---> into ArrayList ---> " + weeklyDates.get(i));
+
+			DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
+
+			olDates.add(weeklyDates.get(i).format(sdf).toString());
+		}
+
+		ObservableList<String> olCategory = FXCollections.observableArrayList(olDates);
+
+		System.out.println("Setup categories");
+
+		// needs to be set to false so that we can get immediate changes to category
+		// by default the axes have auto ranging enabled, so any change applied will be
+		// overridden.
+		numberAxisWeight.setAutoRanging(false);
+		categoryAxisDate.setAutoRanging(false);
+
+		categoryAxisDate.setCategories(olCategory);
+	}
+
+	/**
+	 * Second method that gets invoked in buildGUIWeeklyLineChart
+	 */
+	private void buildGUIWeeklyLineChartNumberAxis() {
+		numberAxisWeight.setLowerBound(0);
+		numberAxisWeight.setUpperBound(200);
+	}
+
+	/**
+	 * Third method that gets invoked in buildGUIWeeklyLineChart
+	 */
+	@SuppressWarnings("unchecked")
+	private void buildGUILinePoints() {
+
+		// Loop through weekly Data and get the points
+		for (int i = 0; i < weeklyData.size(); i++) {
+
+			ExerciseChartData ecd = weeklyData.get(i);
+
+			@SuppressWarnings("rawtypes")
+			XYChart.Series series = new XYChart.Series();
+			series.setName(ecd.getName());
+
+			// Loop through dates/values
+			for (int p = 0; p < ecd.getDates().size(); p++) {
+
+				System.out.println("DATES SIZE -------------------------------------------");
+
+				// Get the CategoryAxis value
+				DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
+
+				String date = ecd.getDates().get(p).format(sdf).toString();
+				double value = ecd.getValues().get(p);
+
+				System.out.println("Date: " + date);
+				System.out.println("value: " + value);
+
+				// Add the data
+				series.getData().add(new XYChart.Data(date, value));
+			}
+
+			// Finally add it to the graph
+			lineChartExercises.getData().addAll(series);
+		}
+
+	}
+
 	/**
 	 * Method used to debug all the points on the weekly chart
 	 */
 	private void outputWeeklyChartData() {
-		for(int i=0; i<weeklyData.size(); i++) {
-			
+		for (int i = 0; i < weeklyData.size(); i++) {
+
 			// Format the output
 			DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
-			
+
 			// shorter reference
 			ExerciseChartData ecd = weeklyData.get(i);
-			
+
 			// shorter length reference
 			int len = ecd.getDates().size();
-			
+
 			// loop through both dates/exercises (since they are same size)
-			for(int p=0; p<len; p++) {
+			for (int p = 0; p < len; p++) {
 				String categoryAxisDate = ecd.getDates().get(p).format(sdf).toString();
 				double numberAxisWeight = ecd.getValues().get(p);
-				
+
 				// Actual debug info
 				System.out.println("CategoryAxis: " + categoryAxisDate);
 				System.out.println("NumberAxis: " + numberAxisWeight);
 			}
 		}
 	}
-	
-	// Makes sure that if we have duplicate exercise names, we only increase the weight ArrayList
-	private void createWeeklyExercise(Exercise e, LocalDate date) {
-		
-		boolean found = false;
-		// Loop through 
-		for(int i=0; i<weeklyData.size(); i++) {
-			
-			// Check whether or not we already have this exercise added
-			
-			if(weeklyData.get(i).getName().equals(e.getName())) {
-				found = true;
-				
-				// add into weeklyData
-				weeklyData.get(i).addChartData(date, e.getWeight());
-				
-				break;
-			}
-		}
-		
-		if(!found) {
-			
-			ArrayList<LocalDate> rgDates = new ArrayList<LocalDate>();
-			rgDates.add(date);
-			
-			ArrayList<Double> rgValues = new ArrayList<Double>();
-			rgValues.add(e.getWeight());
-			
-			// add a new ExerciseChartData object
-			ExerciseChartData ecd = new ExerciseChartData(e.getName(), rgDates, rgValues);
-			weeklyData.add(ecd);
-		}
-	}
-	
-	
-	public static LocalDate getLocalDateFromDate(Date date){
-		   return LocalDate.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
-	}
-	
-	private int getDateIndex(Date startDate) {
-	
-		for(int i=0; i<MainProgramController.days.size(); i++) {
-			
-			Day day = MainProgramController.days.get(i);
-			
-			int num1 = getLocalDateFromDate(startDate).getDayOfYear();
-			int num2 = day.getDate().getDayOfYear();
-			
-			// If we get a match, return the index in the ArrayList
-			if(num1 == num2){
-				return i;
-			}
-		}
-		
-		// No index found
-		return -1;
-	}
-	
-	public Date convertToDateViaInstant(LocalDate dateToConvert) {
-	    return java.util.Date.from(dateToConvert.atStartOfDay()
-	      .atZone(ZoneId.systemDefault())
-	      .toInstant());
-	}
+
+	// ----------------------- MONTHLY CHART-------------------------------------
 
 	private void createMonthlyLineChart() {
-		// Create a date range between the current 'selected' week in date picker
-		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-				
-		// Debug
-		System.out.println("Date range for monthly was: " + selectedDate.toString());
-		
-		// Get start of the month from 'selectedDate'
-		System.out.println("Month start date: " + getStartOfMonth(selectedDate));
-		
-		// Get end of the month from 'selectedDate'
-		System.out.println("Month end date: " + getEndOfMonth(selectedDate));
+
+		// Loads ExerciseChartData objects
+		loadMonthlyExerciseChartData();
+
+		// Creates GUI representation of LineChart
+		buildGUIMonthlyLineChart();
 	}
 
-	
+	private void loadMonthlyExerciseChartData() {
+
+	}
+
+	private void buildGUIMonthlyLineChart() {
+		// Create a date range between the current 'selected' week in date picker
+		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+		// Debug
+		System.out.println("Date range for monthly was: " + selectedDate.toString());
+
+		// Get start of the month from 'selectedDate'
+		System.out.println("Month start date: " + getStartOfMonth(selectedDate));
+
+		// Get end of the month from 'selectedDate'
+		System.out.println("Month end date: " + getEndOfMonth(selectedDate));
+
+		Date start = getStartOfWeek(selectedDate);
+		Date end = getEndOfWeek(selectedDate);
+		int startIndex = getDateIndex(start);
+		int endIndex = getDateIndex(end);
+
+		for (int i = startIndex; i <= endIndex; i++) {
+			// Reference to the current day
+			Day day = MainProgramController.days.get(i);
+
+			// Save the dates into ArrayList
+			weeklyDates.add(day.getDate());
+
+			// Loop through its exercises and add create an ExerciseChartData
+			for (int e = 0; e < day.getExercises().size(); e++) {
+				createWeeklyExercise(day.getExercises().get(e), day.getDate());
+			}
+		}
+	}
+
+	private void buildGUIMonthlyLineChartCategoryAxis() {
+
+	}
+
+	private void buildGUIMonthlyLineChartNumberAxis() {
+
+	}
+
+	private void buildGUIMonthlyLinePoints() {
+
+	}
+
 	private void createYearlyLineChart() {
 		// Create a date range between the current 'selected' week in date picker
 		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-		
+
 		// Debug
 		System.out.println("Date range for yearly was: " + selectedDate.toString());
-		
+
 		// Get start of the month from 'selectedDate'
 		System.out.println("Year start date: " + getStartOfYear(selectedDate));
-		
+
 		// Get end of the month from 'selectedDate'
 		System.out.println("Year end date: " + getEndOfYear(selectedDate));
 	}
-	
+
+	public static LocalDate getLocalDateFromDate(Date date) {
+		return LocalDate.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
+	}
+
+	private int getDateIndex(Date startDate) {
+
+		for (int i = 0; i < MainProgramController.days.size(); i++) {
+
+			Day day = MainProgramController.days.get(i);
+
+			int num1 = getLocalDateFromDate(startDate).getDayOfYear();
+			int num2 = day.getDate().getDayOfYear();
+
+			// If we get a match, return the index in the ArrayList
+			if (num1 == num2) {
+				return i;
+			}
+		}
+
+		// No index found
+		return -1;
+	}
+
+	public Date convertToDateViaInstant(LocalDate dateToConvert) {
+		return java.util.Date.from(dateToConvert.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+	}
+
 	private Date getStartOfYear(Date selectedDate) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(selectedDate);
-		
-		
+
 		cal.set(Calendar.DAY_OF_YEAR, 1);
-		
+
 		return cal.getTime();
 	}
-	
+
 	private Date getEndOfYear(Date selectedDate) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(selectedDate);
-		
+
 		// Return the last day of the year
 		cal.set(Calendar.DAY_OF_YEAR, cal.getActualMaximum(Calendar.DAY_OF_YEAR));
-		
+
 		return cal.getTime();
 	}
-	
-	
+
 	private Date getEndOfMonth(Date selectedDate) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(selectedDate);
-		
+
 		// Set the day to the end of the month and time to 23:59:59
 		cal.set(Calendar.DAY_OF_MONTH, getMonthDays(selectedDate));
 		cal.set(Calendar.HOUR, 23);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 59);
-		
+
 		return cal.getTime();
 	}
-	
+
 	private Date getStartOfMonth(Date selectedDate) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(selectedDate);
-		
+
 		// Ensure its the first day, at 00:00:00
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		cal.set(Calendar.HOUR, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
-		
+
 		return cal.getTime();
 	}
-	
-	
+
 	private Date getStartOfWeek(Date selectedDate) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(selectedDate);
-		
+
 		// Go to the start of the week
 		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-		
+
 		// Ensure time is set at 00:00:00
 		cal.set(Calendar.HOUR, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
-		
-	    return cal.getTime();
+
+		return cal.getTime();
 	}
-	
+
 	private Date getEndOfWeek(Date selectedDate) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(selectedDate);
-		
+
 		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek() + 6);
-		
+
 		// ensure time is 23:59:59
 		cal.set(Calendar.HOUR, 23);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 59);
-		
+
 		return cal.getTime();
 	}
 
