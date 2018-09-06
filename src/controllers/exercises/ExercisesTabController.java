@@ -84,8 +84,8 @@ public class ExercisesTabController implements Initializable {
 	private String currentMode = "Weekly";
 
 	// Stores ExerciseChartDay; weekly, monthly, yearly
-	private ArrayList<ExerciseChartData> weeklyData = new ArrayList<ExerciseChartData>();
-	private ArrayList<LocalDate> weeklyDates = new ArrayList<LocalDate>();
+	private ArrayList<ExerciseChartData> chartData = new ArrayList<ExerciseChartData>();
+	private ArrayList<LocalDate> chartDates = new ArrayList<LocalDate>();
 
 	// Start of ExercisesTabController runs on creation
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -152,8 +152,8 @@ public class ExercisesTabController implements Initializable {
 		lineChartExercises.getData().clear();
 
 		// remove stored chart data
-		weeklyData.clear();
-		weeklyDates.clear();
+		chartData.clear();
+		chartDates.clear();
 
 		// remove any fixed categories
 		categoryAxisDate.getCategories().clear();
@@ -197,35 +197,18 @@ public class ExercisesTabController implements Initializable {
 	private void createLineChart(String value) {
 
 		System.out.println("Timeline selected: " + value);
-
-		switch (value) {
-		case "Weekly":
-			createWeeklyLineChart();
-			break;
-		case "Monthly":
-			createMonthlyLineChart();
-			break;
-		case "Yearly":
-			createYearlyLineChart();
-			break;
-		}
-	}
-
-	/**
-	 * First method that gets called to build a weekly chart
-	 */
-	private void createWeeklyLineChart() {
-		// Loads ExerciseChartData objects
-		loadWeeklyExerciseChartData();
+		
+		// Loads the dates into weeklyDates etc
+		loadExerciseChartData(value);
 
 		// Creates GUI representation of LineChart
-		buildGUIWeeklyLineChart();
+		buildGUILineChart(value);
 	}
 
 	/**
 	 * Method that gets invoked inside createWeeklyLineChart()
 	 */
-	private void loadWeeklyExerciseChartData() {
+	private void loadExerciseChartData(String value) {
 
 		// Create a date range between the current 'selected' week in date picker
 		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -246,9 +229,25 @@ public class ExercisesTabController implements Initializable {
 		// Day 2: {name: Deadlift, weight: 45}
 		// What would be saved is ExerciseChartData {name: Deadlift, weight[]: 40, 45 }
 
+		
 		Date start = getStartOfWeek(selectedDate);
 		Date end = getEndOfWeek(selectedDate);
-
+		
+		switch(value) {
+			case "Weekly":
+				start = getStartOfWeek(selectedDate);
+				end = getEndOfWeek(selectedDate);
+				break;
+			case "Monthly":
+				start = getStartOfMonth(selectedDate);
+				end = getEndOfMonth(selectedDate);
+				break;
+			case "Yearly":
+				start = getStartOfYear(selectedDate);
+				end = getEndOfYear(selectedDate);
+				break;
+		}
+		
 		// Returns the index in the ArrayList of the starting day
 		int startIndex = getDateIndex(start);
 		int endIndex = getDateIndex(end);
@@ -261,11 +260,14 @@ public class ExercisesTabController implements Initializable {
 			Day day = MainProgramController.days.get(i);
 
 			// Save the dates into ArrayList
-			weeklyDates.add(day.getDate());
+			chartDates.add(day.getDate());
 
 			// Loop through its exercises and add create an ExerciseChartData
 			for (int e = 0; e < day.getExercises().size(); e++) {
-				createWeeklyExercise(day.getExercises().get(e), day.getDate());
+				
+				System.out.println("CREATE EXERCISE: " + day.getDate());
+				
+				createExercise(day.getExercises().get(e), day.getDate());
 			}
 		}
 	}
@@ -277,19 +279,19 @@ public class ExercisesTabController implements Initializable {
 	 * @param e
 	 * @param date
 	 */
-	private void createWeeklyExercise(Exercise e, LocalDate date) {
+	private void createExercise(Exercise e, LocalDate date) {
 
 		boolean found = false;
 		// Loop through
-		for (int i = 0; i < weeklyData.size(); i++) {
+		for (int i = 0; i < chartData.size(); i++) {
 
 			// Check whether or not we already have this exercise added
 
-			if (weeklyData.get(i).getName().equals(e.getName())) {
+			if (chartData.get(i).getName().equals(e.getName())) {
 				found = true;
 
 				// add into weeklyData
-				weeklyData.get(i).addChartData(date, e.getWeight());
+				chartData.get(i).addChartData(date, e.getWeight());
 
 				break;
 			}
@@ -305,39 +307,44 @@ public class ExercisesTabController implements Initializable {
 
 			// add a new ExerciseChartData object
 			ExerciseChartData ecd = new ExerciseChartData(e.getName(), rgDates, rgValues);
-			weeklyData.add(ecd);
+			chartData.add(ecd);
 		}
 	}
 
 	/**
 	 * Second method that gets invoked inside createWeeklyLineChart
 	 */
-	private void buildGUIWeeklyLineChart() {
+	private void buildGUILineChart(String mode) {
 
 		// Builds the category axis
-		buildGUIWeeklyLineChartCategoryAxis();
+		buildGUILineChartCategoryAxis(mode);
 
 		// Builds the number axis
-		buildGUIWeeklyLineChartNumberAxis();
+		buildGUILineChartNumberAxis();
 
 		// Builds the line points
-		buildGUILinePoints();
+		buildGUILinePoints(mode);
 	}
 
 	/**
 	 * First method that gets invoked in buildGUIWeeklyLineChart
 	 */
-	private void buildGUIWeeklyLineChartCategoryAxis() {
+	private void buildGUILineChartCategoryAxis(String mode) {
 		// Store all the dates into a string ArrayList
 		ArrayList<String> olDates = new ArrayList<String>();
 
-		for (int i = 0; i < weeklyDates.size(); i++) {
+		for (int i = 0; i < chartDates.size(); i++) {
 
-			System.out.println("Adding ---> into ArrayList ---> " + weeklyDates.get(i));
+			System.out.println("Adding ---> into ArrayList ---> " + chartDates.get(i));
 
+			
 			DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
+			
+			String formattedDate = chartDates.get(i).format(sdf).toString();
+			
+			System.out.println("Formated date: " + formattedDate);
 
-			olDates.add(weeklyDates.get(i).format(sdf).toString());
+			olDates.add(formattedDate);
 		}
 
 		ObservableList<String> olCategory = FXCollections.observableArrayList(olDates);
@@ -349,6 +356,8 @@ public class ExercisesTabController implements Initializable {
 		// overridden.
 		numberAxisWeight.setAutoRanging(false);
 		categoryAxisDate.setAutoRanging(false);
+		
+		categoryAxisDate.getCategories().clear();
 
 		categoryAxisDate.setCategories(olCategory);
 	}
@@ -356,7 +365,7 @@ public class ExercisesTabController implements Initializable {
 	/**
 	 * Second method that gets invoked in buildGUIWeeklyLineChart
 	 */
-	private void buildGUIWeeklyLineChartNumberAxis() {
+	private void buildGUILineChartNumberAxis() {
 		numberAxisWeight.setLowerBound(0);
 		numberAxisWeight.setUpperBound(200);
 	}
@@ -365,12 +374,12 @@ public class ExercisesTabController implements Initializable {
 	 * Third method that gets invoked in buildGUIWeeklyLineChart
 	 */
 	@SuppressWarnings("unchecked")
-	private void buildGUILinePoints() {
+	private void buildGUILinePoints(String mode) {
 
 		// Loop through weekly Data and get the points
-		for (int i = 0; i < weeklyData.size(); i++) {
+		for (int i = 0; i < chartData.size(); i++) {
 
-			ExerciseChartData ecd = weeklyData.get(i);
+			ExerciseChartData ecd = chartData.get(i);
 
 			@SuppressWarnings("rawtypes")
 			XYChart.Series series = new XYChart.Series();
@@ -381,8 +390,9 @@ public class ExercisesTabController implements Initializable {
 
 				System.out.println("DATES SIZE -------------------------------------------");
 
-				// Get the CategoryAxis value
+				
 				DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
+				
 
 				String date = ecd.getDates().get(p).format(sdf).toString();
 				double value = ecd.getValues().get(p);
@@ -403,14 +413,14 @@ public class ExercisesTabController implements Initializable {
 	/**
 	 * Method used to debug all the points on the weekly chart
 	 */
-	private void outputWeeklyChartData() {
-		for (int i = 0; i < weeklyData.size(); i++) {
+	private void outputChartData() {
+		for (int i = 0; i < chartData.size(); i++) {
 
 			// Format the output
 			DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
 
 			// shorter reference
-			ExerciseChartData ecd = weeklyData.get(i);
+			ExerciseChartData ecd = chartData.get(i);
 
 			// shorter length reference
 			int len = ecd.getDates().size();
@@ -427,79 +437,7 @@ public class ExercisesTabController implements Initializable {
 		}
 	}
 
-	// ----------------------- MONTHLY CHART-------------------------------------
-
-	private void createMonthlyLineChart() {
-
-		// Loads ExerciseChartData objects
-		loadMonthlyExerciseChartData();
-
-		// Creates GUI representation of LineChart
-		buildGUIMonthlyLineChart();
-	}
-
-	private void loadMonthlyExerciseChartData() {
-		// Create a date range between the current 'selected' week in date picker
-		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-		// Debug
-		System.out.println("Date range for monthly was: " + selectedDate.toString());
-
-		// Get start of the month from 'selectedDate'
-		System.out.println("Month start date: " + getStartOfMonth(selectedDate));
-
-		// Get end of the month from 'selectedDate'
-		System.out.println("Month end date: " + getEndOfMonth(selectedDate));
-
-		Date start = getStartOfWeek(selectedDate);
-		Date end = getEndOfWeek(selectedDate);
-		int startIndex = getDateIndex(start);
-		int endIndex = getDateIndex(end);
-
-		for (int i = startIndex; i <= endIndex; i++) {
-			// Reference to the current day
-			Day day = MainProgramController.days.get(i);
-
-			// Save the dates into ArrayList
-			weeklyDates.add(day.getDate());
-
-			// Loop through its exercises and add create an ExerciseChartData
-			for (int e = 0; e < day.getExercises().size(); e++) {
-				createWeeklyExercise(day.getExercises().get(e), day.getDate());
-			}
-		}
-	}
-
-	private void buildGUIMonthlyLineChart() {
-		
-	}
-
-	private void buildGUIMonthlyLineChartCategoryAxis() {
-
-	}
-
-	private void buildGUIMonthlyLineChartNumberAxis() {
-
-	}
-
-	private void buildGUIMonthlyLinePoints() {
-
-	}
-
-	private void createYearlyLineChart() {
-		// Create a date range between the current 'selected' week in date picker
-		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-		// Debug
-		System.out.println("Date range for yearly was: " + selectedDate.toString());
-
-		// Get start of the month from 'selectedDate'
-		System.out.println("Year start date: " + getStartOfYear(selectedDate));
-
-		// Get end of the month from 'selectedDate'
-		System.out.println("Year end date: " + getEndOfYear(selectedDate));
-	}
-
+	
 	public static LocalDate getLocalDateFromDate(Date date) {
 		return LocalDate.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
 	}
