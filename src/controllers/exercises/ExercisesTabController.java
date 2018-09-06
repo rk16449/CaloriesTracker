@@ -366,7 +366,7 @@ public class ExercisesTabController implements Initializable {
 			
 			// loop through both dates/exercises (since they are same size)
 			for(int p=0; p<len; p++) {
-				String categoryAxisDate = weeklyData.get(i).getDates().get(i).format(sdf).toString();
+				String categoryAxisDate = weeklyData.get(i).getDates().get(p).format(sdf).toString();
 				
 				System.out.println("CategoryAxis: " + categoryAxisDate);
 			}
@@ -542,156 +542,12 @@ public class ExercisesTabController implements Initializable {
 		return cal.getTime();
 	}
 
-	private void deprecatedCreateLineChart() {
-		
-		/*
-		// Checkout how many different exercises we have ever added
-		// For each exercise, of each week add a point in the line chart
-		for (int i = 0; i < MainProgramController.addedExercises.size(); i++) {
-
-			Exercise lineExercise = MainProgramController.addedExercises.get(i);
-
-			@SuppressWarnings("rawtypes")
-			XYChart.Series series = new XYChart.Series();
-			series.setName(lineExercise.getName());
-
-			// Loop through every day and get the exercise weight data on this date
-			for (int z = 0; z < MainProgramController.days.size(); z++) {
-
-				// reference to current 'day'
-				Day currentDay = MainProgramController.days.get(z);
-
-				// Loop through the exercises on this day
-				for (int p = 0; p < currentDay.getExercises().size(); p++) {
-
-					// reference to current 'exercise'
-					Exercise currentExercise = currentDay.getExercises().get(p);
-
-					// Check if this is the same one
-					if (currentExercise.getName().equals(lineExercise.getName())) {
-
-						// Convert the date format
-						DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
-						// Add the data
-						series.getData().add(new XYChart.Data<String, Double>(
-								currentDay.getDate().format(sdf).toString(), currentExercise.getWeight()));
-						// Save reference to rgCharts ArrayList
-						rgCharts.add(series);
-					}
-				}
-			}
-
-			// Finally add it to the graph
-			lineChartExercises.getData().addAll(series);
-		}
-		*/
-	}
-	
-
-	private void deprecatedSetupLineChartCurrentWeek() {
-
-		/*
-		int countDays = 0;
-		int countExercises = 0;
-
-		ArrayList<String> dates = new ArrayList<String>();
-
-		// Preload the Date axis with the current week if there are no values in this
-		// month
-		for (int i = 0; i < MainProgramController.days.size(); i++) {
-
-			// Reference to Day
-			Day day = MainProgramController.days.get(i);
-
-			// Convert LocalDate to Date so we can check with between method
-			Date date = Date.from(day.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-			// Add 1 second to this date so that we can fit the interval
-			date.setSeconds(1);
-
-			// Only check values between here
-			if (between(date, getMonthStart(), getMonthEnd())) {
-
-				if (countDays % 2 == 0) {
-
-					DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
-					dates.add(day.getDate().format(sdf).toString());
-				}
-
-				// Increases the amount of current month days checked
-				countDays++;
-
-				// We gotta loop through added exercises first
-				for (int z = 0; z < MainProgramController.addedExercises.size(); z++) {
-
-					Exercise zExercise = MainProgramController.addedExercises.get(z);
-
-					// Check for a match with the exercises in this day
-					for (int p = 0; p < day.getExercises().size(); p++) {
-
-						Exercise pExercise = day.getExercises().get(p);
-
-						if (zExercise.getName().equals(pExercise.getName())) {
-							countExercises++;
-							break; // go to next day
-						}
-					}
-
-				}
-
-				// Also check if there is more than 5 exercises added?
-				System.out.println("countDays: " + countDays + " getMonthdays: " + getMonthDays());
-			}
-
-			// Exit loop, we don't need to check other months ahead of us
-			if (countDays >= getMonthDays())
-				break;
-		}
-
-		// Check how many loaded exercises there were
-		System.out.println("count exercises: " + countExercises);
-
-		// If there is less than 5 exercises stored this month, generate some Date axis
-		// values
-		if (countExercises < 5) {
-			categoryAxisDate.setCategories(FXCollections.<String>observableArrayList(dates));
-		} else {
-			createLineChart();
-		}
-		*/
-	}
-
 	// return the amount of days in the current month
 	private int getMonthDays(Date selectedDate) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(selectedDate);
 		int monthMaxDays = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 		return monthMaxDays;
-	}
-
-	private Date getMonthStart() {
-
-		Calendar c = Calendar.getInstance(); // this takes current date
-		c.set(Calendar.DAY_OF_MONTH, 1);
-
-		// set the hours, mins, seconds
-		c.set(Calendar.HOUR_OF_DAY, 0);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
-
-		return c.getTime();
-	}
-
-	private Date getMonthEnd() {
-
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
-
-		// Set time to 23:59:59
-		cal.set(Calendar.HOUR_OF_DAY, 23);
-		cal.set(Calendar.MINUTE, 59);
-		cal.set(Calendar.SECOND, 59);
-
-		return cal.getTime();
 	}
 
 	public static boolean between(Date date, Date dateStart, Date dateEnd) {
