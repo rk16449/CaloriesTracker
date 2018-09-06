@@ -263,17 +263,9 @@ public class ExercisesTabController implements Initializable {
 
 				// Check if there is any exercises on this day, and if there is then add the day
 				if(day.getExercises().size() >= 1) {
-					chartDates.add(day.getDate());
-					// Loop through its exercises and add create an ExerciseChartData
-					for (int e = 0; e < day.getExercises().size(); e++) {
-						createExercise(day.getExercises().get(e), day.getDate());
-					}
+					addPoint(day);
 				}else if(i % 28 == 0) {
-					chartDates.add(day.getDate());
-					// Loop through its exercises and add create an ExerciseChartData
-					for (int e = 0; e < day.getExercises().size(); e++) {
-						createExercise(day.getExercises().get(e), day.getDate());
-					}
+					addPoint(day);
 				}
 			}
 			
@@ -283,20 +275,24 @@ public class ExercisesTabController implements Initializable {
 				// Reference to the current day
 				Day day = MainProgramController.days.get(i);
 
-				// Save the dates into ArrayList
-				chartDates.add(day.getDate());
-
-				// Loop through its exercises and add create an ExerciseChartData
-				for (int e = 0; e < day.getExercises().size(); e++) {
-					
-					System.out.println("CREATE EXERCISE: " + day.getDate());
-					
-					createExercise(day.getExercises().get(e), day.getDate());
-				}
+				addPoint(day);
 			}
 		}
 		
 
+	}
+	
+	/**
+	 * Method that creates values for 2 ArrayLists: chartDates, chartData
+	 * @param day
+	 */
+	private void addPoint(Day day) {
+		// Save the dates into ArrayList
+		chartDates.add(day.getDate());
+		// Loop through its exercises and add create an ExerciseChartData
+		for (int e = 0; e < day.getExercises().size(); e++) {
+			createExercise(day.getExercises().get(e), day.getDate());
+		}
 	}
 
 	/**
