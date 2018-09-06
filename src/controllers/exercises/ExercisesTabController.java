@@ -355,20 +355,29 @@ public class ExercisesTabController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Method used to debug all the points on the weekly chart
+	 */
 	private void outputWeeklyChartData() {
 		for(int i=0; i<weeklyData.size(); i++) {
 			
 			// Format the output
 			DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM");
 			
+			// shorter reference
+			ExerciseChartData ecd = weeklyData.get(i);
 			
-			int len = weeklyData.get(i).getDates().size();
+			// shorter length reference
+			int len = ecd.getDates().size();
 			
 			// loop through both dates/exercises (since they are same size)
 			for(int p=0; p<len; p++) {
-				String categoryAxisDate = weeklyData.get(i).getDates().get(p).format(sdf).toString();
+				String categoryAxisDate = ecd.getDates().get(p).format(sdf).toString();
+				double numberAxisWeight = ecd.getValues().get(p);
 				
+				// Actual debug info
 				System.out.println("CategoryAxis: " + categoryAxisDate);
+				System.out.println("NumberAxis: " + numberAxisWeight);
 			}
 		}
 	}
