@@ -439,10 +439,6 @@ public class ExercisesTabController implements Initializable {
 	}
 
 	private void loadMonthlyExerciseChartData() {
-
-	}
-
-	private void buildGUIMonthlyLineChart() {
 		// Create a date range between the current 'selected' week in date picker
 		Date selectedDate = Date.from(currentDay.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 
@@ -472,6 +468,10 @@ public class ExercisesTabController implements Initializable {
 				createWeeklyExercise(day.getExercises().get(e), day.getDate());
 			}
 		}
+	}
+
+	private void buildGUIMonthlyLineChart() {
+		
 	}
 
 	private void buildGUIMonthlyLineChartCategoryAxis() {
