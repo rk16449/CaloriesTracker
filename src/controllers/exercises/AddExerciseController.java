@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -31,6 +32,9 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 	
 	@FXML
 	TextField tfSearch;
+	
+	@FXML
+	CheckBox checkBoxEstimate;
 
 	// The current selected Exercise we need to pass back to the DietTabController
 	private Exercise returnExerciseData;
@@ -76,6 +80,11 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 
 	public Exercise getExercise() {
 		return returnExerciseData;
+	}
+	
+	@FXML
+	protected void handleEstimateCaloriesBurned(ActionEvent event) throws IOException {
+		
 	}
 	
 	@FXML
