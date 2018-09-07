@@ -178,6 +178,17 @@ public class Person {
 		if(!gender.equals("Male") && !gender.equals("Female")) throw new IllegalArgumentException("Illegal gender set!");
 		
 		this.gender = gender;
+		
+		
+		// After setting gender we need to update everything
+		updatePerson();
+	}
+	
+	private void updatePerson() {
+		calculateBMR();
+		calculateTDEE();
+		
+		setGoalCalories(getTDEE() * currentGoal.getMultiplier());
 	}
 
 	public double getBodyfat() {

@@ -13,10 +13,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.Exercise;
+import model.Person;
 
 public class AddExerciseController extends BaseExerciseController implements Initializable {
 	
@@ -31,6 +33,9 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 	
 	@FXML
 	TextField tfSearch;
+	
+	@FXML
+	CheckBox checkBoxEstimate;
 
 	// The current selected Exercise we need to pass back to the DietTabController
 	private Exercise returnExerciseData;
@@ -65,7 +70,7 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 		tvExercises.setItems(flExercises);
 		
 		
-		// Setup textfield filter (based off food name)
+		// Setup TextField filter (based off food name)
 		tfSearch.setPromptText("Search here!");
 		tfSearch.setOnKeyReleased(keyEvent -> {
 			System.out.println("textfield search activated");
@@ -76,6 +81,65 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 
 	public Exercise getExercise() {
 		return returnExerciseData;
+	}
+	
+	@FXML
+	protected void handleEstimateCaloriesBurned(ActionEvent event) throws IOException {
+		
+		
+		// If checkBox Estimate is selected then we need to disable and calculate what the calories burned is
+		if(checkBoxEstimate.isSelected()) {
+			tfCaloriesBurned.setDisable(true);
+			
+			tfCaloriesBurned.setText(calculateCaloriesBurned());
+			
+		}else {
+			tfCaloriesBurned.setDisable(false);
+		}
+		
+	}
+	
+	private String calculateCaloriesBurned() {
+		
+		// Check the weight of the person, the age
+		
+		// Formula for calculating calories is body weight multiplied by time 
+		/// exercised multiply by intensityLevel
+		
+		double intensityLevel = 0.0042;
+		
+		
+		// Get our weight but make sure its converted into pounds
+		double weightlb = 0.0;
+		if(Person.getInstance().getUnits().equals(("Metric"))){
+			weightlb = Person.getInstance().getWeight() * 2.20462;
+		}else {
+			weightlb = Person.getInstance().getWeight();
+		}
+		
+		
+		double timeExercised = 0;
+		double sets = 0, reps = 0;
+		
+		// Try converting to a number
+		try {
+			sets = Double.parseDouble(tfSets.getText());
+			reps = Double.parseDouble(tfReps.getText());
+		}catch(NumberFormatException e) {
+			
+		}
+		
+		double secondsPerRep = 10;
+		
+		// We assume it takes about 10 seconds per rep
+		// Seconds / 60 gives us timeExercised in minutes
+		// e.g. 5*10*5 on squats = 
+		timeExercised = (((reps * secondsPerRep) * sets) / 60);
+		
+		double caloriesBurned = (timeExercised * weightlb) * intensityLevel;
+	
+		
+		return Double.toString(caloriesBurned);
 	}
 	
 	@FXML
