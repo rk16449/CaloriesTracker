@@ -100,18 +100,18 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 		
 	}
 	
+	/**
+	 * This method attempts to estimate the calories burned during exercise
+	 * It checks the persons weight(in lbs) and multiplies by the amount of minutes exercised
+	 * It then multiplies this by the intensityLevel (which is calculated from the amount of weight lifted)
+	 * @return
+	 */
 	private String calculateCaloriesBurned() {
 		
-		// Check the weight of the person, the age
-		// Formula for calculating calories is body weight multiplied by time 
-		///exercised multiply by intensityLevel
-		// Depending on the weight lifted we can assume some kind of intensity level
-		
-		
 		double weightLifted = 0, sets = 0, reps = 0;
-		double intensityLevel = 0.0042;
-		double timeExercised = 0, secondsPerRep = 10;
+		double timeExercised = 0, intensityLevel = 0, secondsPerRep = 10;
 		
+		// Try to convert the TextFields into doubles
 		try {
 			weightLifted = Double.parseDouble(tfWeight.getText());
 			sets = Double.parseDouble(tfSets.getText());
@@ -119,12 +119,9 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 		}catch(NumberFormatException e) {
 			System.out.println("TextFields cannot be converted to a double");
 		}
+
 		
-		
-		
-		
-		
-		// Get our weight but make sure its converted into pounds
+		// Get our weight but make sure its converted into pounds, also convert weightLifted into KG
 		double personWeight = 0.0;
 		if(Person.getInstance().getUnits().equals(("Metric"))){
 			personWeight = Person.getInstance().getWeight() * 2.20462;
@@ -149,19 +146,14 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 			intensityLevel = 0.07;
 		}
 		
-		
-		
-		
+
 		// We assume it takes about on average 10 seconds per rep
-		// Seconds / 60 gives us timeExercised in minutes
-		// e.g. 5*10*5 on squats = 
 		timeExercised = (((reps * secondsPerRep) * sets) / 60);
-		
 		
 		// Calculate the calories burned
 		double caloriesBurned = (timeExercised * personWeight) * intensityLevel;
 		
-		
+		// Return the value rounded by 2 decimals in String form
 		return Double.toString(Helper.round(caloriesBurned, 2));
 	}
 	
