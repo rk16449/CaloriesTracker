@@ -18,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.Exercise;
+import model.Helper;
 import model.Person;
 
 public class AddExerciseController extends BaseExerciseController implements Initializable {
@@ -99,47 +100,61 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 		
 	}
 	
+	/**
+	 * This method attempts to estimate the calories burned during exercise
+	 * It checks the persons weight(in lbs) and multiplies by the amount of minutes exercised
+	 * It then multiplies this by the intensityLevel (which is calculated from the amount of weight lifted)
+	 * @return
+	 */
 	private String calculateCaloriesBurned() {
 		
-		// Check the weight of the person, the age
+		double weightLifted = 0, sets = 0, reps = 0;
+		double timeExercised = 0, intensityLevel = 0, secondsPerRep = 10;
 		
-		// Formula for calculating calories is body weight multiplied by time 
-		/// exercised multiply by intensityLevel
-		
-		double intensityLevel = 0.0042;
-		
-		
-		// Get our weight but make sure its converted into pounds
-		double weightlb = 0.0;
-		if(Person.getInstance().getUnits().equals(("Metric"))){
-			weightlb = Person.getInstance().getWeight() * 2.20462;
-		}else {
-			weightlb = Person.getInstance().getWeight();
-		}
-		
-		
-		double timeExercised = 0;
-		double sets = 0, reps = 0;
-		
-		// Try converting to a number
+		// Try to convert the TextFields into doubles
 		try {
+			weightLifted = Double.parseDouble(tfWeight.getText());
 			sets = Double.parseDouble(tfSets.getText());
 			reps = Double.parseDouble(tfReps.getText());
 		}catch(NumberFormatException e) {
+			System.out.println("TextFields cannot be converted to a double");
+		}
+
+		
+		// Get our weight but make sure its converted into pounds, also convert weightLifted into KG
+		double personWeight = 0.0;
+		if(Person.getInstance().getUnits().equals(("Metric"))){
+			personWeight = Person.getInstance().getWeight() * 2.20462;
+		}else {
+			personWeight = Person.getInstance().getWeight();
 			
+			// convert weight lifted to kg
+			weightLifted = weightLifted / 2.20462;
 		}
 		
-		double secondsPerRep = 10;
 		
-		// We assume it takes about 10 seconds per rep
-		// Seconds / 60 gives us timeExercised in minutes
-		// e.g. 5*10*5 on squats = 
+		// Calculate intensity level (20kg barbell)
+		if(weightLifted >=0 && weightLifted <= 20) {
+			intensityLevel = 0.0475;
+		}else if(weightLifted > 20 && weightLifted <= 40) {
+			intensityLevel = 0.0525;
+		}else if(weightLifted > 40 && weightLifted <= 80) {
+			intensityLevel = 0.055;
+		}else if(weightLifted > 80 && weightLifted <= 120) {
+			intensityLevel = 0.06;
+		}else if(weightLifted > 120 && weightLifted <= 200) {
+			intensityLevel = 0.07;
+		}
+		
+
+		// We assume it takes about on average 10 seconds per rep
 		timeExercised = (((reps * secondsPerRep) * sets) / 60);
 		
-		double caloriesBurned = (timeExercised * weightlb) * intensityLevel;
-	
+		// Calculate the calories burned
+		double caloriesBurned = (timeExercised * personWeight) * intensityLevel;
 		
-		return Double.toString(caloriesBurned);
+		// Return the value rounded by 2 decimals in String form
+		return Double.toString(Helper.round(caloriesBurned, 2));
 	}
 	
 	@FXML
