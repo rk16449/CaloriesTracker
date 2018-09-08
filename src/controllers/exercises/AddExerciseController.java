@@ -159,16 +159,18 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 		return Double.toString(Helper.round(caloriesBurned, 2));
 	}
 	
+	/**
+	 * FXML TextField handler to check whenever we type into the TextFields: Sets, Reps, Weight
+	 * so that we can adjust the calories burned estimation
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void handleTextField(KeyEvent event) throws IOException {
-		
-		System.out.println("text field handler ---");
-		
 		// If we have estimate calories checked, update the calories value every time we change TextField
 		if(checkBoxEstimate.isSelected()) {
 			tfCaloriesBurned.setText(calculateCaloriesBurned());
 		}
-		
 	}
 	
 	
