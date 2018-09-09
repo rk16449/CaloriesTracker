@@ -17,6 +17,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import model.Exercise;
 import model.Helper;
 import model.Person;
@@ -156,6 +158,21 @@ public class AddExerciseController extends BaseExerciseController implements Ini
 		// Return the value rounded by 2 decimals in String form
 		return Double.toString(Helper.round(caloriesBurned, 2));
 	}
+	
+	/**
+	 * FXML TextField handler to check whenever we type into the TextFields: Sets, Reps, Weight
+	 * so that we can adjust the calories burned estimation
+	 * @param event
+	 * @throws IOException
+	 */
+	@FXML
+	protected void handleTextField(KeyEvent event) throws IOException {
+		// If we have estimate calories checked, update the calories value every time we change TextField
+		if(checkBoxEstimate.isSelected()) {
+			tfCaloriesBurned.setText(calculateCaloriesBurned());
+		}
+	}
+	
 	
 	@FXML
 	protected void handleAddExercise(ActionEvent event) throws IOException {

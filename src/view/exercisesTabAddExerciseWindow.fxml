@@ -33,11 +33,11 @@
         </rowConstraints>
          <children>
             <Label prefHeight="17.0" prefWidth="192.0" text="Total Sets:" />
-            <TextField fx:id="tfSets" GridPane.columnIndex="1" />
+            <TextField fx:id="tfSets" onKeyTyped="#handleTextField" GridPane.columnIndex="1" />
             <Label text="Reps:" GridPane.rowIndex="1" />
-            <TextField fx:id="tfReps" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="tfReps" onKeyTyped="#handleTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label prefHeight="17.0" prefWidth="230.0" text="Weight:" textAlignment="CENTER" GridPane.rowIndex="2" />
-            <TextField fx:id="tfWeight" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="tfWeight"  onKeyTyped="#handleTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Calories Burned:" GridPane.rowIndex="3" />
             <TextField fx:id="tfCaloriesBurned" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
