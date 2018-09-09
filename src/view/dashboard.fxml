@@ -36,7 +36,7 @@
       <RowConstraints />
   </rowConstraints>
    <children>
-      <TabPane fx:id="tabPane" prefHeight="600.0" prefWidth="944.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnSpan="11" GridPane.rowSpan="12">
+      <TabPane fx:id="tabPane" prefHeight="600.0" prefWidth="944.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnSpan="2147483647" GridPane.rowSpan="2147483647">
          <tabs>
             <Tab fx:id="tabDashboard" text="Dashboard">
                <content>
