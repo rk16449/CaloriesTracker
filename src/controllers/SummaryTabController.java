@@ -37,9 +37,12 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	CategoryAxis categoryAxisDate;
 	@FXML
 	NumberAxis numberAxisCalories;
+	
+	/*
 	@FXML
 	TextField tfCurrentGoal;
-
+	 */
+	
 	// Holds bar chart data points
 	@SuppressWarnings("rawtypes")
 	private ArrayList<XYChart.Series> charts = new ArrayList<XYChart.Series>();
@@ -72,7 +75,7 @@ public class SummaryTabController extends BaseFoodController implements Initiali
 	 * Updates the TextField of the current goal
 	 */
 	private void updateCurrentGoalTF() {
-		tfCurrentGoal.setText(person.getCurrentGoal().getName());
+		//tfCurrentGoal.setText(person.getCurrentGoal().getName());
 	}
 
 	/**
