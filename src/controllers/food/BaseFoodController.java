@@ -84,9 +84,9 @@ public class BaseFoodController extends BaseController {
 
 	protected void updateGUIPieChart() {
 		// now update the slices manually (good enough for such small amount of slices)
-		addedSlices.get(2).setPieValue(carbs);
+		addedSlices.get(1).setPieValue(carbs);
 		addedSlices.get(0).setPieValue(protein);
-		addedSlices.get(1).setPieValue(fats);
+		addedSlices.get(2).setPieValue(fats);
 	}
 	
 	/**
