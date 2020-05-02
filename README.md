@@ -1,4 +1,4 @@
-# CaloriesTracker
+# Calories Tracker, Fitness Application, Java
 
 [![BCH compliance](https://bettercodehub.com/edge/badge/rk16449/CaloriesTracker?branch=master)](https://bettercodehub.com/)
 
